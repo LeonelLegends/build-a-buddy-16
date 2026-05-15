@@ -34,7 +34,6 @@ function HomePage() {
     { icon: PiggyBank, title: t("services.iul.title"), desc: t("services.iul.desc") },
     { icon: Heart, title: t("services.whole.title"), desc: t("services.whole.desc") },
     { icon: Shield, title: t("services.term.title"), desc: t("services.term.desc") },
-    { icon: Briefcase, title: t("services.benefits.title"), desc: t("services.benefits.desc") },
     { icon: Building2, title: t("services.cafeteria.title"), desc: t("services.cafeteria.desc") },
   ];
 
