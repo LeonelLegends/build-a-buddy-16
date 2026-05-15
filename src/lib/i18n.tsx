@@ -7,7 +7,7 @@ type Dict = Record<string, string>;
 const en: Dict = {
   "nav.home": "Home",
   "nav.services": "Services",
-  "nav.benefits": "Employee Benefits",
+  "nav.benefits": "Section 125 Plans",
   "nav.contact": "Contact",
   "nav.cta": "Free Consultation",
 
