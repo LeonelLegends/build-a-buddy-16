@@ -45,7 +45,7 @@ function ContactPage() {
                   <p className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">
                     {t("contact.phoneLabel")}
                   </p>
-                  <p className="font-medium text-primary">(555) 123-4567</p>
+                  <p className="font-medium text-primary">(941) 265-0210</p>
                 </div>
               </div>
             </div>
@@ -58,7 +58,7 @@ function ContactPage() {
                   <p className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">
                     {t("contact.emailLabel")}
                   </p>
-                  <p className="font-medium text-primary">info@legendsinsurance.com</p>
+                  <p className="font-medium text-primary">jeff@legendsinsuranceservices.com</p>
                 </div>
               </div>
             </div>
