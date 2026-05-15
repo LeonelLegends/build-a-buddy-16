@@ -34,15 +34,14 @@ const en: Dict = {
   "services.whole.desc": "Permanent coverage that builds cash value over time.",
   "services.term.title": "Term Life",
   "services.term.desc": "Affordable coverage for the years that matter most.",
-  "services.benefits.title": "Employee Benefits",
-  "services.benefits.desc": "Group plans built for companies with 50+ full-time employees.",
   "services.cafeteria.title": "Section 125 Cafeteria Plans",
-  "services.cafeteria.desc": "Pre-tax benefit programs that save your team and business money.",
+  "services.cafeteria.desc":
+    "Pre-tax employee benefit programs for companies with 50+ full-time employees — saving your team and your business money.",
   "services.learn": "Learn more",
 
-  "benefits.title": "Employee benefits & 125 cafeteria plans",
+  "benefits.title": "Section 125 Cafeteria Plans",
   "benefits.subtitle":
-    "Specialized solutions for companies with 50 or more full-time employees.",
+    "Pre-tax employee benefit programs for companies with 50 or more full-time employees — saving your team and your business money.",
   "benefits.point1.title": "Tax savings for everyone",
   "benefits.point1.desc":
     "Section 125 plans let employees pay for benefits with pre-tax dollars — reducing payroll taxes for your business too.",
