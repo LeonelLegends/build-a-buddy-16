@@ -45,40 +45,41 @@
 :root {
   --radius: 0.75rem;
 
-  /* Navy Trust + Gold palette */
-  --background: oklch(0.985 0.008 80);          /* warm cream #f8f4ec */
-  --foreground: oklch(0.18 0.05 265);           /* deep navy ink */
+  /* Legends multi-accent palette — teal · purple · coral · orange (from logo) */
+  --background: oklch(0.99 0.003 250);          /* near-white */
+  --foreground: oklch(0.20 0.02 250);           /* charcoal ink */
 
   --card: oklch(1 0 0);
-  --card-foreground: oklch(0.18 0.05 265);
+  --card-foreground: oklch(0.20 0.02 250);
   --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.18 0.05 265);
+  --popover-foreground: oklch(0.20 0.02 250);
 
-  --primary: oklch(0.22 0.07 265);              /* deep navy #0f1b3d */
-  --primary-foreground: oklch(0.985 0.008 80);
+  --primary: oklch(0.22 0.02 250);              /* logo charcoal */
+  --primary-foreground: oklch(0.99 0.003 250);
 
-  --secondary: oklch(0.36 0.08 255);            /* mid navy #1e3a5f */
-  --secondary-foreground: oklch(0.985 0.008 80);
+  --secondary: oklch(0.55 0.13 200);            /* teal mid */
+  --secondary-foreground: oklch(0.99 0.003 250);
 
-  --muted: oklch(0.94 0.012 80);
-  --muted-foreground: oklch(0.45 0.04 265);
+  --muted: oklch(0.96 0.005 250);
+  --muted-foreground: oklch(0.45 0.02 250);
 
-  --accent: oklch(0.78 0.12 82);                /* gold accent surface */
-  --accent-foreground: oklch(0.22 0.07 265);
+  --accent: oklch(0.70 0.18 30);                /* coral */
+  --accent-foreground: oklch(0.99 0.003 250);
 
-  --gold: oklch(0.74 0.13 82);                  /* #c9a84c */
-  --gold-foreground: oklch(0.18 0.05 265);
-  --cream: oklch(0.965 0.018 80);               /* #f5f0e0 */
+  /* "gold" token kept for class compatibility — now vibrant teal accent */
+  --gold: oklch(0.68 0.14 195);                 /* logo teal */
+  --gold-foreground: oklch(0.99 0.003 250);
+  --cream: oklch(0.97 0.012 200);
 
   --destructive: oklch(0.577 0.245 27.325);
   --destructive-foreground: oklch(0.985 0 0);
 
-  --border: oklch(0.88 0.015 80);
-  --input: oklch(0.88 0.015 80);
-  --ring: oklch(0.74 0.13 82);
+  --border: oklch(0.90 0.008 250);
+  --input: oklch(0.90 0.008 250);
+  --ring: oklch(0.68 0.14 195);
 
-  --gradient-hero: linear-gradient(135deg, oklch(0.18 0.06 265) 0%, oklch(0.30 0.08 260) 100%);
-  --gradient-gold: linear-gradient(135deg, oklch(0.78 0.13 85) 0%, oklch(0.68 0.14 75) 100%);
+  --gradient-hero: linear-gradient(135deg, oklch(0.62 0.15 200) 0%, oklch(0.55 0.18 305) 50%, oklch(0.68 0.18 30) 100%);
+  --gradient-gold: linear-gradient(135deg, oklch(0.68 0.14 195) 0%, oklch(0.70 0.18 30) 100%);
 }
 
 @layer base {
