@@ -107,7 +107,6 @@ function ContactPage() {
                       <option>{t("services.iul.title")}</option>
                       <option>{t("services.whole.title")}</option>
                       <option>{t("services.term.title")}</option>
-                      <option>{t("services.benefits.title")}</option>
                       <option>{t("services.cafeteria.title")}</option>
                     </select>
                   </div>

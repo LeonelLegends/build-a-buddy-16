@@ -7,7 +7,7 @@ type Dict = Record<string, string>;
 const en: Dict = {
   "nav.home": "Home",
   "nav.services": "Services",
-  "nav.benefits": "Employee Benefits",
+  "nav.benefits": "Section 125 Plans",
   "nav.contact": "Contact",
   "nav.cta": "Free Consultation",
 
@@ -34,15 +34,14 @@ const en: Dict = {
   "services.whole.desc": "Permanent coverage that builds cash value over time.",
   "services.term.title": "Term Life",
   "services.term.desc": "Affordable coverage for the years that matter most.",
-  "services.benefits.title": "Employee Benefits",
-  "services.benefits.desc": "Group plans built for companies with 50+ full-time employees.",
   "services.cafeteria.title": "Section 125 Cafeteria Plans",
-  "services.cafeteria.desc": "Pre-tax benefit programs that save your team and business money.",
+  "services.cafeteria.desc":
+    "Pre-tax employee benefit programs for companies with 50+ full-time employees — saving your team and your business money.",
   "services.learn": "Learn more",
 
-  "benefits.title": "Employee benefits & 125 cafeteria plans",
+  "benefits.title": "Section 125 Cafeteria Plans",
   "benefits.subtitle":
-    "Specialized solutions for companies with 50 or more full-time employees.",
+    "Pre-tax employee benefit programs for companies with 50 or more full-time employees — saving your team and your business money.",
   "benefits.point1.title": "Tax savings for everyone",
   "benefits.point1.desc":
     "Section 125 plans let employees pay for benefits with pre-tax dollars — reducing payroll taxes for your business too.",
@@ -96,7 +95,7 @@ const en: Dict = {
 const es: Dict = {
   "nav.home": "Inicio",
   "nav.services": "Servicios",
-  "nav.benefits": "Beneficios",
+  "nav.benefits": "Sección 125",
   "nav.contact": "Contacto",
   "nav.cta": "Consulta gratuita",
 
@@ -123,15 +122,14 @@ const es: Dict = {
   "services.whole.desc": "Cobertura permanente que acumula valor en efectivo.",
   "services.term.title": "Vida a Término",
   "services.term.desc": "Cobertura accesible para los años que más importan.",
-  "services.benefits.title": "Beneficios para Empleados",
-  "services.benefits.desc": "Planes grupales para empresas con más de 50 empleados.",
-  "services.cafeteria.title": "Planes Cafetería 125",
-  "services.cafeteria.desc": "Beneficios pre-impuestos que ahorran dinero a tu empresa y empleados.",
+  "services.cafeteria.title": "Planes Cafetería Sección 125",
+  "services.cafeteria.desc":
+    "Programas de beneficios pre-impuestos para empresas con más de 50 empleados a tiempo completo — ahorrando dinero a tu equipo y a tu negocio.",
   "services.learn": "Más información",
 
-  "benefits.title": "Beneficios para empleados y planes cafetería 125",
+  "benefits.title": "Planes Cafetería Sección 125",
   "benefits.subtitle":
-    "Soluciones especializadas para empresas con 50 o más empleados a tiempo completo.",
+    "Programas de beneficios pre-impuestos para empresas con 50 o más empleados a tiempo completo — ahorrando dinero a tu equipo y a tu negocio.",
   "benefits.point1.title": "Ahorros fiscales para todos",
   "benefits.point1.desc":
     "Los planes Sección 125 permiten a los empleados pagar beneficios con dólares pre-impuestos — reduciendo también los impuestos de nómina de tu empresa.",
