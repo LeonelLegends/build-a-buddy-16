@@ -95,7 +95,7 @@ const en: Dict = {
 const es: Dict = {
   "nav.home": "Inicio",
   "nav.services": "Servicios",
-  "nav.benefits": "Beneficios",
+  "nav.benefits": "Sección 125",
   "nav.contact": "Contacto",
   "nav.cta": "Consulta gratuita",
 
