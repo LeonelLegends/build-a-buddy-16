@@ -122,15 +122,14 @@ const es: Dict = {
   "services.whole.desc": "Cobertura permanente que acumula valor en efectivo.",
   "services.term.title": "Vida a Término",
   "services.term.desc": "Cobertura accesible para los años que más importan.",
-  "services.benefits.title": "Beneficios para Empleados",
-  "services.benefits.desc": "Planes grupales para empresas con más de 50 empleados.",
-  "services.cafeteria.title": "Planes Cafetería 125",
-  "services.cafeteria.desc": "Beneficios pre-impuestos que ahorran dinero a tu empresa y empleados.",
+  "services.cafeteria.title": "Planes Cafetería Sección 125",
+  "services.cafeteria.desc":
+    "Programas de beneficios pre-impuestos para empresas con más de 50 empleados a tiempo completo — ahorrando dinero a tu equipo y a tu negocio.",
   "services.learn": "Más información",
 
-  "benefits.title": "Beneficios para empleados y planes cafetería 125",
+  "benefits.title": "Planes Cafetería Sección 125",
   "benefits.subtitle":
-    "Soluciones especializadas para empresas con 50 o más empleados a tiempo completo.",
+    "Programas de beneficios pre-impuestos para empresas con 50 o más empleados a tiempo completo — ahorrando dinero a tu equipo y a tu negocio.",
   "benefits.point1.title": "Ahorros fiscales para todos",
   "benefits.point1.desc":
     "Los planes Sección 125 permiten a los empleados pagar beneficios con dólares pre-impuestos — reduciendo también los impuestos de nómina de tu empresa.",
