@@ -1,7 +1,8 @@
 import { Link } from "@tanstack/react-router";
 import { useState } from "react";
-import { Menu, X, Shield } from "lucide-react";
+import { Menu, X } from "lucide-react";
 import { useI18n } from "@/lib/i18n";
+import logo from "@/assets/logo.jpg";
 
 export function Header() {
   const { t, lang, setLang } = useI18n();
@@ -17,13 +18,8 @@ export function Header() {
   return (
     <header className="sticky top-0 z-40 border-b border-border/60 bg-background/80 backdrop-blur-md">
       <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4">
-        <Link to="/" className="flex items-center gap-2.5 group">
-          <span className="grid h-9 w-9 place-items-center rounded-lg bg-gradient-hero shadow-gold">
-            <Shield className="h-5 w-5 text-gold" />
-          </span>
-          <span className="font-display text-lg font-semibold tracking-tight text-primary">
-            Legends <span className="text-gold">Insurance</span>
-          </span>
+        <Link to="/" className="flex items-center gap-2.5 group" aria-label="Legends Insurance Services">
+          <img src={logo} alt="Legends Insurance Services" className="h-11 w-auto rounded-md" />
         </Link>
 
         <nav className="hidden items-center gap-8 md:flex">

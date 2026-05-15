@@ -38,8 +38,8 @@ export function Footer() {
             {t("nav.contact")}
           </h4>
           <ul className="mt-4 space-y-3 text-sm text-primary-foreground/75">
-            <li className="flex items-center gap-2"><Phone className="h-4 w-4 text-gold" /> (555) 123-4567</li>
-            <li className="flex items-center gap-2"><Mail className="h-4 w-4 text-gold" /> info@legendsinsurance.com</li>
+            <li className="flex items-center gap-2"><Phone className="h-4 w-4 text-gold" /> (941) 265-0210</li>
+            <li className="flex items-center gap-2"><Mail className="h-4 w-4 text-gold" /> jeff@legendsinsuranceservices.com</li>
             <li className="flex items-center gap-2"><MapPin className="h-4 w-4 text-gold" /> United States</li>
           </ul>
         </div>
