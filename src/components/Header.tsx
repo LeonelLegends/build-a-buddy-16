@@ -39,7 +39,7 @@ export function Header() {
           ))}
         </nav>
 
-        <div className="hidden items-center gap-3 md:flex">
+        <div className="hidden items-center gap-3 lg:flex">
           <button
             onClick={() => setLang(lang === "en" ? "es" : "en")}
             className="rounded-md border border-border px-3 py-1.5 text-xs font-semibold uppercase tracking-wide text-foreground/70 transition-colors hover:border-gold hover:text-primary"
@@ -55,7 +55,7 @@ export function Header() {
         </div>
 
         <button
-          className="md:hidden text-primary"
+          className="lg:hidden text-primary"
           onClick={() => setOpen(!open)}
           aria-label="Menu"
         >
@@ -64,7 +64,7 @@ export function Header() {
       </div>
 
       {open && (
-        <div className="border-t border-border bg-background md:hidden">
+        <div className="border-t border-border bg-background lg:hidden">
           <div className="mx-auto flex max-w-7xl flex-col gap-1 px-6 py-4">
             {links.map((l) => (
               <Link
