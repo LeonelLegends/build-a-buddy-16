@@ -90,12 +90,29 @@ function ContactPage() {
               </div>
             ) : (
               <form
-                onSubmit={(e) => {
+                onSubmit={async (e) => {
                   e.preventDefault();
+                  if (submitting) return;
+                  setSubmitting(true);
+                  const fd = new FormData(e.currentTarget);
+                  const payload = {
+                    name: String(fd.get("name") ?? "").trim(),
+                    email: String(fd.get("email") ?? "").trim(),
+                    phone: String(fd.get("phone") ?? "").trim() || null,
+                    interest: String(fd.get("interest") ?? "").trim() || null,
+                    message: String(fd.get("message") ?? "").trim() || null,
+                  };
+                  const { error } = await supabase.from("leads").insert(payload);
+                  setSubmitting(false);
+                  if (error) {
+                    toast.error("Could not send your message. Please try again.");
+                    return;
+                  }
                   setSent(true);
                 }}
                 className="rounded-2xl border border-border bg-card p-7 shadow-elegant"
               >
+
                 <div className="grid gap-4 md:grid-cols-2">
                   <Field label={t("contact.name")} name="name" required />
                   <Field label={t("contact.email")} name="email" type="email" required />
