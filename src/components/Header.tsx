@@ -20,7 +20,7 @@ export function Header() {
       <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4">
         <Link to="/" className="flex items-center gap-3 group shrink-0" aria-label="Legends Insurance Services">
           <img src={logo} alt="Legends Insurance Services" className="h-11 w-auto rounded-md" />
-          <span className="font-display text-lg font-semibold leading-tight text-slate-50 md:text-xl">
+          <span className="font-display text-lg font-semibold leading-tight md:text-xl text-slate-950">
             Legends Insurance Services
           </span>
         </Link>
