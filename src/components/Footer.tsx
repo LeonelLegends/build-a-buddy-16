@@ -68,7 +68,7 @@ export function Footer() {
               <FacebookIcon className="h-4 w-4" />
             </a>
             <a
-              href="https://www.instagram.com/legendsadvisorygroup/"
+              href="askme"
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex h-9 w-9 items-center justify-center rounded-full bg-primary-foreground/10 text-primary-foreground/80 transition-colors hover:bg-gradient-to-tr hover:from-[#f09433] hover:via-[#e6683c] hover:to-[#bc1888] hover:text-white"
