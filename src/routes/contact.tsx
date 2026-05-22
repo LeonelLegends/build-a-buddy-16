@@ -23,6 +23,8 @@ export const Route = createFileRoute("/contact")({
 function ContactPage() {
   const { t } = useI18n();
   const [sent, setSent] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
+
 
   return (
     <>
