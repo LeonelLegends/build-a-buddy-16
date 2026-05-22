@@ -27,7 +27,7 @@ export function Footer() {
         <div className="md:col-span-2">
           <Link to="/" className="flex items-center gap-3">
             <img src={logo} alt="Legends Insurance Services" className="h-11 w-auto rounded-md bg-white/5 p-1" />
-            <span className="font-display text-lg font-semibold leading-tight text-slate-50">
+            <span className="font-display leading-tight text-slate-50 text-2xl font-sans font-medium">
               Legends Insurance Services
             </span>
           </Link>
