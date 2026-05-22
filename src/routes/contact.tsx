@@ -2,6 +2,9 @@ import { createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
 import { Mail, Phone, Clock, CheckCircle2 } from "lucide-react";
 import { useI18n } from "@/lib/i18n";
+import { supabase } from "@/integrations/supabase/client";
+import { toast } from "sonner";
+
 
 export const Route = createFileRoute("/contact")({
   head: () => ({
