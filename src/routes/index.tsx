@@ -133,7 +133,7 @@ function HomePage() {
               loading="lazy"
               className="rounded-3xl shadow-elegant"
             />
-            <div className="absolute -bottom-6 -right-6 hidden h-32 w-32 rounded-3xl bg-gradient-gold shadow-gold md:block" />
+            
           </div>
           <div>
             <h2 className="font-display text-3xl text-primary md:text-4xl">{t("about.title")}</h2>
