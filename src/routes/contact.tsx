@@ -145,9 +145,10 @@ function ContactPage() {
                 </div>
                 <button
                   type="submit"
-                  className="mt-6 w-full rounded-md bg-gradient-gold px-5 py-3 text-sm font-semibold text-primary shadow-gold transition-transform hover:-translate-y-0.5"
+                  disabled={submitting}
+                  className="mt-6 w-full rounded-md bg-gradient-gold px-5 py-3 text-sm font-semibold text-primary shadow-gold transition-transform hover:-translate-y-0.5 disabled:opacity-60"
                 >
-                  {t("contact.submit")}
+                  {submitting ? "Sending..." : t("contact.submit")}
                 </button>
               </form>
             )}
