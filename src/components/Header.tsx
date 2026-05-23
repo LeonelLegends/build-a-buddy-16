@@ -40,6 +40,12 @@ export function Header() {
         </nav>
 
         <div className="hidden items-center gap-3 lg:flex">
+          <Link
+            to="/login"
+            className="rounded-md border border-border px-4 py-2 text-sm font-semibold text-foreground/80 transition-colors hover:border-gold hover:text-primary"
+          >
+            {t("nav.login") ?? "Login"}
+          </Link>
           <button
             onClick={() => setLang(lang === "en" ? "es" : "en")}
             className="rounded-md border border-border px-3 py-1.5 text-xs font-semibold uppercase tracking-wide text-foreground/70 transition-colors hover:border-gold hover:text-primary"
@@ -84,6 +90,13 @@ export function Header() {
             >
               {t("lang.toggle")}
             </button>
+            <Link
+              to="/login"
+              onClick={() => setOpen(false)}
+              className="rounded-md border border-border px-3 py-2.5 text-center text-sm font-semibold text-foreground/80 hover:bg-muted"
+            >
+              {t("nav.login") ?? "Login"}
+            </Link>
             <Link
               to="/contact"
               onClick={() => setOpen(false)}
