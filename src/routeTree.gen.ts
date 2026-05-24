@@ -20,6 +20,9 @@ import { Route as ContactRouteImport } from './routes/contact'
 import { Route as BenefitsRouteImport } from './routes/benefits'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as CrmIndexRouteImport } from './routes/crm.index'
+import { Route as CrmSettingsRouteImport } from './routes/crm.settings'
+import { Route as CrmPipelineRouteImport } from './routes/crm.pipeline'
+import { Route as CrmContactsRouteImport } from './routes/crm.contacts'
 import { Route as ApiPublicChatRouteImport } from './routes/api/public/chat'
 
 const TermsRoute = TermsRouteImport.update({
@@ -77,6 +80,21 @@ const CrmIndexRoute = CrmIndexRouteImport.update({
   path: '/',
   getParentRoute: () => CrmRoute,
 } as any)
+const CrmSettingsRoute = CrmSettingsRouteImport.update({
+  id: '/settings',
+  path: '/settings',
+  getParentRoute: () => CrmRoute,
+} as any)
+const CrmPipelineRoute = CrmPipelineRouteImport.update({
+  id: '/pipeline',
+  path: '/pipeline',
+  getParentRoute: () => CrmRoute,
+} as any)
+const CrmContactsRoute = CrmContactsRouteImport.update({
+  id: '/contacts',
+  path: '/contacts',
+  getParentRoute: () => CrmRoute,
+} as any)
 const ApiPublicChatRoute = ApiPublicChatRouteImport.update({
   id: '/api/public/chat',
   path: '/api/public/chat',
@@ -94,6 +112,9 @@ export interface FileRoutesByFullPath {
   '/services': typeof ServicesRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/terms': typeof TermsRoute
+  '/crm/contacts': typeof CrmContactsRoute
+  '/crm/pipeline': typeof CrmPipelineRoute
+  '/crm/settings': typeof CrmSettingsRoute
   '/crm/': typeof CrmIndexRoute
   '/api/public/chat': typeof ApiPublicChatRoute
 }
@@ -107,6 +128,9 @@ export interface FileRoutesByTo {
   '/services': typeof ServicesRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/terms': typeof TermsRoute
+  '/crm/contacts': typeof CrmContactsRoute
+  '/crm/pipeline': typeof CrmPipelineRoute
+  '/crm/settings': typeof CrmSettingsRoute
   '/crm': typeof CrmIndexRoute
   '/api/public/chat': typeof ApiPublicChatRoute
 }
@@ -122,6 +146,9 @@ export interface FileRoutesById {
   '/services': typeof ServicesRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/terms': typeof TermsRoute
+  '/crm/contacts': typeof CrmContactsRoute
+  '/crm/pipeline': typeof CrmPipelineRoute
+  '/crm/settings': typeof CrmSettingsRoute
   '/crm/': typeof CrmIndexRoute
   '/api/public/chat': typeof ApiPublicChatRoute
 }
@@ -138,6 +165,9 @@ export interface FileRouteTypes {
     | '/services'
     | '/sitemap.xml'
     | '/terms'
+    | '/crm/contacts'
+    | '/crm/pipeline'
+    | '/crm/settings'
     | '/crm/'
     | '/api/public/chat'
   fileRoutesByTo: FileRoutesByTo
@@ -151,6 +181,9 @@ export interface FileRouteTypes {
     | '/services'
     | '/sitemap.xml'
     | '/terms'
+    | '/crm/contacts'
+    | '/crm/pipeline'
+    | '/crm/settings'
     | '/crm'
     | '/api/public/chat'
   id:
@@ -165,6 +198,9 @@ export interface FileRouteTypes {
     | '/services'
     | '/sitemap.xml'
     | '/terms'
+    | '/crm/contacts'
+    | '/crm/pipeline'
+    | '/crm/settings'
     | '/crm/'
     | '/api/public/chat'
   fileRoutesById: FileRoutesById
@@ -262,6 +298,27 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof CrmIndexRouteImport
       parentRoute: typeof CrmRoute
     }
+    '/crm/settings': {
+      id: '/crm/settings'
+      path: '/settings'
+      fullPath: '/crm/settings'
+      preLoaderRoute: typeof CrmSettingsRouteImport
+      parentRoute: typeof CrmRoute
+    }
+    '/crm/pipeline': {
+      id: '/crm/pipeline'
+      path: '/pipeline'
+      fullPath: '/crm/pipeline'
+      preLoaderRoute: typeof CrmPipelineRouteImport
+      parentRoute: typeof CrmRoute
+    }
+    '/crm/contacts': {
+      id: '/crm/contacts'
+      path: '/contacts'
+      fullPath: '/crm/contacts'
+      preLoaderRoute: typeof CrmContactsRouteImport
+      parentRoute: typeof CrmRoute
+    }
     '/api/public/chat': {
       id: '/api/public/chat'
       path: '/api/public/chat'
@@ -273,10 +330,16 @@ declare module '@tanstack/react-router' {
 }
 
 interface CrmRouteChildren {
+  CrmContactsRoute: typeof CrmContactsRoute
+  CrmPipelineRoute: typeof CrmPipelineRoute
+  CrmSettingsRoute: typeof CrmSettingsRoute
   CrmIndexRoute: typeof CrmIndexRoute
 }
 
 const CrmRouteChildren: CrmRouteChildren = {
+  CrmContactsRoute: CrmContactsRoute,
+  CrmPipelineRoute: CrmPipelineRoute,
+  CrmSettingsRoute: CrmSettingsRoute,
   CrmIndexRoute: CrmIndexRoute,
 }
 
