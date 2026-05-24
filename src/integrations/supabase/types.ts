@@ -14,36 +14,113 @@ export type Database = {
   }
   public: {
     Tables: {
+      lead_notes: {
+        Row: {
+          author_id: string | null
+          body: string
+          created_at: string
+          id: string
+          lead_id: string
+        }
+        Insert: {
+          author_id?: string | null
+          body: string
+          created_at?: string
+          id?: string
+          lead_id: string
+        }
+        Update: {
+          author_id?: string | null
+          body?: string
+          created_at?: string
+          id?: string
+          lead_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "lead_notes_lead_id_fkey"
+            columns: ["lead_id"]
+            isOneToOne: false
+            referencedRelation: "leads"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       leads: {
         Row: {
+          age: number | null
+          beneficiaries: string | null
           created_at: string
           email: string
           id: string
+          insurance_type: string | null
           interest: string | null
           message: string | null
           name: string
           phone: string | null
+          pipeline_status: Database["public"]["Enums"]["pipeline_stage"]
+          position: number
+          priority: Database["public"]["Enums"]["lead_priority"]
+          smoker: boolean
           status: Database["public"]["Enums"]["lead_status"]
         }
         Insert: {
+          age?: number | null
+          beneficiaries?: string | null
           created_at?: string
           email: string
           id?: string
+          insurance_type?: string | null
           interest?: string | null
           message?: string | null
           name: string
           phone?: string | null
+          pipeline_status?: Database["public"]["Enums"]["pipeline_stage"]
+          position?: number
+          priority?: Database["public"]["Enums"]["lead_priority"]
+          smoker?: boolean
           status?: Database["public"]["Enums"]["lead_status"]
         }
         Update: {
+          age?: number | null
+          beneficiaries?: string | null
           created_at?: string
           email?: string
           id?: string
+          insurance_type?: string | null
           interest?: string | null
           message?: string | null
           name?: string
           phone?: string | null
+          pipeline_status?: Database["public"]["Enums"]["pipeline_stage"]
+          position?: number
+          priority?: Database["public"]["Enums"]["lead_priority"]
+          smoker?: boolean
           status?: Database["public"]["Enums"]["lead_status"]
+        }
+        Relationships: []
+      }
+      message_templates: {
+        Row: {
+          body: string
+          channel: Database["public"]["Enums"]["message_channel"]
+          id: string
+          name: string
+          updated_at: string
+        }
+        Insert: {
+          body: string
+          channel: Database["public"]["Enums"]["message_channel"]
+          id?: string
+          name: string
+          updated_at?: string
+        }
+        Update: {
+          body?: string
+          channel?: Database["public"]["Enums"]["message_channel"]
+          id?: string
+          name?: string
+          updated_at?: string
         }
         Relationships: []
       }
@@ -83,7 +160,15 @@ export type Database = {
     }
     Enums: {
       app_role: "admin" | "user"
+      lead_priority: "Low" | "Medium" | "High"
       lead_status: "New" | "Pending" | "Closed"
+      message_channel: "whatsapp" | "email" | "sms"
+      pipeline_stage:
+        | "New Lead"
+        | "Appointment Scheduled"
+        | "Proposal Sent"
+        | "Sales Closed"
+        | "Future Follow-up"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -212,7 +297,16 @@ export const Constants = {
   public: {
     Enums: {
       app_role: ["admin", "user"],
+      lead_priority: ["Low", "Medium", "High"],
       lead_status: ["New", "Pending", "Closed"],
+      message_channel: ["whatsapp", "email", "sms"],
+      pipeline_stage: [
+        "New Lead",
+        "Appointment Scheduled",
+        "Proposal Sent",
+        "Sales Closed",
+        "Future Follow-up",
+      ],
     },
   },
 } as const
