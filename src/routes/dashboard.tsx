@@ -122,12 +122,20 @@ function DashboardPage() {
           <span className="text-xs font-semibold uppercase tracking-wider text-gold">Admin</span>
           <h1 className="mt-1 font-display text-3xl text-primary">Leads</h1>
         </div>
-        <button
-          onClick={signOut}
-          className="inline-flex items-center gap-2 rounded-md border border-border bg-card px-3 py-2 text-sm hover:bg-muted"
-        >
-          <LogOut className="h-4 w-4" /> Sign out
-        </button>
+        <div className="flex items-center gap-2">
+          <a
+            href="/crm/pipeline"
+            className="inline-flex items-center gap-2 rounded-md bg-gradient-gold px-3 py-2 text-sm font-semibold text-primary shadow-gold"
+          >
+            Open CRM →
+          </a>
+          <button
+            onClick={signOut}
+            className="inline-flex items-center gap-2 rounded-md border border-border bg-card px-3 py-2 text-sm hover:bg-muted"
+          >
+            <LogOut className="h-4 w-4" /> Sign out
+          </button>
+        </div>
       </div>
 
       <div className="mt-6 flex flex-wrap gap-2">
