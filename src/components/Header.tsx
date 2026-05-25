@@ -86,21 +86,21 @@ export function Header() {
             ))}
             <button
               onClick={() => setLang(lang === "en" ? "es" : "en")}
-              className="mt-2 rounded-md border border-border px-3 py-2 text-sm font-semibold text-foreground/80"
+              className="mt-2 rounded-md bg-logo-green px-4 py-2 text-sm font-semibold uppercase tracking-wide text-logo-green-foreground text-center"
             >
               {t("lang.toggle")}
             </button>
             <Link
               to="/login"
               onClick={() => setOpen(false)}
-              className="rounded-md border border-border px-3 py-2.5 text-center text-sm font-semibold text-foreground/80 hover:bg-muted"
+              className="rounded-md bg-logo-green px-4 py-2.5 text-center text-sm font-semibold text-logo-green-foreground"
             >
               {t("nav.login") ?? "Login"}
             </Link>
             <Link
               to="/contact"
               onClick={() => setOpen(false)}
-              className="mt-1 rounded-md bg-gradient-gold px-4 py-2.5 text-center text-sm font-semibold text-primary"
+              className="rounded-md bg-logo-green px-4 py-2.5 text-center text-sm font-semibold text-logo-green-foreground"
             >
               {t("nav.cta")}
             </Link>
