@@ -68,6 +68,10 @@
   --accent: oklch(0.70 0.18 30);                /* coral */
   --accent-foreground: oklch(0.99 0.003 250);
 
+  /* logo green extracted from brand mark (#38cf9f) */
+  --logo-green: oklch(0.78 0.17 165);
+  --logo-green-foreground: oklch(0.99 0.003 250);
+
   /* "gold" token kept for class compatibility — now vibrant teal accent */
   --gold: oklch(0.68 0.14 195);                 /* logo teal */
   --gold-foreground: oklch(0.99 0.003 250);
