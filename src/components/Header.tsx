@@ -42,19 +42,19 @@ export function Header() {
         <div className="hidden items-center gap-3 lg:flex">
           <Link
             to="/login"
-            className="rounded-md border border-border px-4 py-2 text-sm font-semibold text-foreground/80 transition-colors hover:border-gold hover:text-primary"
+            className="rounded-md bg-logo-green px-4 py-2 text-sm font-semibold text-logo-green-foreground shadow-sm transition-transform hover:-translate-y-0.5"
           >
             {t("nav.login") ?? "Login"}
           </Link>
           <button
             onClick={() => setLang(lang === "en" ? "es" : "en")}
-            className="rounded-md border border-border px-3 py-1.5 text-xs font-semibold uppercase tracking-wide text-foreground/70 transition-colors hover:border-gold hover:text-primary"
+            className="rounded-md bg-logo-green px-4 py-2 text-sm font-semibold uppercase tracking-wide text-logo-green-foreground shadow-sm transition-transform hover:-translate-y-0.5"
           >
             {t("lang.toggle")}
           </button>
           <Link
             to="/contact"
-            className="rounded-md bg-gradient-gold px-4 py-2 text-sm font-semibold text-primary shadow-gold transition-transform hover:-translate-y-0.5"
+            className="rounded-md bg-logo-green px-4 py-2 text-sm font-semibold text-logo-green-foreground shadow-sm transition-transform hover:-translate-y-0.5"
           >
             {t("nav.cta")}
           </Link>
@@ -86,21 +86,21 @@ export function Header() {
             ))}
             <button
               onClick={() => setLang(lang === "en" ? "es" : "en")}
-              className="mt-2 rounded-md border border-border px-3 py-2 text-sm font-semibold text-foreground/80"
+              className="mt-2 rounded-md bg-logo-green px-4 py-2 text-sm font-semibold uppercase tracking-wide text-logo-green-foreground text-center"
             >
               {t("lang.toggle")}
             </button>
             <Link
               to="/login"
               onClick={() => setOpen(false)}
-              className="rounded-md border border-border px-3 py-2.5 text-center text-sm font-semibold text-foreground/80 hover:bg-muted"
+              className="rounded-md bg-logo-green px-4 py-2.5 text-center text-sm font-semibold text-logo-green-foreground"
             >
               {t("nav.login") ?? "Login"}
             </Link>
             <Link
               to="/contact"
               onClick={() => setOpen(false)}
-              className="mt-1 rounded-md bg-gradient-gold px-4 py-2.5 text-center text-sm font-semibold text-primary"
+              className="rounded-md bg-logo-green px-4 py-2.5 text-center text-sm font-semibold text-logo-green-foreground"
             >
               {t("nav.cta")}
             </Link>
