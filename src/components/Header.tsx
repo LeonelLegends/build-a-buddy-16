@@ -44,7 +44,7 @@ export function Header() {
             to="/login"
             className="rounded-md bg-logo-green px-4 py-2 text-sm font-semibold text-logo-green-foreground shadow-sm transition-transform hover:-translate-y-0.5"
           >
-            {t("nav.login") ?? "Login"}
+            {t("Login") ?? "Login"}
           </Link>
           <button
             onClick={() => setLang(lang === "en" ? "es" : "en")}
@@ -60,11 +60,7 @@ export function Header() {
           </Link>
         </div>
 
-        <button
-          className="lg:hidden text-primary"
-          onClick={() => setOpen(!open)}
-          aria-label="Menu"
-        >
+        <button className="lg:hidden text-primary" onClick={() => setOpen(!open)} aria-label="Menu">
           {open ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
         </button>
       </div>
