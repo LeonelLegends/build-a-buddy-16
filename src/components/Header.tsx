@@ -42,19 +42,19 @@ export function Header() {
         <div className="hidden items-center gap-3 lg:flex">
           <Link
             to="/login"
-            className="rounded-md bg-logo-green px-4 py-2 text-sm font-semibold text-logo-green-foreground shadow-sm transition-transform hover:-translate-y-0.5"
+            className="rounded-md bg-logo-green px-4 py-2 text-sm font-semibold text-logo-green-foreground shadow-sm transition-transform hover:-translate-y-0.5 active:bg-emerald-700"
           >
             Login
           </Link>
           <button
             onClick={() => setLang(lang === "en" ? "es" : "en")}
-            className="rounded-md bg-logo-green px-4 py-2 text-sm font-semibold uppercase tracking-wide text-logo-green-foreground shadow-sm transition-transform hover:-translate-y-0.5"
+            className="rounded-md bg-logo-green px-4 py-2 text-sm font-semibold uppercase tracking-wide text-logo-green-foreground shadow-sm transition-transform hover:-translate-y-0.5 active:bg-emerald-700"
           >
             {t("lang.toggle")}
           </button>
           <Link
             to="/contact"
-            className="rounded-md bg-logo-green px-4 py-2 text-sm font-semibold text-logo-green-foreground shadow-sm transition-transform hover:-translate-y-0.5"
+            className="rounded-md bg-logo-green px-4 py-2 text-sm font-semibold text-logo-green-foreground shadow-sm transition-transform hover:-translate-y-0.5 active:bg-emerald-700"
           >
             {t("nav.cta")}
           </Link>
@@ -82,21 +82,21 @@ export function Header() {
             ))}
             <button
               onClick={() => setLang(lang === "en" ? "es" : "en")}
-              className="mt-2 rounded-md bg-logo-green px-4 py-2 text-sm font-semibold uppercase tracking-wide text-logo-green-foreground text-center"
+              className="mt-2 rounded-md bg-logo-green px-4 py-2 text-sm font-semibold uppercase tracking-wide text-logo-green-foreground text-center active:bg-emerald-700"
             >
               {t("lang.toggle")}
             </button>
             <Link
               to="/login"
               onClick={() => setOpen(false)}
-              className="rounded-md bg-logo-green px-4 py-2.5 text-center text-sm font-semibold text-logo-green-foreground"
+              className="rounded-md bg-logo-green px-4 py-2.5 text-center text-sm font-semibold text-logo-green-foreground active:bg-emerald-700"
             >
               Login
             </Link>
             <Link
               to="/contact"
               onClick={() => setOpen(false)}
-              className="rounded-md bg-logo-green px-4 py-2.5 text-center text-sm font-semibold text-logo-green-foreground"
+              className="rounded-md bg-logo-green px-4 py-2.5 text-center text-sm font-semibold text-logo-green-foreground active:bg-emerald-700"
             >
               {t("nav.cta")}
             </Link>
