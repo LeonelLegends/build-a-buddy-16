@@ -2,7 +2,7 @@ import { Link } from "@tanstack/react-router";
 import { useState } from "react";
 import { Menu, X } from "lucide-react";
 import { useI18n } from "@/lib/i18n";
-import logo from "@/assets/logo.jpg";
+import logo from "@/assets/logo.png";
 
 export function Header() {
   const { t, lang, setLang } = useI18n();
