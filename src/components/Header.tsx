@@ -40,7 +40,10 @@ export function Header() {
         </nav>
 
         <div className="hidden items-center gap-3 lg:flex">
-          <Link to="/login" className="rounded-md bg-emerald-700 px-4 py-2 text-sm font-semibold text-white shadow-sm">
+          <Link
+            to="/login"
+            className="rounded-md bg-logo-green px-4 py-2 text-sm font-semibold text-logo-green-foreground shadow-sm transition-transform hover:-translate-y-0.5 active:bg-emerald-700"
+          >
             Login
           </Link>
           <button
