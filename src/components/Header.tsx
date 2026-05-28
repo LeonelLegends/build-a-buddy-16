@@ -91,7 +91,7 @@ export function Header() {
               onClick={() => setOpen(false)}
               className="rounded-md bg-logo-green px-4 py-2.5 text-center text-sm font-semibold text-logo-green-foreground"
             >
-              {t("Login") ?? "Login"}
+              Login
             </Link>
             <Link
               to="/contact"
