@@ -11,6 +11,8 @@ import {
 import { useI18n } from "@/lib/i18n";
 import heroImg from "@/assets/hero.jpg";
 import familyImg from "@/assets/family.jpg";
+import { PolicySlideshow } from "@/components/PolicySlideshow";
+
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -99,27 +101,9 @@ function HomePage() {
         </div>
       </section>
 
-      {/* Services grid */}
-      <section className="mx-auto max-w-7xl px-6 py-20">
-        <div className="max-w-2xl">
-          <h2 className="font-display text-3xl text-primary md:text-4xl">{t("services.title")}</h2>
-          <p className="mt-3 text-muted-foreground">{t("services.subtitle")}</p>
-        </div>
-        <div className="mt-10 grid gap-5 md:grid-cols-2 lg:grid-cols-3">
-          {services.map((s) => (
-            <div
-              key={s.title}
-              className="group rounded-2xl border border-border bg-card p-6 transition-all hover:-translate-y-1 hover:border-gold/60 hover:shadow-elegant"
-            >
-              <span className="grid h-12 w-12 place-items-center rounded-xl bg-gradient-hero">
-                <s.icon className="h-6 w-6 text-gold" />
-              </span>
-              <h3 className="mt-5 font-display text-xl text-primary">{s.title}</h3>
-              <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{s.desc}</p>
-            </div>
-          ))}
-        </div>
-      </section>
+      {/* Policies slideshow */}
+      <PolicySlideshow />
+
 
       {/* Family / story */}
       <section className="bg-cream">
