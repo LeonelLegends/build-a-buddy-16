@@ -1,13 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import {
-  ArrowRight,
-  TrendingUp,
-  Heart,
-  Shield,
-  Briefcase,
-  Building2,
-  PiggyBank,
-} from "lucide-react";
+import { ArrowRight, Shield } from "lucide-react";
 import { useI18n } from "@/lib/i18n";
 import heroImg from "@/assets/hero.jpg";
 import familyImg from "@/assets/family.jpg";
@@ -31,13 +23,6 @@ export const Route = createFileRoute("/")({
 function HomePage() {
   const { t } = useI18n();
 
-  const services = [
-    { icon: TrendingUp, title: t("services.annuities.title"), desc: t("services.annuities.desc") },
-    { icon: PiggyBank, title: t("services.iul.title"), desc: t("services.iul.desc") },
-    { icon: Heart, title: t("services.whole.title"), desc: t("services.whole.desc") },
-    { icon: Shield, title: t("services.term.title"), desc: t("services.term.desc") },
-    { icon: Building2, title: t("services.cafeteria.title"), desc: t("services.cafeteria.desc") },
-  ];
 
   return (
     <>
