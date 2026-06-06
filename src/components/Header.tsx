@@ -42,19 +42,19 @@ export function Header() {
         <div className="hidden items-center gap-3 lg:flex">
           <Link
             to="/login"
-            className="rounded-md bg-emerald-700 px-4 py-2 text-sm font-semibold text-logo-green-foreground shadow-sm transition-transform hover:-translate-y-0.5"
+            className="rounded-md bg-sky-500 px-4 py-2 text-sm font-semibold text-logo-green-foreground shadow-sm transition-transform hover:-translate-y-0.5"
           >
             Login
           </Link>
           <button
             onClick={() => setLang(lang === "en" ? "es" : "en")}
-            className="rounded-md bg-emerald-700 px-4 py-2 text-sm font-semibold tracking-wide text-logo-green-foreground shadow-sm transition-transform hover:-translate-y-0.5"
+            className="rounded-md bg-sky-500 px-4 py-2 text-sm font-semibold tracking-wide text-logo-green-foreground shadow-sm transition-transform hover:-translate-y-0.5"
           >
             {t("lang.toggle")}
           </button>
           <Link
             to="/contact"
-            className="rounded-md bg-emerald-700 px-4 py-2 text-sm font-semibold text-logo-green-foreground shadow-sm transition-transform hover:-translate-y-0.5"
+            className="rounded-md bg-sky-500 px-4 py-2 text-sm font-semibold text-logo-green-foreground shadow-sm transition-transform hover:-translate-y-0.5"
           >
             {t("nav.cta")}
           </Link>
