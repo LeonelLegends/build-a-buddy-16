@@ -76,6 +76,9 @@ const en: Dict = {
   "contact.emailLabel": "Email",
   "contact.hoursLabel": "Hours",
   "contact.hoursValue": "Mon–Fri, 9:00 am – 6:00 pm (ET)",
+  "contact.scheduleIntro": "If you have a clear idea of what you're looking for, you can schedule a meeting with one of our advisors for an explanation of what interests you.",
+  "contact.scheduleBtn": "Schedule a meeting with me",
+  "contact.formIntro": "If you would like us to send you more information by email or text message, please send us your contact information.",
 
   "footer.tagline": "Family-first financial protection.",
   "footer.rights": "All rights reserved.",
@@ -164,6 +167,9 @@ const es: Dict = {
   "contact.emailLabel": "Correo",
   "contact.hoursLabel": "Horario",
   "contact.hoursValue": "Lun–Vie, 9:00 am – 6:00 pm (ET)",
+  "contact.scheduleIntro": "Si tienes una idea clara de lo que buscas, puedes programar una reunión con uno de nuestros asesores para una explicación de lo que te interesa.",
+  "contact.scheduleBtn": "Programe una reunión conmigo",
+  "contact.formIntro": "Si deseas que te enviemos más información por correo electrónico o mensaje de texto, envíanos tus datos de contacto.",
 
   "footer.tagline": "Protección financiera centrada en la familia.",
   "footer.rights": "Todos los derechos reservados.",
