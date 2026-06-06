@@ -103,8 +103,94 @@ function ContactPage() {
             </div>
           </div>
 
-          <div className="md:col-span-3">
+          <div className="md:col-span-3 space-y-6">
+            <div className="rounded-2xl border border-border bg-card p-7 shadow-elegant">
+              <p className="text-sm text-foreground/80">{t("contact.scheduleIntro")}</p>
+              <div className="mt-5 flex justify-center">
+                <button
+                  type="button"
+                  onClick={() =>
+                    window.Calendly?.initPopupWidget({
+                      url: "https://calendly.com/leonel-legendsinsurance/30min",
+                    })
+                  }
+                  className="inline-flex items-center justify-center rounded-md px-5 py-3 text-sm font-semibold text-white shadow-md transition-transform hover:-translate-y-0.5"
+                  style={{ backgroundColor: "#047857" }}
+                >
+                  {lang === "es" ? "Programe una reunión con un agente" : "Schedule a meeting with an agent"}
+                </button>
+              </div>
+            </div>
+
             {sent ? (
+              <div className="rounded-2xl border border-gold/40 bg-cream p-10 text-center">
+                <CheckCircle2 className="mx-auto h-12 w-12 text-gold" />
+                <h2 className="mt-4 font-display text-2xl text-primary">{t("contact.thanks")}</h2>
+              </div>
+            ) : (
+              <form
+                onSubmit={async (e) => {
+                  e.preventDefault();
+                  if (submitting) return;
+                  setSubmitting(true);
+                  const fd = new FormData(e.currentTarget);
+                  const payload = {
+                    name: String(fd.get("name") ?? "").trim(),
+                    email: String(fd.get("email") ?? "").trim(),
+                    phone: String(fd.get("phone") ?? "").trim() || null,
+                    interest: String(fd.get("interest") ?? "").trim() || null,
+                    message: String(fd.get("message") ?? "").trim() || null,
+                  };
+                  const { error } = await supabase.from("leads").insert(payload);
+                  setSubmitting(false);
+                  if (error) {
+                    toast.error("Could not send your message. Please try again.");
+                    return;
+                  }
+                  setSent(true);
+                }}
+                className="rounded-2xl border border-border bg-card p-7 shadow-elegant"
+              >
+                <p className="mb-5 text-sm text-foreground/80">{t("contact.formIntro")}</p>
+                <div className="grid gap-4 md:grid-cols-2">
+                  <Field label={t("contact.name")} name="name" required />
+                  <Field label={t("contact.email")} name="email" type="email" required />
+                  <Field label={t("contact.phone")} name="phone" type="tel" />
+                  <div className="flex flex-col">
+                    <label className="mb-1.5 text-sm font-medium text-foreground/80">{t("contact.interest")}</label>
+                    <select
+                      name="interest"
+                      className="rounded-md border border-border bg-background px-3 py-2.5 text-sm outline-none focus:border-gold"
+                    >
+                      <option>HYSA</option>
+                      <option>401(k)</option>
+                      <option>Roth IRA</option>
+                      <option>{lang === "es" ? "Seguro de Vida a Término" : "Term Life Insurance"}</option>
+                      <option>{lang === "es" ? "Seguro de Vida Permanente" : "Permanent Life Insurance"}</option>
+                      <option>{lang === "es" ? "Anualidades" : "Annuities"}</option>
+                    </select>
+                  </div>
+                </div>
+                <div className="mt-4 flex flex-col">
+                  <label className="mb-1.5 text-sm font-medium text-foreground/80">{t("contact.message")}</label>
+                  <textarea
+                    name="message"
+                    rows={5}
+                    className="rounded-md border border-border bg-background px-3 py-2.5 text-sm outline-none focus:border-gold"
+                  />
+                </div>
+
+                <button
+                  type="submit"
+                  disabled={submitting}
+                  className="mt-6 w-full rounded-md bg-gradient-gold px-5 py-3 text-sm font-semibold text-primary shadow-gold transition-transform hover:-translate-y-0.5 disabled:opacity-60"
+                >
+                  {submitting ? "Sending..." : t("contact.submit")}
+                </button>
+              </form>
+            )}
+          </div>
+
               <div className="rounded-2xl border border-gold/40 bg-cream p-10 text-center">
                 <CheckCircle2 className="mx-auto h-12 w-12 text-gold" />
                 <h2 className="mt-4 font-display text-2xl text-primary">{t("contact.thanks")}</h2>
