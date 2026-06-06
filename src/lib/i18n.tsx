@@ -168,7 +168,7 @@ const es: Dict = {
   "contact.hoursLabel": "Horario",
   "contact.hoursValue": "Lun–Vie, 9:00 am – 6:00 pm (ET)",
   "contact.scheduleIntro": "Si tienes una idea clara de lo que buscas, puedes programar una reunión con uno de nuestros asesores para una explicación de lo que te interesa.",
-  "contact.scheduleBtn": "Programe una reunión conmigo",
+  "contact.scheduleBtn": "Programe una reunión con un agente",
   "contact.formIntro": "Si deseas que te enviemos más información por correo electrónico o mensaje de texto, envíanos tus datos de contacto.",
 
   "footer.tagline": "Protección financiera centrada en la familia.",
