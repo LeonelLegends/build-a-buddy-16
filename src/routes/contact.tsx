@@ -1,9 +1,16 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Mail, Phone, Clock, CheckCircle2 } from "lucide-react";
 import { useI18n } from "@/lib/i18n";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
+
+declare global {
+  interface Window {
+    Calendly?: { initPopupWidget: (opts: { url: string }) => void };
+  }
+}
+
 
 
 export const Route = createFileRoute("/contact")({
@@ -21,9 +28,29 @@ export const Route = createFileRoute("/contact")({
 });
 
 function ContactPage() {
-  const { t } = useI18n();
+  const { t, lang } = useI18n();
   const [sent, setSent] = useState(false);
   const [submitting, setSubmitting] = useState(false);
+
+  useEffect(() => {
+    const linkId = "calendly-css";
+    if (!document.getElementById(linkId)) {
+      const link = document.createElement("link");
+      link.id = linkId;
+      link.rel = "stylesheet";
+      link.href = "https://assets.calendly.com/assets/external/widget.css";
+      document.head.appendChild(link);
+    }
+    const scriptId = "calendly-js";
+    if (!document.getElementById(scriptId)) {
+      const script = document.createElement("script");
+      script.id = scriptId;
+      script.src = "https://assets.calendly.com/assets/external/widget.js";
+      script.async = true;
+      document.body.appendChild(script);
+    }
+  }, []);
+
 
 
   return (
@@ -125,11 +152,12 @@ function ContactPage() {
                       name="interest"
                       className="rounded-md border border-border bg-background px-3 py-2.5 text-sm outline-none focus:border-gold"
                     >
-                      <option>{t("services.annuities.title")}</option>
-                      <option>{t("services.iul.title")}</option>
-                      <option>{t("services.whole.title")}</option>
-                      <option>{t("services.term.title")}</option>
-                      <option>{t("services.cafeteria.title")}</option>
+                      <option>HYSA</option>
+                      <option>401(k)</option>
+                      <option>Roth IRA</option>
+                      <option>{lang === "es" ? "Seguro de Vida a Término" : "Term Life Insurance"}</option>
+                      <option>{lang === "es" ? "Seguro de Vida Permanente" : "Permanent Life Insurance"}</option>
+                      <option>{lang === "es" ? "Anualidades" : "Annuities"}</option>
                     </select>
                   </div>
                 </div>
@@ -143,6 +171,21 @@ function ContactPage() {
                     className="rounded-md border border-border bg-background px-3 py-2.5 text-sm outline-none focus:border-gold"
                   />
                 </div>
+                <div className="mt-6 flex justify-center">
+                  <button
+                    type="button"
+                    onClick={() =>
+                      window.Calendly?.initPopupWidget({
+                        url: "https://calendly.com/leonel-legendsinsuranceservices/30min",
+                      })
+                    }
+                    className="inline-flex items-center justify-center rounded-md px-5 py-3 text-sm font-semibold text-white shadow-md transition-transform hover:-translate-y-0.5"
+                    style={{ backgroundColor: "#047857" }}
+                  >
+                    {lang === "es" ? "Programe una reunión conmigo" : "Schedule a meeting with me"}
+                  </button>
+                </div>
+
                 <button
                   type="submit"
                   disabled={submitting}
