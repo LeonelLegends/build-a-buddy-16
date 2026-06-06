@@ -75,7 +75,7 @@ const en: Dict = {
   "contact.phoneLabel": "Phone",
   "contact.emailLabel": "Email",
   "contact.hoursLabel": "Hours",
-  "contact.hoursValue": "Mon–Fri, 9am – 6pm ET",
+  "contact.hoursValue": "Mon–Fri, 9:00 am – 6:00 pm (ET)",
 
   "footer.tagline": "Family-first financial protection.",
   "footer.rights": "All rights reserved.",
@@ -163,7 +163,7 @@ const es: Dict = {
   "contact.phoneLabel": "Teléfono",
   "contact.emailLabel": "Correo",
   "contact.hoursLabel": "Horario",
-  "contact.hoursValue": "Lun–Vie, 9am – 6pm ET",
+  "contact.hoursValue": "Lun–Vie, 9:00 am – 6:00 pm (ET)",
 
   "footer.tagline": "Protección financiera centrada en la familia.",
   "footer.rights": "Todos los derechos reservados.",
