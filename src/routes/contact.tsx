@@ -11,8 +11,6 @@ declare global {
   }
 }
 
-
-
 export const Route = createFileRoute("/contact")({
   head: () => ({
     meta: [
@@ -51,15 +49,11 @@ function ContactPage() {
     }
   }, []);
 
-
-
   return (
     <>
       <section className="bg-gradient-hero text-primary-foreground">
         <div className="mx-auto max-w-7xl px-6 py-16 md:py-24">
-          <span className="text-xs font-semibold uppercase tracking-wider text-gold">
-            {t("nav.contact")}
-          </span>
+          <span className="text-xs font-semibold uppercase tracking-wider text-gold">{t("nav.contact")}</span>
           <h1 className="mt-4 font-display text-4xl md:text-5xl">{t("contact.title")}</h1>
           <p className="mt-4 max-w-xl text-primary-foreground/80">{t("contact.subtitle")}</p>
         </div>
@@ -139,15 +133,12 @@ function ContactPage() {
                 }}
                 className="rounded-2xl border border-border bg-card p-7 shadow-elegant"
               >
-
                 <div className="grid gap-4 md:grid-cols-2">
                   <Field label={t("contact.name")} name="name" required />
                   <Field label={t("contact.email")} name="email" type="email" required />
                   <Field label={t("contact.phone")} name="phone" type="tel" />
                   <div className="flex flex-col">
-                    <label className="mb-1.5 text-sm font-medium text-foreground/80">
-                      {t("contact.interest")}
-                    </label>
+                    <label className="mb-1.5 text-sm font-medium text-foreground/80">{t("contact.interest")}</label>
                     <select
                       name="interest"
                       className="rounded-md border border-border bg-background px-3 py-2.5 text-sm outline-none focus:border-gold"
@@ -162,9 +153,7 @@ function ContactPage() {
                   </div>
                 </div>
                 <div className="mt-4 flex flex-col">
-                  <label className="mb-1.5 text-sm font-medium text-foreground/80">
-                    {t("contact.message")}
-                  </label>
+                  <label className="mb-1.5 text-sm font-medium text-foreground/80">{t("contact.message")}</label>
                   <textarea
                     name="message"
                     rows={5}
@@ -176,7 +165,7 @@ function ContactPage() {
                     type="button"
                     onClick={() =>
                       window.Calendly?.initPopupWidget({
-                        url: "https://calendly.com/leonel-legendsinsuranceservices/30min",
+                        url: "https://calendly.com/leonel-legendsinsurance/30min",
                       })
                     }
                     className="inline-flex items-center justify-center rounded-md px-5 py-3 text-sm font-semibold text-white shadow-md transition-transform hover:-translate-y-0.5"
