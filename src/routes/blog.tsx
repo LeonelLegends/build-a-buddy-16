@@ -84,6 +84,12 @@ function BlogIndex() {
   const { t, lang } = useI18n();
   const posts = getAllPosts();
 
+  useEffect(() => {
+    loadBlogs();
+  }, []);
+
+
+
   return (
     <section className="mx-auto max-w-6xl px-6 py-16 md:py-24">
       <header className="mb-12 text-center">
