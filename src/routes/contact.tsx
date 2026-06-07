@@ -62,7 +62,7 @@ function ContactPage() {
       <section className="mx-auto max-w-7xl px-6 py-16">
         <div className="grid gap-10 md:grid-cols-5">
           <div className="md:col-span-3 space-y-6 md:order-1">
-            <div className="rounded-2xl border border-border bg-card p-7 shadow-elegant">
+            <div className="rounded-2xl border border-border bg-cyan-700 p-7 shadow-elegant">
               <p className="text-sm text-foreground/80">{t("contact.scheduleIntro")}</p>
               <div className="mt-5 flex justify-center">
                 <button
@@ -190,7 +190,6 @@ function ContactPage() {
               </div>
             </div>
           </div>
-
         </div>
       </section>
     </>
