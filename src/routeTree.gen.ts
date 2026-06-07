@@ -17,12 +17,14 @@ import { Route as LoginRouteImport } from './routes/login'
 import { Route as DashboardRouteImport } from './routes/dashboard'
 import { Route as CrmRouteImport } from './routes/crm'
 import { Route as ContactRouteImport } from './routes/contact'
+import { Route as BlogRouteImport } from './routes/blog'
 import { Route as BenefitsRouteImport } from './routes/benefits'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as CrmIndexRouteImport } from './routes/crm.index'
 import { Route as CrmSettingsRouteImport } from './routes/crm.settings'
 import { Route as CrmPipelineRouteImport } from './routes/crm.pipeline'
 import { Route as CrmContactsRouteImport } from './routes/crm.contacts'
+import { Route as BlogSlugRouteImport } from './routes/blog.$slug'
 import { Route as ApiPublicChatRouteImport } from './routes/api/public/chat'
 
 const TermsRoute = TermsRouteImport.update({
@@ -65,6 +67,11 @@ const ContactRoute = ContactRouteImport.update({
   path: '/contact',
   getParentRoute: () => rootRouteImport,
 } as any)
+const BlogRoute = BlogRouteImport.update({
+  id: '/blog',
+  path: '/blog',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const BenefitsRoute = BenefitsRouteImport.update({
   id: '/benefits',
   path: '/benefits',
@@ -95,6 +102,11 @@ const CrmContactsRoute = CrmContactsRouteImport.update({
   path: '/contacts',
   getParentRoute: () => CrmRoute,
 } as any)
+const BlogSlugRoute = BlogSlugRouteImport.update({
+  id: '/$slug',
+  path: '/$slug',
+  getParentRoute: () => BlogRoute,
+} as any)
 const ApiPublicChatRoute = ApiPublicChatRouteImport.update({
   id: '/api/public/chat',
   path: '/api/public/chat',
@@ -104,6 +116,7 @@ const ApiPublicChatRoute = ApiPublicChatRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/benefits': typeof BenefitsRoute
+  '/blog': typeof BlogRouteWithChildren
   '/contact': typeof ContactRoute
   '/crm': typeof CrmRouteWithChildren
   '/dashboard': typeof DashboardRoute
@@ -112,6 +125,7 @@ export interface FileRoutesByFullPath {
   '/services': typeof ServicesRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/terms': typeof TermsRoute
+  '/blog/$slug': typeof BlogSlugRoute
   '/crm/contacts': typeof CrmContactsRoute
   '/crm/pipeline': typeof CrmPipelineRoute
   '/crm/settings': typeof CrmSettingsRoute
@@ -121,6 +135,7 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/benefits': typeof BenefitsRoute
+  '/blog': typeof BlogRouteWithChildren
   '/contact': typeof ContactRoute
   '/dashboard': typeof DashboardRoute
   '/login': typeof LoginRoute
@@ -128,6 +143,7 @@ export interface FileRoutesByTo {
   '/services': typeof ServicesRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/terms': typeof TermsRoute
+  '/blog/$slug': typeof BlogSlugRoute
   '/crm/contacts': typeof CrmContactsRoute
   '/crm/pipeline': typeof CrmPipelineRoute
   '/crm/settings': typeof CrmSettingsRoute
@@ -138,6 +154,7 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/benefits': typeof BenefitsRoute
+  '/blog': typeof BlogRouteWithChildren
   '/contact': typeof ContactRoute
   '/crm': typeof CrmRouteWithChildren
   '/dashboard': typeof DashboardRoute
@@ -146,6 +163,7 @@ export interface FileRoutesById {
   '/services': typeof ServicesRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/terms': typeof TermsRoute
+  '/blog/$slug': typeof BlogSlugRoute
   '/crm/contacts': typeof CrmContactsRoute
   '/crm/pipeline': typeof CrmPipelineRoute
   '/crm/settings': typeof CrmSettingsRoute
@@ -157,6 +175,7 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/benefits'
+    | '/blog'
     | '/contact'
     | '/crm'
     | '/dashboard'
@@ -165,6 +184,7 @@ export interface FileRouteTypes {
     | '/services'
     | '/sitemap.xml'
     | '/terms'
+    | '/blog/$slug'
     | '/crm/contacts'
     | '/crm/pipeline'
     | '/crm/settings'
@@ -174,6 +194,7 @@ export interface FileRouteTypes {
   to:
     | '/'
     | '/benefits'
+    | '/blog'
     | '/contact'
     | '/dashboard'
     | '/login'
@@ -181,6 +202,7 @@ export interface FileRouteTypes {
     | '/services'
     | '/sitemap.xml'
     | '/terms'
+    | '/blog/$slug'
     | '/crm/contacts'
     | '/crm/pipeline'
     | '/crm/settings'
@@ -190,6 +212,7 @@ export interface FileRouteTypes {
     | '__root__'
     | '/'
     | '/benefits'
+    | '/blog'
     | '/contact'
     | '/crm'
     | '/dashboard'
@@ -198,6 +221,7 @@ export interface FileRouteTypes {
     | '/services'
     | '/sitemap.xml'
     | '/terms'
+    | '/blog/$slug'
     | '/crm/contacts'
     | '/crm/pipeline'
     | '/crm/settings'
@@ -208,6 +232,7 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   BenefitsRoute: typeof BenefitsRoute
+  BlogRoute: typeof BlogRouteWithChildren
   ContactRoute: typeof ContactRoute
   CrmRoute: typeof CrmRouteWithChildren
   DashboardRoute: typeof DashboardRoute
@@ -277,6 +302,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ContactRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/blog': {
+      id: '/blog'
+      path: '/blog'
+      fullPath: '/blog'
+      preLoaderRoute: typeof BlogRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/benefits': {
       id: '/benefits'
       path: '/benefits'
@@ -319,6 +351,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof CrmContactsRouteImport
       parentRoute: typeof CrmRoute
     }
+    '/blog/$slug': {
+      id: '/blog/$slug'
+      path: '/$slug'
+      fullPath: '/blog/$slug'
+      preLoaderRoute: typeof BlogSlugRouteImport
+      parentRoute: typeof BlogRoute
+    }
     '/api/public/chat': {
       id: '/api/public/chat'
       path: '/api/public/chat'
@@ -328,6 +367,16 @@ declare module '@tanstack/react-router' {
     }
   }
 }
+
+interface BlogRouteChildren {
+  BlogSlugRoute: typeof BlogSlugRoute
+}
+
+const BlogRouteChildren: BlogRouteChildren = {
+  BlogSlugRoute: BlogSlugRoute,
+}
+
+const BlogRouteWithChildren = BlogRoute._addFileChildren(BlogRouteChildren)
 
 interface CrmRouteChildren {
   CrmContactsRoute: typeof CrmContactsRoute
@@ -348,6 +397,7 @@ const CrmRouteWithChildren = CrmRoute._addFileChildren(CrmRouteChildren)
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   BenefitsRoute: BenefitsRoute,
+  BlogRoute: BlogRouteWithChildren,
   ContactRoute: ContactRoute,
   CrmRoute: CrmRouteWithChildren,
   DashboardRoute: DashboardRoute,
