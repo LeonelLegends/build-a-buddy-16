@@ -1,16 +1,17 @@
 backend:
   name: git-gateway
+  repo: repo: LeonelLegends/legendsinsurance
   branch: main
 
-media_folder: "public/uploads"
-public_folder: "/uploads"
+media_folder: "public/images/uploads"
+public_folder: "/images/uploads"
 
 collections:
   - name: "blog"
     label: "Blog"
     folder: "content/blog"
     create: true
-    slug: "{{slug}}"
+    slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
     extension: "md"
     format: "frontmatter"
     fields:
