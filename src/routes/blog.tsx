@@ -135,6 +135,11 @@ function BlogIndex() {
           ))}
         </div>
       )}
+
+      <div
+        id="blog-container"
+        className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3"
+      />
     </section>
   );
 }
