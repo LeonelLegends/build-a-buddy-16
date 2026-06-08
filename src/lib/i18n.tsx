@@ -8,7 +8,7 @@ const en: Dict = {
   "nav.home": "Home",
   "nav.services": "Services",
   "nav.benefits": "Section 125 Plans",
-  "nav.blog": "Blog",
+  "nav.blog": "Blogs",
   "nav.contact": "Contact",
   "nav.cta": "Free Consultation",
   "blog.title": "Insights & Guides",
@@ -59,8 +59,7 @@ const en: Dict = {
   "benefits.point3.desc":
     "We manage plan documents, nondiscrimination testing, and annual reviews so you stay compliant.",
   "benefits.point4.title": "Dedicated support",
-  "benefits.point4.desc":
-    "A real human advisor for your HR team and on-site enrollment for your employees.",
+  "benefits.point4.desc": "A real human advisor for your HR team and on-site enrollment for your employees.",
   "benefits.cta": "Request a benefits proposal",
 
   "about.title": "Built on trust. Powered by people.",
@@ -83,9 +82,11 @@ const en: Dict = {
   "contact.emailLabel": "Email",
   "contact.hoursLabel": "Hours",
   "contact.hoursValue": "Mon–Fri, 9:00 am – 6:00 pm (ET)",
-  "contact.scheduleIntro": "If you have a clear idea of what you're looking for, you can schedule a meeting with one of our advisors for an explanation of what interests you.",
+  "contact.scheduleIntro":
+    "If you have a clear idea of what you're looking for, you can schedule a meeting with one of our advisors for an explanation of what interests you.",
   "contact.scheduleBtn": "Schedule a meeting with an agent",
-  "contact.formIntro": "If you would like us to send you more information by email or text message, please send us your contact information.",
+  "contact.formIntro":
+    "If you would like us to send you more information by email or text message, please send us your contact information.",
 
   "footer.tagline": "Family-first financial protection.",
   "footer.rights": "All rights reserved.",
@@ -110,7 +111,8 @@ const es: Dict = {
   "nav.contact": "Contacto",
   "nav.cta": "Consulta gratuita",
   "blog.title": "Artículos y Guías",
-  "blog.subtitle": "Consejos prácticos sobre seguros de vida, anualidades, planificación para el retiro y beneficios para empleados.",
+  "blog.subtitle":
+    "Consejos prácticos sobre seguros de vida, anualidades, planificación para el retiro y beneficios para empleados.",
   "blog.empty": "Aún no hay publicaciones — vuelve pronto.",
   "blog.read": "Leer más",
   "blog.back": "Volver al blog",
@@ -151,14 +153,11 @@ const es: Dict = {
   "benefits.point1.desc":
     "Los planes Sección 125 permiten a los empleados pagar beneficios con dólares pre-impuestos — reduciendo también los impuestos de nómina de tu empresa.",
   "benefits.point2.title": "Menú de beneficios personalizado",
-  "benefits.point2.desc":
-    "Salud, dental, visión, FSA, cuidado de dependientes y coberturas suplementarias.",
+  "benefits.point2.desc": "Salud, dental, visión, FSA, cuidado de dependientes y coberturas suplementarias.",
   "benefits.point3.title": "Cumplimiento normativo",
-  "benefits.point3.desc":
-    "Manejamos documentos del plan, pruebas de no discriminación y revisiones anuales.",
+  "benefits.point3.desc": "Manejamos documentos del plan, pruebas de no discriminación y revisiones anuales.",
   "benefits.point4.title": "Soporte dedicado",
-  "benefits.point4.desc":
-    "Un asesor real para tu equipo de RR.HH. y inscripción en sitio para tus empleados.",
+  "benefits.point4.desc": "Un asesor real para tu equipo de RR.HH. y inscripción en sitio para tus empleados.",
   "benefits.cta": "Solicita una propuesta",
 
   "about.title": "Construido sobre la confianza. Impulsado por personas.",
@@ -181,9 +180,11 @@ const es: Dict = {
   "contact.emailLabel": "Correo",
   "contact.hoursLabel": "Horario",
   "contact.hoursValue": "Lun–Vie, 9:00 am – 6:00 pm (ET)",
-  "contact.scheduleIntro": "Si tienes una idea clara de lo que buscas, puedes programar una reunión con uno de nuestros asesores para una explicación de lo que te interesa.",
+  "contact.scheduleIntro":
+    "Si tienes una idea clara de lo que buscas, puedes programar una reunión con uno de nuestros asesores para una explicación de lo que te interesa.",
   "contact.scheduleBtn": "Programe una reunión con un agente",
-  "contact.formIntro": "Si deseas que te enviemos más información por correo electrónico o mensaje de texto, envíanos tus datos de contacto.",
+  "contact.formIntro":
+    "Si deseas que te enviemos más información por correo electrónico o mensaje de texto, envíanos tus datos de contacto.",
 
   "footer.tagline": "Protección financiera centrada en la familia.",
   "footer.rights": "Todos los derechos reservados.",
