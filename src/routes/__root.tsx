@@ -65,7 +65,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
           "Independent insurance agency offering annuities, IUL, whole & term life, and Section 125 cafeteria plans for businesses with 50+ employees. Bilingual service.",
       },
       { name: "author", content: "Legends Insurance Services" },
-      { property: "og:title", content: "Legends Insurance Services" },
+      { property: "og:title", content: "Legends Insurance Services — Annuities, Life Insurance & Employee Benefits" },
       {
         property: "og:description",
         content:
@@ -73,6 +73,12 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
+      { name: "twitter:title", content: "Legends Insurance Services — Annuities, Life Insurance & Employee Benefits" },
+      { name: "description", content: "Website Builder Buddy helps create and customize websites with dynamic content management and social media integration." },
+      { property: "og:description", content: "Website Builder Buddy helps create and customize websites with dynamic content management and social media integration." },
+      { name: "twitter:description", content: "Website Builder Buddy helps create and customize websites with dynamic content management and social media integration." },
+      { property: "og:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/0a14f57e-b44f-471b-9cbf-ae946ec67e11/id-preview-c6ead256--a7893bcb-5c04-4483-b9fc-472b0c371604.lovable.app-1780873847292.png" },
+      { name: "twitter:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/0a14f57e-b44f-471b-9cbf-ae946ec67e11/id-preview-c6ead256--a7893bcb-5c04-4483-b9fc-472b0c371604.lovable.app-1780873847292.png" },
     ],
     links: [
       { rel: "stylesheet", href: appCss },
