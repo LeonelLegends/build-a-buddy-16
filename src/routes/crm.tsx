@@ -51,7 +51,9 @@ function CrmLayout() {
     return (
       <div className="mx-auto max-w-md p-12 text-center">
         <h1 className="font-display text-2xl text-primary">Not authorized</h1>
-        <p className="mt-2 text-sm text-muted-foreground">Your account needs the admin role to access the CRM.</p>
+        <p className="mt-2 text-sm text-muted-foreground">
+          Your account does not have admin access. Ask an existing admin to grant the <code>admin</code> role to your user in the <code>user_roles</code> table.
+        </p>
         <button onClick={signOut} className="mt-6 rounded-md bg-primary px-4 py-2 text-sm font-semibold text-primary-foreground">Sign out</button>
       </div>
     );
