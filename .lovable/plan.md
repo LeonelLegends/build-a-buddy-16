@@ -1,94 +1,96 @@
-## CRM Build Plan for Life Insurance Agent
+## Root cause
 
-A full CRM layered on top of the existing site, protected behind the existing Supabase Auth (`/login`) and admin role. All CRM routes live under `/crm/*` and require the `admin` role (reusing the `has_role` + `user_roles` pattern already in the project).
+Login itself is working — the auth logs show `leonel@legendsinsuranceservices.com` signing in with HTTP 200, and signup for `leonel.matheus@gmail.com` also succeeds (HTTP 200). The "Not authorized" screen you see comes **after** login, from the CRM page's admin check.
 
----
+When that page loads, the browser calls:
 
-### 1. Database (Supabase migration)
+```
+GET /rest/v1/user_roles?select=role&user_id=eq.<your-id>&role=eq.admin
+```
 
-Extend the existing `leads` table and add supporting tables:
+The database rejects it with:
 
-**`leads` — add columns:**
-- `age` (int, nullable)
-- `insurance_type` (text, nullable) — e.g. "Term Life", "Whole Life", "IUL"
-- `priority` (enum `lead_priority`: `Low`, `Medium`, `High`, default `Medium`)
-- `smoker` (boolean, default false)
-- `beneficiaries` (text, nullable)
-- `pipeline_status` (enum `pipeline_stage`: `New Lead`, `Appointment Scheduled`, `Proposal Sent`, `Sales Closed`, `Future Follow-up`, default `New Lead`)
-- `position` (int, default 0) — for ordering inside a Kanban column
+```
+403 — permission denied for function has_role
+```
 
-The existing `status` (`New`/`Pending`/`Closed`) stays for backward compatibility with the marketing contact form.
+A previous security migration (`20260607230945_…`) revoked `EXECUTE` on `public.has_role(uuid, app_role)` from both `anon` and `authenticated`. But every RLS policy on `user_roles`, `leads`, `lead_notes`, and `message_templates` calls `has_role(...)`. With execute revoked, those policies error out, so:
 
-**New table `lead_notes`:**
-- `id`, `lead_id` (FK leads), `author_id` (uuid), `body` (text), `created_at`
+- The admin check returns "permission denied" → CRM shows **Not authorized**.
+- Selecting/updating leads, notes, and templates also fails for any logged-in user.
 
-**New table `message_templates`:**
-- `id`, `channel` (enum: `whatsapp`, `email`, `sms`), `name`, `body`, `updated_at`
-- Body supports `{{name}}` placeholder.
+So even though your account is correctly marked `admin` in `user_roles`, the policy that grants you access can no longer run.
 
-**RLS:** all CRM tables admin-only via `has_role(auth.uid(), 'admin')`. Public contact-form INSERT on `leads` stays as-is.
+## Fix
 
-Seed three default templates (whatsapp / email / sms).
+### 1. Restore `has_role` execute permission to authenticated users (migration)
 
----
+`has_role` is a `SECURITY DEFINER` function that only reads `user_roles` and returns a boolean. It is safe to expose to authenticated users — that's the whole point of the helper, and every RLS policy depends on it.
 
-### 2. Routes (TanStack)
+```sql
+GRANT EXECUTE ON FUNCTION public.has_role(uuid, public.app_role) TO authenticated;
+```
 
-- `/crm` — layout, requires admin (reuses dashboard's auth check pattern), sidebar nav.
-- `/crm/pipeline` — Kanban board.
-- `/crm/contacts` — table of leads + side drawer on row click.
-- `/crm/settings` — edit message templates.
+This single change restores admin role checks, the CRM screen, lead listing, lead updates, notes, and template management.
 
-The existing `/dashboard` (marketing leads inbox) stays untouched. Add a link from it to `/crm`.
+### 2. Smoother admin onboarding for new signups
 
----
+Right now, a brand-new signup lands on the dashboard and sees "Not authorized" because no one inserted a row into `user_roles`. There are also no policies allowing anyone to insert into `user_roles` from the app, so it can only be done by a database admin.
 
-### 3. Pipeline (Kanban)
+To make onboarding sane without weakening security:
 
-- 5 columns matching `pipeline_stage` enum.
-- Drag & drop via `@dnd-kit/core` + `@dnd-kit/sortable` (install).
-- Card shows: Name, Insurance Type, priority badge (colored), and 3 quick-action icons (WhatsApp / Email / SMS).
-- Drop updates `pipeline_status` + `position` in Supabase, optimistic UI.
+- Add a one-time **bootstrap rule**: if `public.user_roles` is completely empty, the first authenticated signup automatically becomes `admin` via a `BEFORE INSERT` trigger on `auth.users` calling a `SECURITY DEFINER` function. After the first admin exists, the trigger does nothing.
+- Add an admin-only **INSERT/DELETE policy** on `user_roles` so existing admins can promote/demote teammates from the CRM Settings page (UI work can come later if you want — out of scope for this plan; the policy alone unblocks ad-hoc grants via the database tools).
+- Update the dashboard/CRM "Not authorized" screen with clearer copy: "Ask an existing admin to grant you the admin role" (already mostly present on dashboard, missing on CRM page — add it there too).
 
----
+Bootstrap function sketch:
 
-### 4. Contacts table + side drawer
+```sql
+CREATE OR REPLACE FUNCTION public.bootstrap_first_admin()
+RETURNS trigger
+LANGUAGE plpgsql
+SECURITY DEFINER
+SET search_path = public
+AS $$
+BEGIN
+  IF NOT EXISTS (SELECT 1 FROM public.user_roles WHERE role = 'admin') THEN
+    INSERT INTO public.user_roles (user_id, role) VALUES (NEW.id, 'admin');
+  END IF;
+  RETURN NEW;
+END;
+$$;
 
-- shadcn `Table` listing all leads with filters (search by name/email, filter by pipeline stage).
-- Click row → shadcn `Sheet` (side drawer) with:
-  - **Contact info:** name, email, phone, age, smoker Y/N, beneficiaries (editable inline, save button).
-  - **Communication History:** timeline of `lead_notes`, with a textarea to add a new note.
-  - Quick action buttons (WhatsApp / Email / SMS) at top.
+CREATE TRIGGER bootstrap_first_admin_trigger
+AFTER INSERT ON auth.users
+FOR EACH ROW EXECUTE FUNCTION public.bootstrap_first_admin();
+```
 
----
+Admin-managed role policies:
 
-### 5. Direct Communication
+```sql
+CREATE POLICY "Admins can grant roles" ON public.user_roles
+  FOR INSERT TO authenticated WITH CHECK (public.has_role(auth.uid(), 'admin'));
+CREATE POLICY "Admins can revoke roles" ON public.user_roles
+  FOR DELETE TO authenticated USING (public.has_role(auth.uid(), 'admin'));
+```
 
-Quick-action buttons (on cards + drawer) using stored templates with `{{name}}` substitution:
+## What will change
 
-- **WhatsApp:** opens `https://wa.me/<phone>?text=<encoded template>` in new tab (no API, no connector required).
-- **SMS:** opens `sms:<phone>?body=<encoded template>`.
-- **Email:** server function via Resend connector to send email using the email template. Requires connecting Resend — I'll wire the server function and surface a clear "Connect Resend" message if the API key isn't set yet, so the rest of the CRM works immediately.
+- 1 migration containing the `GRANT EXECUTE`, the bootstrap function + trigger, and the two admin-role policies.
+- 1 small UI tweak in `src/routes/crm.tsx` so the "Not authorized" message explains how to get access.
 
----
+## What I'm not changing
 
-### 6. Settings
+- Your existing admin role for `leonel@legendsinsuranceservices.com` (already correct).
+- Auth settings (`auto_confirm_email` stays on).
+- Any business logic, page layouts, or CRM functionality.
 
-`/crm/settings` page with three forms (one per channel) to edit the templates. Saves to `message_templates`.
+## About the deducted credits
 
----
+Build mode credits are usage-based per action, including ones that don't end up solving the bug. The previous turn did successfully run the migrations it described (the user account is confirmed in the database, which you can see in the auth response), but it stopped one root-cause hop short of what was actually blocking your access. That's why login works yet CRM still says "Not authorized."
 
-### 7. Tech notes
+For a refund or credit adjustment, Lovable doesn't process refunds via chat — please contact support at https://lovable.dev/support with this conversation; they can review the case.
 
-- New deps: `@dnd-kit/core`, `@dnd-kit/sortable`, `@dnd-kit/utilities`.
-- All CRM reads/writes go through the browser Supabase client under admin RLS (matches the existing `/dashboard` pattern — no server functions needed except for Resend email send).
-- Design: clean GHL-style — light surfaces, subtle borders, colored pipeline column headers, priority badges (green/amber/red).
-
----
-
-### What I need from you
-
-1. **Resend email sending** — do you want me to wire it now (you'll need to connect Resend afterwards), or skip server-side email for v1 and use `mailto:` links like SMS/WhatsApp?
-2. Confirm the CRM should be **admin-only** (same role as `/dashboard`), not a separate role.
-
-If you just say "go", I'll proceed with: Resend wired but optional (mailto fallback if not connected), admin-only access.
+<presentation-actions>
+<presentation-link url="https://lovable.dev/support">Contact Lovable support about credits</presentation-link>
+</presentation-actions>
