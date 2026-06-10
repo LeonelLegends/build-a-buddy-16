@@ -12,7 +12,7 @@ export function Header() {
     { to: "/", label: t("nav.home") },
     { to: "/services", label: t("nav.services") },
     { to: "/benefits", label: t("nav.benefits") },
-    { to: "/blogs", label: t("nav.blog") },
+    { to: "/blog", label: t("nav.blog") },
     { to: "/contact", label: t("nav.contact") },
   ] as const;
 
