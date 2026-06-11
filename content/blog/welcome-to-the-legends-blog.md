@@ -1,6 +1,6 @@
 ---
 title: "Welcome to the Legends Insurance Blog"
-date: "2026-06-07"
+date: "2026-06-10"
 summary: "Tips, guides, and stories about protecting your family and growing your business with the right insurance and benefits strategy."
 author: "Legends Insurance Services"
 ---
