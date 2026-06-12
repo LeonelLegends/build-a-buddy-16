@@ -55,7 +55,7 @@ function BlogAdmin() {
   const load = async () => {
     setLoading(true);
     const { data, error } = await supabase
-      .from("blog_posts" as never)
+      .from("blog_posts")
       .select("*")
       .order("published_at", { ascending: false });
     if (error) toast.error(error.message);
@@ -97,8 +97,8 @@ function BlogAdmin() {
       published_at: new Date(editing.published_at).toISOString(),
     };
     const { error } = editing.id
-      ? await supabase.from("blog_posts" as never).update(payload).eq("id", editing.id)
-      : await supabase.from("blog_posts" as never).insert(payload);
+      ? await supabase.from("blog_posts").update(payload).eq("id", editing.id)
+      : await supabase.from("blog_posts").insert(payload);
     setSaving(false);
     if (error) return toast.error(error.message);
     toast.success("Saved");
@@ -108,7 +108,7 @@ function BlogAdmin() {
 
   const remove = async (id: string) => {
     if (!confirm("Delete this post? This cannot be undone.")) return;
-    const { error } = await supabase.from("blog_posts" as never).delete().eq("id", id);
+    const { error } = await supabase.from("blog_posts").delete().eq("id", id);
     if (error) return toast.error(error.message);
     toast.success("Deleted");
     load();
