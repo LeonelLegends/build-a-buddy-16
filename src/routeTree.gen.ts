@@ -24,6 +24,7 @@ import { Route as CrmIndexRouteImport } from './routes/crm.index'
 import { Route as CrmSettingsRouteImport } from './routes/crm.settings'
 import { Route as CrmPipelineRouteImport } from './routes/crm.pipeline'
 import { Route as CrmContactsRouteImport } from './routes/crm.contacts'
+import { Route as CrmBlogRouteImport } from './routes/crm.blog'
 import { Route as BlogSlugRouteImport } from './routes/blog.$slug'
 import { Route as ApiPublicChatRouteImport } from './routes/api/public/chat'
 
@@ -102,6 +103,11 @@ const CrmContactsRoute = CrmContactsRouteImport.update({
   path: '/contacts',
   getParentRoute: () => CrmRoute,
 } as any)
+const CrmBlogRoute = CrmBlogRouteImport.update({
+  id: '/blog',
+  path: '/blog',
+  getParentRoute: () => CrmRoute,
+} as any)
 const BlogSlugRoute = BlogSlugRouteImport.update({
   id: '/$slug',
   path: '/$slug',
@@ -126,6 +132,7 @@ export interface FileRoutesByFullPath {
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/terms': typeof TermsRoute
   '/blog/$slug': typeof BlogSlugRoute
+  '/crm/blog': typeof CrmBlogRoute
   '/crm/contacts': typeof CrmContactsRoute
   '/crm/pipeline': typeof CrmPipelineRoute
   '/crm/settings': typeof CrmSettingsRoute
@@ -144,6 +151,7 @@ export interface FileRoutesByTo {
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/terms': typeof TermsRoute
   '/blog/$slug': typeof BlogSlugRoute
+  '/crm/blog': typeof CrmBlogRoute
   '/crm/contacts': typeof CrmContactsRoute
   '/crm/pipeline': typeof CrmPipelineRoute
   '/crm/settings': typeof CrmSettingsRoute
@@ -164,6 +172,7 @@ export interface FileRoutesById {
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/terms': typeof TermsRoute
   '/blog/$slug': typeof BlogSlugRoute
+  '/crm/blog': typeof CrmBlogRoute
   '/crm/contacts': typeof CrmContactsRoute
   '/crm/pipeline': typeof CrmPipelineRoute
   '/crm/settings': typeof CrmSettingsRoute
@@ -185,6 +194,7 @@ export interface FileRouteTypes {
     | '/sitemap.xml'
     | '/terms'
     | '/blog/$slug'
+    | '/crm/blog'
     | '/crm/contacts'
     | '/crm/pipeline'
     | '/crm/settings'
@@ -203,6 +213,7 @@ export interface FileRouteTypes {
     | '/sitemap.xml'
     | '/terms'
     | '/blog/$slug'
+    | '/crm/blog'
     | '/crm/contacts'
     | '/crm/pipeline'
     | '/crm/settings'
@@ -222,6 +233,7 @@ export interface FileRouteTypes {
     | '/sitemap.xml'
     | '/terms'
     | '/blog/$slug'
+    | '/crm/blog'
     | '/crm/contacts'
     | '/crm/pipeline'
     | '/crm/settings'
@@ -351,6 +363,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof CrmContactsRouteImport
       parentRoute: typeof CrmRoute
     }
+    '/crm/blog': {
+      id: '/crm/blog'
+      path: '/blog'
+      fullPath: '/crm/blog'
+      preLoaderRoute: typeof CrmBlogRouteImport
+      parentRoute: typeof CrmRoute
+    }
     '/blog/$slug': {
       id: '/blog/$slug'
       path: '/$slug'
@@ -379,6 +398,7 @@ const BlogRouteChildren: BlogRouteChildren = {
 const BlogRouteWithChildren = BlogRoute._addFileChildren(BlogRouteChildren)
 
 interface CrmRouteChildren {
+  CrmBlogRoute: typeof CrmBlogRoute
   CrmContactsRoute: typeof CrmContactsRoute
   CrmPipelineRoute: typeof CrmPipelineRoute
   CrmSettingsRoute: typeof CrmSettingsRoute
@@ -386,6 +406,7 @@ interface CrmRouteChildren {
 }
 
 const CrmRouteChildren: CrmRouteChildren = {
+  CrmBlogRoute: CrmBlogRoute,
   CrmContactsRoute: CrmContactsRoute,
   CrmPipelineRoute: CrmPipelineRoute,
   CrmSettingsRoute: CrmSettingsRoute,

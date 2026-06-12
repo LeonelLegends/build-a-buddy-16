@@ -1,7 +1,7 @@
 import { createFileRoute, Link, Outlet, useNavigate } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
-import { LayoutGrid, Users, Settings, LogOut } from "lucide-react";
+import { LayoutGrid, Users, Settings, LogOut, FileText } from "lucide-react";
 
 export const Route = createFileRoute("/crm")({
   head: () => ({
@@ -62,6 +62,7 @@ function CrmLayout() {
   const navItems = [
     { to: "/crm/pipeline", label: "Pipeline", icon: LayoutGrid },
     { to: "/crm/contacts", label: "Contacts", icon: Users },
+    { to: "/crm/blog", label: "Blog", icon: FileText },
     { to: "/crm/settings", label: "Settings", icon: Settings },
   ] as const;
 

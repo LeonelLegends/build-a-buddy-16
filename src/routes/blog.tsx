@@ -1,53 +1,15 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { useEffect } from "react";
-import { getAllPosts } from "@/lib/blog";
+import { useEffect, useState } from "react";
+import { supabase } from "@/integrations/supabase/client";
 import { useI18n } from "@/lib/i18n";
 
-// GitHub repo configuration for dynamically listing markdown posts
-const repo = "LeonelLegends/legendsinsurance";
-const folder = "content/blog";
-
-type GitHubFile = { name: string; download_url: string };
-
-async function loadBlogs() {
-  const container = document.getElementById("blog-container");
-  if (!container) return;
-  container.innerHTML = "";
-
-  const url = `https://api.github.com/repos/${repo}/contents/${folder}`;
-
-  try {
-    const response = await fetch(url);
-    if (!response.ok) throw new Error(`GitHub responded ${response.status}`);
-    const files: GitHubFile[] = await response.json();
-
-    const markdownFiles = files.filter((file) => file.name.endsWith(".md"));
-
-    for (const file of markdownFiles) {
-      const postResponse = await fetch(file.download_url);
-      const content = await postResponse.text();
-
-      // Title = first "# Heading" line, falling back to filename
-      const headingLine = content.split("\n").find((l) => l.startsWith("# "));
-      const title = headingLine
-        ? headingLine.replace(/^#\s+/, "")
-        : file.name.replace(/\.md$/, "");
-
-      const slug = file.name.replace(/\.md$/, "");
-
-      const card = document.createElement("div");
-      card.className =
-        "blog-card group flex flex-col rounded-2xl border border-border bg-card p-6 shadow-sm transition-all hover:-translate-y-1 hover:border-primary/40 hover:shadow-lg";
-      card.innerHTML = `
-        <h3 class="font-display text-xl font-semibold leading-snug text-foreground group-hover:text-primary">${title}</h3>
-        <a href="/blog/${slug}" class="mt-4 text-sm font-semibold text-primary">Read more →</a>
-      `;
-      container.appendChild(card);
-    }
-  } catch (error) {
-    console.error("Error loading blogs:", error);
-  }
-}
+type PostRow = {
+  slug: string;
+  title: string;
+  summary: string;
+  cover: string | null;
+  published_at: string;
+};
 
 export const Route = createFileRoute("/blog")({
   head: () => ({
@@ -82,13 +44,20 @@ function formatDate(iso: string, lang: string): string {
 
 function BlogIndex() {
   const { t, lang } = useI18n();
-  const posts = getAllPosts();
+  const [posts, setPosts] = useState<PostRow[]>([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    loadBlogs();
+    (async () => {
+      const { data } = await supabase
+        .from("blog_posts")
+        .select("slug,title,summary,cover,published_at")
+        .eq("published", true)
+        .order("published_at", { ascending: false });
+      setPosts((data as PostRow[]) ?? []);
+      setLoading(false);
+    })();
   }, []);
-
-
 
   return (
     <section className="mx-auto max-w-6xl px-6 py-16 md:py-24">
@@ -101,7 +70,9 @@ function BlogIndex() {
         </p>
       </header>
 
-      {posts.length === 0 ? (
+      {loading ? (
+        <p className="text-center text-muted-foreground">Loading…</p>
+      ) : posts.length === 0 ? (
         <p className="text-center text-muted-foreground">{t("blog.empty")}</p>
       ) : (
         <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
@@ -120,7 +91,7 @@ function BlogIndex() {
                 />
               )}
               <time className="text-xs font-medium uppercase tracking-wider text-muted-foreground">
-                {formatDate(post.date, lang)}
+                {formatDate(post.published_at, lang)}
               </time>
               <h2 className="mt-2 font-display text-xl font-semibold leading-snug text-foreground group-hover:text-primary">
                 {post.title}
@@ -135,11 +106,6 @@ function BlogIndex() {
           ))}
         </div>
       )}
-
-      <div
-        id="blog-container"
-        className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3"
-      />
     </section>
   );
 }
