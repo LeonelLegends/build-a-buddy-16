@@ -1,26 +1,21 @@
-import { createFileRoute, Link, notFound } from "@tanstack/react-router";
-import { getPostBySlug } from "@/lib/blog";
+import { createFileRoute, Link } from "@tanstack/react-router";
+import { useEffect, useState } from "react";
+import { marked } from "marked";
+import { supabase } from "@/integrations/supabase/client";
 import { useI18n } from "@/lib/i18n";
 
+type Post = {
+  slug: string;
+  title: string;
+  summary: string;
+  author: string | null;
+  cover: string | null;
+  body: string;
+  published_at: string;
+};
+
 export const Route = createFileRoute("/blog/$slug")({
-  loader: ({ params }) => {
-    const post = getPostBySlug(params.slug);
-    if (!post) throw notFound();
-    return { post };
-  },
-  head: ({ loaderData }) => ({
-    meta: loaderData
-      ? [
-          { title: `${loaderData.post.title} — Legends Insurance Services` },
-          { name: "description", content: loaderData.post.summary },
-          { property: "og:title", content: loaderData.post.title },
-          { property: "og:description", content: loaderData.post.summary },
-          ...(loaderData.post.cover
-            ? [{ property: "og:image", content: loaderData.post.cover }]
-            : []),
-        ]
-      : [],
-  }),
+  component: BlogPostPage,
   notFoundComponent: () => (
     <div className="mx-auto max-w-2xl px-6 py-24 text-center">
       <h1 className="font-display text-3xl font-bold">Post not found</h1>
@@ -37,7 +32,6 @@ export const Route = createFileRoute("/blog/$slug")({
       </button>
     </div>
   ),
-  component: BlogPostPage,
 });
 
 function formatDate(iso: string, lang: string): string {
@@ -52,21 +46,50 @@ function formatDate(iso: string, lang: string): string {
 }
 
 function BlogPostPage() {
-  const { post } = Route.useLoaderData();
+  const { slug } = Route.useParams();
   const { t, lang } = useI18n();
+  const [post, setPost] = useState<Post | null>(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    (async () => {
+      setLoading(true);
+      const { data } = await supabase
+        .from("blog_posts")
+        .select("slug,title,summary,author,cover,body,published_at")
+        .eq("slug", slug)
+        .eq("published", true)
+        .maybeSingle();
+      setPost((data as Post | null) ?? null);
+      setLoading(false);
+    })();
+  }, [slug]);
+
+  if (loading) {
+    return <div className="mx-auto max-w-2xl px-6 py-24 text-center text-muted-foreground">Loading…</div>;
+  }
+  if (!post) {
+    return (
+      <div className="mx-auto max-w-2xl px-6 py-24 text-center">
+        <h1 className="font-display text-3xl font-bold">Post not found</h1>
+        <Link to="/blog" className="mt-6 inline-block font-semibold text-primary">
+          ← Back to blog
+        </Link>
+      </div>
+    );
+  }
+
+  const html = marked.parse(post.body || "", { async: false }) as string;
 
   return (
     <article className="mx-auto max-w-3xl px-6 py-16 md:py-24">
-      <Link
-        to="/blog"
-        className="text-sm font-semibold text-primary hover:underline"
-      >
+      <Link to="/blog" className="text-sm font-semibold text-primary hover:underline">
         ← {t("blog.back")}
       </Link>
 
       <header className="mt-6 mb-10">
         <time className="text-xs font-medium uppercase tracking-wider text-muted-foreground">
-          {formatDate(post.date, lang)}
+          {formatDate(post.published_at, lang)}
         </time>
         <h1 className="mt-2 font-display text-3xl font-bold tracking-tight md:text-5xl">
           {post.title}
@@ -91,7 +114,7 @@ function BlogPostPage() {
 
       <div
         className="prose prose-slate max-w-none prose-headings:font-display prose-headings:tracking-tight prose-a:text-primary"
-        dangerouslySetInnerHTML={{ __html: post.html }}
+        dangerouslySetInnerHTML={{ __html: html }}
       />
     </article>
   );
