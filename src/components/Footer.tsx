@@ -25,6 +25,7 @@ export function Footer() {
   const { t } = useI18n();
   const [hysaOpen, setHysaOpen] = useState(false);
   return (
+    <>
     <footer className="mt-24 border-t border-border bg-primary text-primary-foreground">
       <div className="mx-auto grid max-w-7xl gap-10 px-6 py-14 md:grid-cols-4">
         <div className="md:col-span-2">
