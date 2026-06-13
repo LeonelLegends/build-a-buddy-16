@@ -4,6 +4,7 @@ import { marked } from "marked";
 import { supabase } from "@/integrations/supabase/client";
 import { useI18n } from "@/lib/i18n";
 import { resolveBlogImage } from "@/lib/blog-images";
+import { incrementBlogView } from "@/lib/blog-views.functions";
 
 type Post = {
   slug: string;
@@ -69,8 +70,8 @@ function BlogPostPage() {
       setPost((data as Post | null) ?? null);
       setLoading(false);
       if (data) {
-        // best-effort view increment
-        supabase.rpc("increment_blog_view", { _slug: slug });
+        // best-effort view increment via server function
+        incrementBlogView({ data: { slug } }).catch(() => {});
         const url = await resolveBlogImage((data as Post).cover_path || (data as Post).cover);
         setCover(url);
       }
