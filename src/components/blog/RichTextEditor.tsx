@@ -74,6 +74,13 @@ const UL_STYLES = [
   { label: "▪ Square", value: "square" },
 ];
 
+const TABLE_BORDER_STYLES = [
+  { label: "Dotted", value: "dotted" },
+  { label: "Solid", value: "solid" },
+  { label: "Dashed", value: "dashed" },
+  { label: "Hidden", value: "none" },
+];
+
 // Extend lists with a persistent listStyle attribute so the chosen style
 // survives ProseMirror re-renders.
 const StyledOrderedList = OrderedList.extend({
@@ -112,6 +119,11 @@ const StyledTable = Table.extend({
         default: "on" as "on" | "off",
         parseHTML: (el) => el.getAttribute("data-borders") || "on",
         renderHTML: (attrs) => ({ "data-borders": attrs.borders ?? "on" }),
+      },
+      borderStyle: {
+        default: "dotted" as "dotted" | "solid" | "dashed",
+        parseHTML: (el) => el.getAttribute("data-border-style") || "dotted",
+        renderHTML: (attrs) => ({ "data-border-style": attrs.borderStyle ?? "dotted" }),
       },
     };
   },
@@ -225,18 +237,42 @@ export function RichTextEditor({ value, onChange, placeholder }: Props) {
         .rte-content ul[data-list-style="circle"] { list-style-type: circle; }
         .rte-content ul[data-list-style="square"] { list-style-type: square; }
 
-        .rte-content table.rte-table { border-collapse: collapse; width: 100%; margin: 0.75rem 0; table-layout: fixed; overflow: hidden; }
+        .rte-content table.rte-table {
+          border-collapse: collapse;
+          width: 100%;
+          margin: 0.75rem 0;
+          table-layout: fixed;
+          overflow: hidden;
+          border: 1px dotted #94a3b8;
+        }
         .rte-content table.rte-table td,
         .rte-content table.rte-table th {
-          border: 1px solid #cbd5e1;
+          border: 1px dotted #94a3b8 !important;
           padding: 6px 8px;
           vertical-align: top;
           min-width: 60px;
           position: relative;
         }
+        .rte-content table.rte-table[data-border-style="solid"] {
+          border-style: solid;
+        }
+        .rte-content table.rte-table[data-border-style="solid"] td,
+        .rte-content table.rte-table[data-border-style="solid"] th {
+          border-style: solid !important;
+        }
+        .rte-content table.rte-table[data-border-style="dashed"] {
+          border-style: dashed;
+        }
+        .rte-content table.rte-table[data-border-style="dashed"] td,
+        .rte-content table.rte-table[data-border-style="dashed"] th {
+          border-style: dashed !important;
+        }
         .rte-content table.rte-table[data-borders="off"] td,
         .rte-content table.rte-table[data-borders="off"] th {
-          border: 1px dashed #e2e8f0;
+          border-color: transparent !important;
+        }
+        .rte-content table.rte-table[data-borders="off"] {
+          border-color: transparent;
         }
         .rte-content table.rte-table th { background: #f1f5f9; font-weight: 600; text-align: left; }
         .rte-content .selectedCell {
@@ -264,6 +300,7 @@ export function RichTextEditor({ value, onChange, placeholder }: Props) {
 function Toolbar({ editor, onPickImage }: { editor: Editor; onPickImage: () => void }) {
   // Prevent toolbar mousedown from stealing focus from the editor.
   const noFocusSteal = (e: React.MouseEvent) => e.preventDefault();
+  const focusEditor = () => requestAnimationFrame(() => editor.chain().focus().run());
 
   const btn = (active: boolean) =>
     `rounded p-1.5 text-slate-700 hover:bg-slate-100 ${active ? "bg-slate-200 text-slate-900" : ""}`;
@@ -297,7 +334,29 @@ function Toolbar({ editor, onPickImage }: { editor: Editor; onPickImage: () => v
       .focus()
       .updateAttributes("table", { borders: current === "off" ? "on" : "off" })
       .run();
+    focusEditor();
   };
+
+  const applyTableBorderStyle = (style: string) => {
+    if (style === "none") {
+      editor.chain().focus().updateAttributes("table", { borders: "off" }).run();
+      focusEditor();
+      return;
+    }
+
+    editor
+      .chain()
+      .focus()
+      .updateAttributes("table", { borders: "on", borderStyle: style })
+      .run();
+    focusEditor();
+  };
+
+  const currentTableBorderStyle = (() => {
+    const attrs = editor.getAttributes("table") as { borders?: string; borderStyle?: string };
+    if (attrs.borders === "off") return "none";
+    return attrs.borderStyle ?? "dotted";
+  })();
 
   return (
     <div className="flex flex-wrap items-center gap-0.5 p-1.5" onMouseDown={noFocusSteal}>
@@ -317,6 +376,7 @@ function Toolbar({ editor, onPickImage }: { editor: Editor; onPickImage: () => v
                   if (f.value) editor.chain().focus().setFontFamily(f.value).run();
                   else editor.chain().focus().unsetFontFamily().run();
                   close();
+                  focusEditor();
                 }}
                 style={{ fontFamily: f.value || undefined }}
                 className="block w-full px-3 py-1.5 text-left text-sm text-slate-700 hover:bg-slate-100"
@@ -346,7 +406,7 @@ function Toolbar({ editor, onPickImage }: { editor: Editor; onPickImage: () => v
                 key={s.value}
                 type="button"
                 onMouseDown={noFocusSteal}
-                onClick={() => { applyBulletStyle(s.value); close(); }}
+                onClick={() => { applyBulletStyle(s.value); close(); focusEditor(); }}
                 className="block w-full px-3 py-1.5 text-left text-sm text-slate-700 hover:bg-slate-100"
               >
                 {s.label}
@@ -364,7 +424,7 @@ function Toolbar({ editor, onPickImage }: { editor: Editor; onPickImage: () => v
                 key={s.value}
                 type="button"
                 onMouseDown={noFocusSteal}
-                onClick={() => { applyOrderedStyle(s.value); close(); }}
+                onClick={() => { applyOrderedStyle(s.value); close(); focusEditor(); }}
                 className="block w-full px-3 py-1.5 text-left text-sm text-slate-700 hover:bg-slate-100"
               >
                 {s.label}
@@ -383,6 +443,30 @@ function Toolbar({ editor, onPickImage }: { editor: Editor; onPickImage: () => v
       <button type="button" onMouseDown={noFocusSteal} onClick={onPickImage} className={btn(false)} title="Insert image"><ImageIcon className="h-4 w-4" /></button>
       <Divider />
       <InsertTablePopover editor={editor} />
+      <Dropdown
+        label={TABLE_BORDER_STYLES.find((style) => style.value === currentTableBorderStyle)?.label ?? "Borders"}
+        title="Table border type"
+        width="w-36"
+      >
+        {(close) => (
+          <div>
+            {TABLE_BORDER_STYLES.map((style) => (
+              <button
+                key={style.value}
+                type="button"
+                onMouseDown={noFocusSteal}
+                onClick={() => {
+                  applyTableBorderStyle(style.value);
+                  close();
+                }}
+                className="block w-full px-3 py-1.5 text-left text-sm text-slate-700 hover:bg-slate-100"
+              >
+                {style.label}
+              </button>
+            ))}
+          </div>
+        )}
+      </Dropdown>
       <button type="button" onMouseDown={noFocusSteal} onClick={toggleTableBorders} className={btn(false)} title="Toggle table borders"><SquareDashed className="h-4 w-4" /></button>
       <button type="button" onMouseDown={noFocusSteal} onClick={() => editor.chain().focus().mergeCells().run()} className={btn(false)} title="Merge selected cells"><Merge className="h-4 w-4" /></button>
       <button type="button" onMouseDown={noFocusSteal} onClick={() => editor.chain().focus().splitCell().run()} className={btn(false)} title="Split cell"><Split className="h-4 w-4" /></button>
