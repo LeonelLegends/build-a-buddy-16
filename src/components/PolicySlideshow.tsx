@@ -236,7 +236,6 @@ const PAGE_SIZE = 3;
 
 export function PolicySlideshow() {
   const { lang } = useI18n();
-  const navigate = useNavigate({ from: "/services" });
   const totalPages = Math.ceil(POLICIES.length / PAGE_SIZE);
 
   const [page, setPage] = useState(() => {
