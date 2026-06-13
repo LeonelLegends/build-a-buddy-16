@@ -30,10 +30,9 @@ function CrmLayout() {
         .from("user_roles")
         .select("role")
         .eq("user_id", session.user.id)
-        .in("role", ["admin", "master"])
-        .maybeSingle();
+        .in("role", ["admin", "master"]);
       if (!mounted) return;
-      setIsAdmin(!!data);
+      setIsAdmin((data ?? []).length > 0);
       setChecked(true);
     })();
     return () => { mounted = false; };
