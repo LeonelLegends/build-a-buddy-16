@@ -30,14 +30,19 @@ import {
   Rows,
   Columns,
   Trash2,
+  Merge,
+  Split,
+  SquareDashed,
 } from "lucide-react";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { resolveBlogImage, uploadBlogImage } from "@/lib/blog-images";
 import { toast } from "sonner";
 
 const COLORS = [
-  "#0f172a", "#334155", "#64748b", "#ef4444", "#f97316",
-  "#eab308", "#22c55e", "#06b6d4", "#3b82f6", "#8b5cf6", "#ec4899",
+  "#000000", "#374151", "#6b7280", "#9ca3af", "#d1d5db", "#ffffff",
+  "#ef4444", "#f97316", "#f59e0b", "#eab308", "#84cc16", "#22c55e",
+  "#10b981", "#06b6d4", "#0ea5e9", "#3b82f6", "#6366f1", "#8b5cf6",
+  "#a855f7", "#d946ef", "#ec4899", "#f43f5e", "#78350f", "#14532d",
 ];
 
 const FONTS = [
@@ -82,6 +87,7 @@ export function RichTextEditor({ value, onChange, placeholder }: Props) {
       TableCell,
     ],
     content: value || "",
+    autofocus: "end",
     onUpdate: ({ editor }) => onChange(editor.getHTML()),
     editorProps: {
       attributes: {
@@ -91,7 +97,6 @@ export function RichTextEditor({ value, onChange, placeholder }: Props) {
       handleKeyDown: (_view, event) => {
         if (event.key === "Tab") {
           event.preventDefault();
-          // Insert real tab character (preserved by white-space: pre-wrap)
           editor?.chain().focus().insertContent("\t").run();
           return true;
         }
@@ -142,21 +147,52 @@ export function RichTextEditor({ value, onChange, placeholder }: Props) {
       <div
         className="overflow-y-auto"
         style={{ maxHeight: "calc(100vh - 320px)", minHeight: "300px" }}
+        onClick={() => {
+          if (!editor.isFocused) editor.commands.focus();
+        }}
       >
         <EditorContent editor={editor} placeholder={placeholder} />
       </div>
       <style>{`
         .rte-content { white-space: pre-wrap; }
         .rte-content p:empty::before { content: ""; display: inline-block; }
+        .rte-content ul { list-style-type: disc; padding-left: 1.6rem; margin: 0.5rem 0; }
+        .rte-content ol { list-style-type: decimal; padding-left: 1.6rem; margin: 0.5rem 0; }
+        .rte-content ul li, .rte-content ol li { display: list-item; margin: 0.15rem 0; }
         .rte-content ol[data-list-style="upper-alpha"] { list-style-type: upper-alpha; }
         .rte-content ol[data-list-style="lower-alpha"] { list-style-type: lower-alpha; }
         .rte-content ol[data-list-style="upper-roman"] { list-style-type: upper-roman; }
         .rte-content ol[data-list-style="lower-roman"] { list-style-type: lower-roman; }
         .rte-content ol[data-list-style="decimal"] { list-style-type: decimal; }
-        .rte-content table.rte-table { border-collapse: collapse; width: 100%; margin: 0.75rem 0; table-layout: fixed; }
-        .rte-content table.rte-table td, .rte-content table.rte-table th { border: 1px solid #cbd5e1; padding: 6px 8px; vertical-align: top; min-width: 60px; }
+
+        .rte-content table.rte-table { border-collapse: collapse; width: 100%; margin: 0.75rem 0; table-layout: fixed; overflow: hidden; }
+        .rte-content table.rte-table td,
+        .rte-content table.rte-table th {
+          border: 1px dotted #94a3b8;
+          padding: 6px 8px;
+          vertical-align: top;
+          min-width: 60px;
+          position: relative;
+        }
+        .rte-content table.rte-table[data-borders="off"] td,
+        .rte-content table.rte-table[data-borders="off"] th {
+          border: 1px dashed transparent;
+        }
         .rte-content table.rte-table th { background: #f1f5f9; font-weight: 600; text-align: left; }
         .rte-content .selectedCell { background: rgba(59,130,246,0.15); }
+
+        /* Tiptap column resize handle */
+        .rte-content .column-resize-handle {
+          position: absolute;
+          right: -2px;
+          top: 0;
+          bottom: -2px;
+          width: 4px;
+          background-color: #3b82f6;
+          pointer-events: none;
+        }
+        .rte-content.resize-cursor { cursor: col-resize; }
+        .rte-content .tableWrapper { overflow-x: auto; }
       `}</style>
     </div>
   );
@@ -180,9 +216,8 @@ function Toolbar({ editor, onPickImage }: { editor: Editor; onPickImage: () => v
     if (!editor.isActive("orderedList")) {
       editor.chain().focus().toggleOrderedList().run();
     }
-    // Tag the closest ol node by updating attributes via DOM after the fact
     requestAnimationFrame(() => {
-      const dom = (editor.view.dom as HTMLElement);
+      const dom = editor.view.dom as HTMLElement;
       const sel = window.getSelection();
       if (!sel || sel.rangeCount === 0) return;
       let node: HTMLElement | null = sel.anchorNode as HTMLElement | null;
@@ -191,11 +226,26 @@ function Toolbar({ editor, onPickImage }: { editor: Editor; onPickImage: () => v
       }
       if (node && node.nodeName === "OL") {
         node.setAttribute("data-list-style", style);
-        // trigger onUpdate
         editor.commands.focus();
         onChangeFire(editor);
       }
     });
+  };
+
+  const toggleTableBorders = () => {
+    const dom = editor.view.dom as HTMLElement;
+    const sel = window.getSelection();
+    if (!sel || sel.rangeCount === 0) return;
+    let node: HTMLElement | null = sel.anchorNode as HTMLElement | null;
+    while (node && node !== dom && node.nodeName !== "TABLE") {
+      node = node.parentElement;
+    }
+    if (node && node.nodeName === "TABLE") {
+      const current = node.getAttribute("data-borders");
+      node.setAttribute("data-borders", current === "off" ? "on" : "off");
+      editor.commands.focus();
+      onChangeFire(editor);
+    }
   };
 
   return (
@@ -206,9 +256,13 @@ function Toolbar({ editor, onPickImage }: { editor: Editor; onPickImage: () => v
           const v = e.target.value;
           if (v) editor.chain().focus().setFontFamily(v).run();
           else editor.chain().focus().unsetFontFamily().run();
+          // Return focus to editor, not the select
+          requestAnimationFrame(() => editor.commands.focus());
         }}
+        onMouseDown={(e) => e.stopPropagation()}
         className="mr-1 rounded border border-slate-200 bg-white px-1.5 py-1 text-xs text-slate-700"
         title="Font family"
+        tabIndex={-1}
       >
         {FONTS.map((f) => (
           <option key={f.label} value={f.value}>{f.label}</option>
@@ -224,17 +278,19 @@ function Toolbar({ editor, onPickImage }: { editor: Editor; onPickImage: () => v
       <Divider />
       <ColorPicker editor={editor} />
       <Divider />
-      <button type="button" onClick={() => editor.chain().focus().toggleBulletList().run()} className={btn(editor.isActive("bulletList"))} title="Bullet list"><List className="h-4 w-4" /></button>
-      <button type="button" onClick={() => editor.chain().focus().toggleOrderedList().run()} className={btn(editor.isActive("orderedList"))} title="Numbered list"><ListOrdered className="h-4 w-4" /></button>
+      <button type="button" onMouseDown={(e) => { e.preventDefault(); editor.chain().focus().toggleBulletList().run(); }} className={btn(editor.isActive("bulletList"))} title="Bullet list"><List className="h-4 w-4" /></button>
+      <button type="button" onMouseDown={(e) => { e.preventDefault(); editor.chain().focus().toggleOrderedList().run(); }} className={btn(editor.isActive("orderedList"))} title="Numbered list"><ListOrdered className="h-4 w-4" /></button>
       <select
         onChange={(e) => {
           const v = e.target.value;
           if (v) applyListStyle(v);
           e.target.value = "";
+          requestAnimationFrame(() => editor.commands.focus());
         }}
         defaultValue=""
         className="rounded border border-slate-200 bg-white px-1 py-1 text-xs text-slate-700"
         title="List style"
+        tabIndex={-1}
       >
         <option value="" disabled>List style</option>
         {LIST_STYLES.map((l) => (
@@ -253,6 +309,9 @@ function Toolbar({ editor, onPickImage }: { editor: Editor; onPickImage: () => v
       <button type="button" onClick={() => editor.chain().focus().insertTable({ rows: 3, cols: 3, withHeaderRow: true }).run()} className={btn(false)} title="Insert table"><TableIcon className="h-4 w-4" /></button>
       <button type="button" onClick={() => editor.chain().focus().addRowAfter().run()} className={btn(false)} title="Add row"><Rows className="h-4 w-4" /></button>
       <button type="button" onClick={() => editor.chain().focus().addColumnAfter().run()} className={btn(false)} title="Add column"><Columns className="h-4 w-4" /></button>
+      <button type="button" onClick={() => editor.chain().focus().mergeCells().run()} className={btn(false)} title="Merge cells"><Merge className="h-4 w-4" /></button>
+      <button type="button" onClick={() => editor.chain().focus().splitCell().run()} className={btn(false)} title="Split cell"><Split className="h-4 w-4" /></button>
+      <button type="button" onClick={toggleTableBorders} className={btn(false)} title="Toggle table borders"><SquareDashed className="h-4 w-4" /></button>
       <button type="button" onClick={() => editor.chain().focus().deleteTable().run()} className={btn(false)} title="Delete table"><Trash2 className="h-4 w-4" /></button>
       <Divider />
       <button type="button" onClick={() => editor.chain().focus().undo().run()} className={btn(false)} title="Undo"><Undo className="h-4 w-4" /></button>
@@ -262,7 +321,6 @@ function Toolbar({ editor, onPickImage }: { editor: Editor; onPickImage: () => v
 }
 
 function onChangeFire(editor: Editor) {
-  // Force an update event so parent receives new HTML with data-list-style attr
   editor.emit("update", { editor, transaction: editor.state.tr, appendedTransactions: [] });
 }
 
@@ -271,32 +329,73 @@ function Divider() {
 }
 
 function ColorPicker({ editor }: { editor: Editor }) {
+  const [open, setOpen] = useState(false);
+  const ref = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (!open) return;
+    const onDoc = (e: MouseEvent) => {
+      if (ref.current && !ref.current.contains(e.target as Node)) setOpen(false);
+    };
+    document.addEventListener("mousedown", onDoc);
+    return () => document.removeEventListener("mousedown", onDoc);
+  }, [open]);
+
+  const current = (editor.getAttributes("textStyle").color as string) || "#0f172a";
+
   return (
-    <div className="group relative">
-      <button type="button" className="rounded p-1.5 text-slate-700 hover:bg-slate-100" title="Text color">
-        <span className="block h-4 w-4 rounded-sm border border-slate-300" style={{ background: editor.getAttributes("textStyle").color || "#0f172a" }} />
+    <div className="relative" ref={ref}>
+      <button
+        type="button"
+        onClick={() => setOpen((v) => !v)}
+        className="flex items-center gap-1 rounded p-1.5 text-slate-700 hover:bg-slate-100"
+        title="Text color"
+      >
+        <span className="block h-4 w-4 rounded-sm border border-slate-300" style={{ background: current }} />
+        <span className="text-[10px] text-slate-500">▾</span>
       </button>
-      <div className="invisible absolute left-0 top-full z-20 mt-1 rounded-md border border-slate-200 bg-white p-2 shadow-lg group-hover:visible">
-        <div className="grid grid-cols-6 gap-1">
-          {COLORS.map((c) => (
+      {open && (
+        <div className="absolute left-0 top-full z-30 mt-1 w-64 rounded-md border border-slate-200 bg-white p-3 shadow-xl">
+          <div className="mb-2 text-xs font-medium text-slate-600">Text color</div>
+          <div className="grid grid-cols-6 gap-2">
+            {COLORS.map((c) => (
+              <button
+                key={c}
+                type="button"
+                onClick={() => {
+                  editor.chain().focus().setColor(c).run();
+                  setOpen(false);
+                }}
+                className="h-8 w-8 rounded border border-slate-300 transition hover:scale-110 hover:shadow"
+                style={{ background: c }}
+                aria-label={`Color ${c}`}
+                title={c}
+              />
+            ))}
+          </div>
+          <div className="mt-3 flex items-center justify-between gap-2">
+            <label className="flex items-center gap-1 text-xs text-slate-600">
+              Custom:
+              <input
+                type="color"
+                value={current}
+                onChange={(e) => editor.chain().focus().setColor(e.target.value).run()}
+                className="h-7 w-10 cursor-pointer rounded border border-slate-300"
+              />
+            </label>
             <button
-              key={c}
               type="button"
-              onClick={() => editor.chain().focus().setColor(c).run()}
-              className="h-5 w-5 rounded border border-slate-300"
-              style={{ background: c }}
-              aria-label={`Color ${c}`}
-            />
-          ))}
-          <button
-            type="button"
-            onClick={() => editor.chain().focus().unsetColor().run()}
-            className="col-span-6 mt-1 rounded border border-slate-200 px-2 py-0.5 text-xs text-slate-600 hover:bg-slate-50"
-          >
-            Reset
-          </button>
+              onClick={() => {
+                editor.chain().focus().unsetColor().run();
+                setOpen(false);
+              }}
+              className="rounded border border-slate-200 px-2 py-1 text-xs text-slate-600 hover:bg-slate-50"
+            >
+              Reset
+            </button>
+          </div>
         </div>
-      </div>
+      )}
     </div>
   );
 }

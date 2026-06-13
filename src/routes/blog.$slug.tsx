@@ -127,8 +127,11 @@ function BlogPostPage() {
         .blog-body ol[data-list-style="upper-roman"] { list-style-type: upper-roman; }
         .blog-body ol[data-list-style="lower-roman"] { list-style-type: lower-roman; }
         .blog-body table { border-collapse: collapse; width: 100%; margin: 1rem 0; }
-        .blog-body table td, .blog-body table th { border: 1px solid #cbd5e1; padding: 8px 10px; vertical-align: top; }
+        .blog-body table td, .blog-body table th { border: 1px dotted #94a3b8; padding: 8px 10px; vertical-align: top; }
+        .blog-body table[data-borders="off"] td, .blog-body table[data-borders="off"] th { border: 1px dashed transparent; }
         .blog-body table th { background: #f1f5f9; font-weight: 600; text-align: left; }
+        .blog-body ul { list-style-type: disc; padding-left: 1.6rem; }
+        .blog-body ol { list-style-type: decimal; padding-left: 1.6rem; }
       `}</style>
     </article>
   );
