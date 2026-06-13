@@ -9,6 +9,8 @@ import { Table } from "@tiptap/extension-table";
 import { TableRow } from "@tiptap/extension-table-row";
 import { TableHeader } from "@tiptap/extension-table-header";
 import { TableCell } from "@tiptap/extension-table-cell";
+import OrderedList from "@tiptap/extension-ordered-list";
+import BulletList from "@tiptap/extension-bullet-list";
 import {
   Bold,
   Italic,
@@ -33,6 +35,7 @@ import {
   Merge,
   Split,
   SquareDashed,
+  ChevronDown,
 } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { resolveBlogImage, uploadBlogImage } from "@/lib/blog-images";
@@ -57,13 +60,62 @@ const FONTS = [
   { label: "Courier", value: '"Courier New", Courier, monospace' },
 ];
 
-const LIST_STYLES: { label: string; value: string }[] = [
+const OL_STYLES = [
   { label: "1, 2, 3", value: "decimal" },
   { label: "A, B, C", value: "upper-alpha" },
   { label: "a, b, c", value: "lower-alpha" },
   { label: "I, II, III", value: "upper-roman" },
   { label: "i, ii, iii", value: "lower-roman" },
 ];
+
+const UL_STYLES = [
+  { label: "• Disc", value: "disc" },
+  { label: "○ Circle", value: "circle" },
+  { label: "▪ Square", value: "square" },
+];
+
+// Extend lists with a persistent listStyle attribute so the chosen style
+// survives ProseMirror re-renders.
+const StyledOrderedList = OrderedList.extend({
+  addAttributes() {
+    return {
+      ...this.parent?.(),
+      listStyle: {
+        default: null as string | null,
+        parseHTML: (el) => el.getAttribute("data-list-style"),
+        renderHTML: (attrs) =>
+          attrs.listStyle ? { "data-list-style": attrs.listStyle } : {},
+      },
+    };
+  },
+});
+
+const StyledBulletList = BulletList.extend({
+  addAttributes() {
+    return {
+      ...this.parent?.(),
+      listStyle: {
+        default: null as string | null,
+        parseHTML: (el) => el.getAttribute("data-list-style"),
+        renderHTML: (attrs) =>
+          attrs.listStyle ? { "data-list-style": attrs.listStyle } : {},
+      },
+    };
+  },
+});
+
+const StyledTable = Table.extend({
+  addAttributes() {
+    return {
+      ...this.parent?.(),
+      borders: {
+        default: "on" as "on" | "off",
+        parseHTML: (el) => el.getAttribute("data-borders") || "on",
+        renderHTML: (attrs) => ({ "data-borders": attrs.borders ?? "on" }),
+      },
+    };
+  },
+});
 
 type Props = {
   value: string;
@@ -75,13 +127,15 @@ export function RichTextEditor({ value, onChange, placeholder }: Props) {
   const fileRef = useRef<HTMLInputElement>(null);
   const editor = useEditor({
     extensions: [
-      StarterKit,
+      StarterKit.configure({ orderedList: false, bulletList: false }),
+      StyledOrderedList,
+      StyledBulletList,
       TextStyle,
       Color,
       FontFamily.configure({ types: ["textStyle"] }),
       Image.configure({ inline: false, allowBase64: false }),
       TextAlign.configure({ types: ["heading", "paragraph"] }),
-      Table.configure({ resizable: true, HTMLAttributes: { class: "rte-table" } }),
+      StyledTable.configure({ resizable: true, HTMLAttributes: { class: "rte-table" } }),
       TableRow,
       TableHeader,
       TableCell,
@@ -105,7 +159,6 @@ export function RichTextEditor({ value, onChange, placeholder }: Props) {
     },
   });
 
-  // Keep editor in sync when switching between EN/ES tabs (external value change)
   useEffect(() => {
     if (!editor) return;
     if (value !== editor.getHTML()) {
@@ -147,8 +200,12 @@ export function RichTextEditor({ value, onChange, placeholder }: Props) {
       <div
         className="overflow-y-auto"
         style={{ maxHeight: "calc(100vh - 320px)", minHeight: "300px" }}
-        onClick={() => {
-          if (!editor.isFocused) editor.commands.focus();
+        onMouseDown={() => {
+          // Drop focus from any toolbar control so the editor gets it cleanly.
+          const ae = document.activeElement as HTMLElement | null;
+          if (ae && ae !== document.body && !ae.classList.contains("rte-content")) {
+            ae.blur?.();
+          }
         }}
       >
         <EditorContent editor={editor} placeholder={placeholder} />
@@ -159,16 +216,19 @@ export function RichTextEditor({ value, onChange, placeholder }: Props) {
         .rte-content ul { list-style-type: disc; padding-left: 1.6rem; margin: 0.5rem 0; }
         .rte-content ol { list-style-type: decimal; padding-left: 1.6rem; margin: 0.5rem 0; }
         .rte-content ul li, .rte-content ol li { display: list-item; margin: 0.15rem 0; }
+        .rte-content ol[data-list-style="decimal"] { list-style-type: decimal; }
         .rte-content ol[data-list-style="upper-alpha"] { list-style-type: upper-alpha; }
         .rte-content ol[data-list-style="lower-alpha"] { list-style-type: lower-alpha; }
         .rte-content ol[data-list-style="upper-roman"] { list-style-type: upper-roman; }
         .rte-content ol[data-list-style="lower-roman"] { list-style-type: lower-roman; }
-        .rte-content ol[data-list-style="decimal"] { list-style-type: decimal; }
+        .rte-content ul[data-list-style="disc"] { list-style-type: disc; }
+        .rte-content ul[data-list-style="circle"] { list-style-type: circle; }
+        .rte-content ul[data-list-style="square"] { list-style-type: square; }
 
         .rte-content table.rte-table { border-collapse: collapse; width: 100%; margin: 0.75rem 0; table-layout: fixed; overflow: hidden; }
         .rte-content table.rte-table td,
         .rte-content table.rte-table th {
-          border: 1px dotted #94a3b8;
+          border: 1px solid #cbd5e1;
           padding: 6px 8px;
           vertical-align: top;
           min-width: 60px;
@@ -176,12 +236,15 @@ export function RichTextEditor({ value, onChange, placeholder }: Props) {
         }
         .rte-content table.rte-table[data-borders="off"] td,
         .rte-content table.rte-table[data-borders="off"] th {
-          border: 1px dashed transparent;
+          border: 1px dashed #e2e8f0;
         }
         .rte-content table.rte-table th { background: #f1f5f9; font-weight: 600; text-align: left; }
-        .rte-content .selectedCell { background: rgba(59,130,246,0.15); }
+        .rte-content .selectedCell {
+          background: rgba(59,130,246,0.15);
+          outline: 2px solid #3b82f6;
+          outline-offset: -2px;
+        }
 
-        /* Tiptap column resize handle */
         .rte-content .column-resize-handle {
           position: absolute;
           right: -2px;
@@ -199,6 +262,9 @@ export function RichTextEditor({ value, onChange, placeholder }: Props) {
 }
 
 function Toolbar({ editor, onPickImage }: { editor: Editor; onPickImage: () => void }) {
+  // Prevent toolbar mousedown from stealing focus from the editor.
+  const noFocusSteal = (e: React.MouseEvent) => e.preventDefault();
+
   const btn = (active: boolean) =>
     `rounded p-1.5 text-slate-700 hover:bg-slate-100 ${active ? "bg-slate-200 text-slate-900" : ""}`;
 
@@ -212,120 +278,256 @@ function Toolbar({ editor, onPickImage }: { editor: Editor; onPickImage: () => v
 
   const currentFont = (editor.getAttributes("textStyle").fontFamily as string) || "";
 
-  const applyListStyle = (style: string) => {
-    if (!editor.isActive("orderedList")) {
-      editor.chain().focus().toggleOrderedList().run();
-    }
-    requestAnimationFrame(() => {
-      const dom = editor.view.dom as HTMLElement;
-      const sel = window.getSelection();
-      if (!sel || sel.rangeCount === 0) return;
-      let node: HTMLElement | null = sel.anchorNode as HTMLElement | null;
-      while (node && node !== dom && node.nodeName !== "OL") {
-        node = node.parentElement;
-      }
-      if (node && node.nodeName === "OL") {
-        node.setAttribute("data-list-style", style);
-        editor.commands.focus();
-        onChangeFire(editor);
-      }
-    });
+  const applyOrderedStyle = (style: string) => {
+    const chain = editor.chain().focus();
+    if (!editor.isActive("orderedList")) chain.toggleOrderedList();
+    chain.updateAttributes("orderedList", { listStyle: style }).run();
+  };
+
+  const applyBulletStyle = (style: string) => {
+    const chain = editor.chain().focus();
+    if (!editor.isActive("bulletList")) chain.toggleBulletList();
+    chain.updateAttributes("bulletList", { listStyle: style }).run();
   };
 
   const toggleTableBorders = () => {
-    const dom = editor.view.dom as HTMLElement;
-    const sel = window.getSelection();
-    if (!sel || sel.rangeCount === 0) return;
-    let node: HTMLElement | null = sel.anchorNode as HTMLElement | null;
-    while (node && node !== dom && node.nodeName !== "TABLE") {
-      node = node.parentElement;
-    }
-    if (node && node.nodeName === "TABLE") {
-      const current = node.getAttribute("data-borders");
-      node.setAttribute("data-borders", current === "off" ? "on" : "off");
-      editor.commands.focus();
-      onChangeFire(editor);
-    }
+    const current = (editor.getAttributes("table") as { borders?: string }).borders ?? "on";
+    editor
+      .chain()
+      .focus()
+      .updateAttributes("table", { borders: current === "off" ? "on" : "off" })
+      .run();
   };
 
   return (
-    <div className="flex flex-wrap items-center gap-0.5 p-1.5">
-      <select
-        value={currentFont}
-        onChange={(e) => {
-          const v = e.target.value;
-          if (v) editor.chain().focus().setFontFamily(v).run();
-          else editor.chain().focus().unsetFontFamily().run();
-          // Return focus to editor, not the select
-          requestAnimationFrame(() => editor.commands.focus());
-        }}
-        onMouseDown={(e) => e.stopPropagation()}
-        className="mr-1 rounded border border-slate-200 bg-white px-1.5 py-1 text-xs text-slate-700"
+    <div className="flex flex-wrap items-center gap-0.5 p-1.5" onMouseDown={noFocusSteal}>
+      <Dropdown
+        label={FONTS.find((f) => f.value === currentFont)?.label ?? "Font"}
         title="Font family"
-        tabIndex={-1}
+        width="w-44"
       >
-        {FONTS.map((f) => (
-          <option key={f.label} value={f.value}>{f.label}</option>
-        ))}
-      </select>
-      <button type="button" onClick={() => editor.chain().focus().toggleHeading({ level: 1 }).run()} className={btn(editor.isActive("heading", { level: 1 }))} title="Heading 1"><Heading1 className="h-4 w-4" /></button>
-      <button type="button" onClick={() => editor.chain().focus().toggleHeading({ level: 2 }).run()} className={btn(editor.isActive("heading", { level: 2 }))} title="Heading 2"><Heading2 className="h-4 w-4" /></button>
-      <button type="button" onClick={() => editor.chain().focus().toggleHeading({ level: 3 }).run()} className={btn(editor.isActive("heading", { level: 3 }))} title="Heading 3"><Heading3 className="h-4 w-4" /></button>
+        {(close) => (
+          <div className="max-h-64 overflow-y-auto">
+            {FONTS.map((f) => (
+              <button
+                key={f.label}
+                type="button"
+                onMouseDown={noFocusSteal}
+                onClick={() => {
+                  if (f.value) editor.chain().focus().setFontFamily(f.value).run();
+                  else editor.chain().focus().unsetFontFamily().run();
+                  close();
+                }}
+                style={{ fontFamily: f.value || undefined }}
+                className="block w-full px-3 py-1.5 text-left text-sm text-slate-700 hover:bg-slate-100"
+              >
+                {f.label}
+              </button>
+            ))}
+          </div>
+        )}
+      </Dropdown>
+      <button type="button" onMouseDown={noFocusSteal} onClick={() => editor.chain().focus().toggleHeading({ level: 1 }).run()} className={btn(editor.isActive("heading", { level: 1 }))} title="Heading 1"><Heading1 className="h-4 w-4" /></button>
+      <button type="button" onMouseDown={noFocusSteal} onClick={() => editor.chain().focus().toggleHeading({ level: 2 }).run()} className={btn(editor.isActive("heading", { level: 2 }))} title="Heading 2"><Heading2 className="h-4 w-4" /></button>
+      <button type="button" onMouseDown={noFocusSteal} onClick={() => editor.chain().focus().toggleHeading({ level: 3 }).run()} className={btn(editor.isActive("heading", { level: 3 }))} title="Heading 3"><Heading3 className="h-4 w-4" /></button>
       <Divider />
-      <button type="button" onClick={() => editor.chain().focus().toggleBold().run()} className={btn(editor.isActive("bold"))} title="Bold"><Bold className="h-4 w-4" /></button>
-      <button type="button" onClick={() => editor.chain().focus().toggleItalic().run()} className={btn(editor.isActive("italic"))} title="Italic"><Italic className="h-4 w-4" /></button>
-      <button type="button" onClick={() => editor.chain().focus().toggleUnderline().run()} className={btn(editor.isActive("underline"))} title="Underline"><UnderlineIcon className="h-4 w-4" /></button>
+      <button type="button" onMouseDown={noFocusSteal} onClick={() => editor.chain().focus().toggleBold().run()} className={btn(editor.isActive("bold"))} title="Bold"><Bold className="h-4 w-4" /></button>
+      <button type="button" onMouseDown={noFocusSteal} onClick={() => editor.chain().focus().toggleItalic().run()} className={btn(editor.isActive("italic"))} title="Italic"><Italic className="h-4 w-4" /></button>
+      <button type="button" onMouseDown={noFocusSteal} onClick={() => editor.chain().focus().toggleUnderline().run()} className={btn(editor.isActive("underline"))} title="Underline"><UnderlineIcon className="h-4 w-4" /></button>
       <Divider />
       <ColorPicker editor={editor} />
       <Divider />
-      <button type="button" onMouseDown={(e) => { e.preventDefault(); editor.chain().focus().toggleBulletList().run(); }} className={btn(editor.isActive("bulletList"))} title="Bullet list"><List className="h-4 w-4" /></button>
-      <button type="button" onMouseDown={(e) => { e.preventDefault(); editor.chain().focus().toggleOrderedList().run(); }} className={btn(editor.isActive("orderedList"))} title="Numbered list"><ListOrdered className="h-4 w-4" /></button>
-      <select
-        onChange={(e) => {
-          const v = e.target.value;
-          if (v) applyListStyle(v);
-          e.target.value = "";
-          requestAnimationFrame(() => editor.commands.focus());
-        }}
-        defaultValue=""
-        className="rounded border border-slate-200 bg-white px-1 py-1 text-xs text-slate-700"
-        title="List style"
-        tabIndex={-1}
-      >
-        <option value="" disabled>List style</option>
-        {LIST_STYLES.map((l) => (
-          <option key={l.value} value={l.value}>{l.label}</option>
-        ))}
-      </select>
-      <button type="button" onClick={() => editor.chain().focus().toggleBlockquote().run()} className={btn(editor.isActive("blockquote"))} title="Quote"><Quote className="h-4 w-4" /></button>
+      <button type="button" onMouseDown={noFocusSteal} onClick={() => editor.chain().focus().toggleBulletList().run()} className={btn(editor.isActive("bulletList"))} title="Bullet list"><List className="h-4 w-4" /></button>
+      <Dropdown label="" icon={<ChevronDown className="h-3 w-3" />} title="Bullet style" width="w-36">
+        {(close) => (
+          <div>
+            {UL_STYLES.map((s) => (
+              <button
+                key={s.value}
+                type="button"
+                onMouseDown={noFocusSteal}
+                onClick={() => { applyBulletStyle(s.value); close(); }}
+                className="block w-full px-3 py-1.5 text-left text-sm text-slate-700 hover:bg-slate-100"
+              >
+                {s.label}
+              </button>
+            ))}
+          </div>
+        )}
+      </Dropdown>
+      <button type="button" onMouseDown={noFocusSteal} onClick={() => editor.chain().focus().toggleOrderedList().run()} className={btn(editor.isActive("orderedList"))} title="Numbered list"><ListOrdered className="h-4 w-4" /></button>
+      <Dropdown label="" icon={<ChevronDown className="h-3 w-3" />} title="Number style" width="w-36">
+        {(close) => (
+          <div>
+            {OL_STYLES.map((s) => (
+              <button
+                key={s.value}
+                type="button"
+                onMouseDown={noFocusSteal}
+                onClick={() => { applyOrderedStyle(s.value); close(); }}
+                className="block w-full px-3 py-1.5 text-left text-sm text-slate-700 hover:bg-slate-100"
+              >
+                {s.label}
+              </button>
+            ))}
+          </div>
+        )}
+      </Dropdown>
+      <button type="button" onMouseDown={noFocusSteal} onClick={() => editor.chain().focus().toggleBlockquote().run()} className={btn(editor.isActive("blockquote"))} title="Quote"><Quote className="h-4 w-4" /></button>
       <Divider />
-      <button type="button" onClick={() => editor.chain().focus().setTextAlign("left").run()} className={btn(editor.isActive({ textAlign: "left" }))} title="Align left"><AlignLeft className="h-4 w-4" /></button>
-      <button type="button" onClick={() => editor.chain().focus().setTextAlign("center").run()} className={btn(editor.isActive({ textAlign: "center" }))} title="Align center"><AlignCenter className="h-4 w-4" /></button>
-      <button type="button" onClick={() => editor.chain().focus().setTextAlign("right").run()} className={btn(editor.isActive({ textAlign: "right" }))} title="Align right"><AlignRight className="h-4 w-4" /></button>
+      <button type="button" onMouseDown={noFocusSteal} onClick={() => editor.chain().focus().setTextAlign("left").run()} className={btn(editor.isActive({ textAlign: "left" }))} title="Align left"><AlignLeft className="h-4 w-4" /></button>
+      <button type="button" onMouseDown={noFocusSteal} onClick={() => editor.chain().focus().setTextAlign("center").run()} className={btn(editor.isActive({ textAlign: "center" }))} title="Align center"><AlignCenter className="h-4 w-4" /></button>
+      <button type="button" onMouseDown={noFocusSteal} onClick={() => editor.chain().focus().setTextAlign("right").run()} className={btn(editor.isActive({ textAlign: "right" }))} title="Align right"><AlignRight className="h-4 w-4" /></button>
       <Divider />
-      <button type="button" onClick={setLink} className={btn(editor.isActive("link"))} title="Link"><LinkIcon className="h-4 w-4" /></button>
-      <button type="button" onClick={onPickImage} className={btn(false)} title="Insert image"><ImageIcon className="h-4 w-4" /></button>
+      <button type="button" onMouseDown={noFocusSteal} onClick={setLink} className={btn(editor.isActive("link"))} title="Link"><LinkIcon className="h-4 w-4" /></button>
+      <button type="button" onMouseDown={noFocusSteal} onClick={onPickImage} className={btn(false)} title="Insert image"><ImageIcon className="h-4 w-4" /></button>
       <Divider />
-      <button type="button" onClick={() => editor.chain().focus().insertTable({ rows: 3, cols: 3, withHeaderRow: true }).run()} className={btn(false)} title="Insert table"><TableIcon className="h-4 w-4" /></button>
-      <button type="button" onClick={() => editor.chain().focus().addRowAfter().run()} className={btn(false)} title="Add row"><Rows className="h-4 w-4" /></button>
-      <button type="button" onClick={() => editor.chain().focus().addColumnAfter().run()} className={btn(false)} title="Add column"><Columns className="h-4 w-4" /></button>
-      <button type="button" onClick={() => editor.chain().focus().mergeCells().run()} className={btn(false)} title="Merge cells"><Merge className="h-4 w-4" /></button>
-      <button type="button" onClick={() => editor.chain().focus().splitCell().run()} className={btn(false)} title="Split cell"><Split className="h-4 w-4" /></button>
-      <button type="button" onClick={toggleTableBorders} className={btn(false)} title="Toggle table borders"><SquareDashed className="h-4 w-4" /></button>
-      <button type="button" onClick={() => editor.chain().focus().deleteTable().run()} className={btn(false)} title="Delete table"><Trash2 className="h-4 w-4" /></button>
+      <InsertTablePopover editor={editor} />
+      <button type="button" onMouseDown={noFocusSteal} onClick={toggleTableBorders} className={btn(false)} title="Toggle table borders"><SquareDashed className="h-4 w-4" /></button>
+      <button type="button" onMouseDown={noFocusSteal} onClick={() => editor.chain().focus().mergeCells().run()} className={btn(false)} title="Merge selected cells"><Merge className="h-4 w-4" /></button>
+      <button type="button" onMouseDown={noFocusSteal} onClick={() => editor.chain().focus().splitCell().run()} className={btn(false)} title="Split cell"><Split className="h-4 w-4" /></button>
+      <button type="button" onMouseDown={noFocusSteal} onClick={() => editor.chain().focus().addRowAfter().run()} className={btn(false)} title="Add row"><Rows className="h-4 w-4" /></button>
+      <button type="button" onMouseDown={noFocusSteal} onClick={() => editor.chain().focus().addColumnAfter().run()} className={btn(false)} title="Add column"><Columns className="h-4 w-4" /></button>
+      <button type="button" onMouseDown={noFocusSteal} onClick={() => editor.chain().focus().deleteTable().run()} className={btn(false)} title="Delete table"><Trash2 className="h-4 w-4" /></button>
       <Divider />
-      <button type="button" onClick={() => editor.chain().focus().undo().run()} className={btn(false)} title="Undo"><Undo className="h-4 w-4" /></button>
-      <button type="button" onClick={() => editor.chain().focus().redo().run()} className={btn(false)} title="Redo"><Redo className="h-4 w-4" /></button>
+      <button type="button" onMouseDown={noFocusSteal} onClick={() => editor.chain().focus().undo().run()} className={btn(false)} title="Undo"><Undo className="h-4 w-4" /></button>
+      <button type="button" onMouseDown={noFocusSteal} onClick={() => editor.chain().focus().redo().run()} className={btn(false)} title="Redo"><Redo className="h-4 w-4" /></button>
     </div>
   );
 }
 
-function onChangeFire(editor: Editor) {
-  editor.emit("update", { editor, transaction: editor.state.tr, appendedTransactions: [] });
-}
-
 function Divider() {
   return <span className="mx-1 h-5 w-px bg-slate-300" />;
+}
+
+function Dropdown({
+  label,
+  icon,
+  title,
+  width = "w-40",
+  children,
+}: {
+  label: string;
+  icon?: React.ReactNode;
+  title: string;
+  width?: string;
+  children: (close: () => void) => React.ReactNode;
+}) {
+  const [open, setOpen] = useState(false);
+  const ref = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (!open) return;
+    const onDoc = (e: MouseEvent) => {
+      if (ref.current && !ref.current.contains(e.target as Node)) setOpen(false);
+    };
+    document.addEventListener("mousedown", onDoc);
+    return () => document.removeEventListener("mousedown", onDoc);
+  }, [open]);
+
+  return (
+    <div className="relative" ref={ref}>
+      <button
+        type="button"
+        onMouseDown={(e) => e.preventDefault()}
+        onClick={() => setOpen((v) => !v)}
+        className="flex items-center gap-1 rounded border border-slate-200 bg-white px-2 py-1 text-xs text-slate-700 hover:bg-slate-100"
+        title={title}
+      >
+        {label && <span className="truncate">{label}</span>}
+        {icon ?? <ChevronDown className="h-3 w-3" />}
+      </button>
+      {open && (
+        <div className={`absolute left-0 top-full z-30 mt-1 ${width} rounded-md border border-slate-200 bg-white py-1 shadow-xl`}>
+          {children(() => setOpen(false))}
+        </div>
+      )}
+    </div>
+  );
+}
+
+function InsertTablePopover({ editor }: { editor: Editor }) {
+  const [open, setOpen] = useState(false);
+  const [rows, setRows] = useState(3);
+  const [cols, setCols] = useState(3);
+  const [header, setHeader] = useState(true);
+  const ref = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (!open) return;
+    const onDoc = (e: MouseEvent) => {
+      if (ref.current && !ref.current.contains(e.target as Node)) setOpen(false);
+    };
+    document.addEventListener("mousedown", onDoc);
+    return () => document.removeEventListener("mousedown", onDoc);
+  }, [open]);
+
+  return (
+    <div className="relative" ref={ref}>
+      <button
+        type="button"
+        onMouseDown={(e) => e.preventDefault()}
+        onClick={() => setOpen((v) => !v)}
+        className="rounded p-1.5 text-slate-700 hover:bg-slate-100"
+        title="Insert table"
+      >
+        <TableIcon className="h-4 w-4" />
+      </button>
+      {open && (
+        <div className="absolute left-0 top-full z-30 mt-1 w-56 rounded-md border border-slate-200 bg-white p-3 shadow-xl">
+          <div className="mb-2 text-xs font-semibold text-slate-700">Insert table</div>
+          <div className="grid grid-cols-2 gap-2">
+            <label className="text-xs text-slate-600">
+              Rows
+              <input
+                type="number"
+                min={1}
+                max={50}
+                value={rows}
+                onChange={(e) => setRows(Math.max(1, Math.min(50, Number(e.target.value) || 1)))}
+                className="mt-1 w-full rounded border border-slate-300 px-2 py-1 text-sm"
+              />
+            </label>
+            <label className="text-xs text-slate-600">
+              Columns
+              <input
+                type="number"
+                min={1}
+                max={20}
+                value={cols}
+                onChange={(e) => setCols(Math.max(1, Math.min(20, Number(e.target.value) || 1)))}
+                className="mt-1 w-full rounded border border-slate-300 px-2 py-1 text-sm"
+              />
+            </label>
+          </div>
+          <label className="mt-2 flex items-center gap-2 text-xs text-slate-600">
+            <input type="checkbox" checked={header} onChange={(e) => setHeader(e.target.checked)} />
+            Include header row
+          </label>
+          <div className="mt-3 flex justify-end gap-2">
+            <button
+              type="button"
+              onClick={() => setOpen(false)}
+              className="rounded border border-slate-200 px-2 py-1 text-xs text-slate-600 hover:bg-slate-50"
+            >
+              Cancel
+            </button>
+            <button
+              type="button"
+              onMouseDown={(e) => e.preventDefault()}
+              onClick={() => {
+                editor.chain().focus().insertTable({ rows, cols, withHeaderRow: header }).run();
+                setOpen(false);
+              }}
+              className="rounded bg-slate-900 px-3 py-1 text-xs font-medium text-white hover:bg-slate-800"
+            >
+              Insert
+            </button>
+          </div>
+        </div>
+      )}
+    </div>
+  );
 }
 
 function ColorPicker({ editor }: { editor: Editor }) {
@@ -347,12 +549,13 @@ function ColorPicker({ editor }: { editor: Editor }) {
     <div className="relative" ref={ref}>
       <button
         type="button"
+        onMouseDown={(e) => e.preventDefault()}
         onClick={() => setOpen((v) => !v)}
         className="flex items-center gap-1 rounded p-1.5 text-slate-700 hover:bg-slate-100"
         title="Text color"
       >
         <span className="block h-4 w-4 rounded-sm border border-slate-300" style={{ background: current }} />
-        <span className="text-[10px] text-slate-500">▾</span>
+        <ChevronDown className="h-3 w-3 text-slate-500" />
       </button>
       {open && (
         <div className="absolute left-0 top-full z-30 mt-1 w-64 rounded-md border border-slate-200 bg-white p-3 shadow-xl">
@@ -362,6 +565,7 @@ function ColorPicker({ editor }: { editor: Editor }) {
               <button
                 key={c}
                 type="button"
+                onMouseDown={(e) => e.preventDefault()}
                 onClick={() => {
                   editor.chain().focus().setColor(c).run();
                   setOpen(false);
@@ -385,6 +589,7 @@ function ColorPicker({ editor }: { editor: Editor }) {
             </label>
             <button
               type="button"
+              onMouseDown={(e) => e.preventDefault()}
               onClick={() => {
                 editor.chain().focus().unsetColor().run();
                 setOpen(false);
