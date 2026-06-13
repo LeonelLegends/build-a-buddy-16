@@ -162,6 +162,13 @@ export const Route = createFileRoute("/api/public/chat")({
               content: String(m.content ?? "").slice(0, 2000),
             }));
 
+          const kb = await buildKnowledgeBase();
+          const kbBlock = lang === "es" ? kb.es : kb.en;
+          const baseSystem = lang === "es" ? SYSTEM_ES : SYSTEM_EN;
+          const kbInstructionEn = `\n\nYou have access to the following published blog articles from Legends Insurance Services. When a user's question is covered by these articles, base your answer on them and cite the relevant article title (and link as /blog/<slug>) so the user can read more. If the articles do not cover the topic, answer from general knowledge within your rules and invite the user to contact the agency.\n\n=== BLOG KNOWLEDGE BASE ===\n${kbBlock}\n=== END BLOG KNOWLEDGE BASE ===`;
+          const kbInstructionEs = `\n\nTienes acceso a los siguientes artículos publicados en el blog de Legends Insurance Services. Cuando la pregunta del usuario esté cubierta por estos artículos, basa tu respuesta en ellos y cita el título del artículo relevante (y el enlace como /blog/<slug>) para que el usuario pueda leer más. Si los artículos no cubren el tema, responde con conocimiento general dentro de tus reglas e invita al usuario a contactar a la agencia.\n\n=== BASE DE CONOCIMIENTO DEL BLOG ===\n${kbBlock}\n=== FIN BASE DE CONOCIMIENTO DEL BLOG ===`;
+          const systemContent = baseSystem + (kbBlock ? (lang === "es" ? kbInstructionEs : kbInstructionEn) : "");
+
           const upstream = await fetch(
             "https://ai.gateway.lovable.dev/v1/chat/completions",
             {
@@ -170,6 +177,11 @@ export const Route = createFileRoute("/api/public/chat")({
                 Authorization: `Bearer ${apiKey}`,
                 "Content-Type": "application/json",
               },
+              body: JSON.stringify({
+                model: "google/gemini-3-flash-preview",
+                stream: true,
+                messages: [
+                  { role: "system", content: systemContent },
               body: JSON.stringify({
                 model: "google/gemini-3-flash-preview",
                 stream: true,
