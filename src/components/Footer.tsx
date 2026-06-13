@@ -31,31 +31,47 @@ export function Footer() {
               Legends Insurance Services
             </span>
           </Link>
-          <p className="mt-4 max-w-sm text-sm text-primary-foreground/70">
-            {t("footer.tagline")}
-          </p>
+          <p className="mt-4 max-w-sm text-sm text-primary-foreground/70">{t("footer.tagline")}</p>
         </div>
 
         <div>
-          <h4 className="text-sm font-semibold uppercase tracking-wider text-gold">
-            {t("nav.services")}
-          </h4>
+          <h4 className="text-sm font-semibold uppercase tracking-wider text-gold">{t("nav.services")}</h4>
           <ul className="mt-4 space-y-2 text-sm text-primary-foreground/75">
-            <li><Link to="/services" className="hover:text-gold">{t("services.annuities.title")}</Link></li>
-            <li><Link to="/services" className="hover:text-gold">{t("services.iul.title")}</Link></li>
-            <li><Link to="/services" className="hover:text-gold">{t("services.whole.title")}</Link></li>
-            <li><Link to="/benefits" className="hover:text-gold">{t("services.cafeteria.title")}</Link></li>
+            <li>
+              <Link to="/services" className="hover:text-gold">
+                {t("services.annuities.title")}
+              </Link>
+            </li>
+            <li>
+              <Link to="/services" className="hover:text-gold">
+                {t("services.iul.title")}
+              </Link>
+            </li>
+            <li>
+              <Link to="/services" className="hover:text-gold">
+                {t("services.whole.title")}
+              </Link>
+            </li>
+            <li>
+              <Link to="/benefits" className="hover:text-gold">
+                {t("services.cafeteria.title")}
+              </Link>
+            </li>
           </ul>
         </div>
 
         <div>
-          <h4 className="text-sm font-semibold uppercase tracking-wider text-gold">
-            {t("nav.contact")}
-          </h4>
+          <h4 className="text-sm font-semibold uppercase tracking-wider text-gold">{t("nav.contact")}</h4>
           <ul className="mt-4 space-y-3 text-sm text-primary-foreground/75">
-            <li className="flex items-center gap-2"><Phone className="h-4 w-4 text-gold" /> (941) 265-0210</li>
-            <li className="flex items-center gap-2"><Mail className="h-4 w-4 text-gold" /> support@legendsinsuranceservices.com</li>
-            <li className="flex items-center gap-2"><MapPin className="h-4 w-4 text-gold" /> Sarasota FL 34231, United States</li>
+            <li className="flex items-center gap-2">
+              <Phone className="h-4 w-4 text-gold" /> (805) 419-3332
+            </li>
+            <li className="flex items-center gap-2">
+              <Mail className="h-4 w-4 text-gold" /> support@legendsinsuranceservices.com
+            </li>
+            <li className="flex items-center gap-2">
+              <MapPin className="h-4 w-4 text-gold" /> Sarasota FL 34231, United States
+            </li>
           </ul>
           <div className="mt-5 flex items-center gap-3">
             <a
@@ -68,7 +84,7 @@ export function Footer() {
               <FacebookIcon className="h-4 w-4" />
             </a>
             <a
-              href="https://www.instagram.com/legendsinsuranceservicios/"
+              href="https://www.instagram.com/legendsinsuranceservices/"
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex h-9 w-9 items-center justify-center rounded-full bg-primary-foreground/10 text-primary-foreground/80 transition-colors hover:bg-gradient-to-tr hover:from-[#f09433] hover:via-[#e6683c] hover:to-[#bc1888] hover:text-white"
@@ -81,10 +97,16 @@ export function Footer() {
       </div>
       <div className="border-t border-primary-foreground/10">
         <div className="mx-auto flex max-w-7xl flex-col items-center justify-between gap-3 px-6 py-5 text-xs text-primary-foreground/60 md:flex-row">
-          <p>© {new Date().getFullYear()} Legends Insurance Services. {t("footer.rights")}</p>
+          <p>
+            © {new Date().getFullYear()} Legends Insurance Services. {t("footer.rights")}
+          </p>
           <div className="flex items-center gap-4">
-            <Link to="/privacy" className="hover:text-gold">Privacy Policy</Link>
-            <Link to="/terms" className="hover:text-gold">Terms of Service</Link>
+            <Link to="/privacy" className="hover:text-gold">
+              Privacy Policy
+            </Link>
+            <Link to="/terms" className="hover:text-gold">
+              Terms of Service
+            </Link>
             <span>Licensed insurance professionals.</span>
           </div>
         </div>
@@ -92,4 +114,3 @@ export function Footer() {
     </footer>
   );
 }
-
