@@ -4,6 +4,7 @@ import { marked } from "marked";
 import { supabase } from "@/integrations/supabase/client";
 import { useI18n } from "@/lib/i18n";
 import { resolveBlogImage } from "@/lib/blog-images";
+import { incrementBlogView } from "@/lib/blog-views.functions";
 
 type Post = {
   slug: string;
