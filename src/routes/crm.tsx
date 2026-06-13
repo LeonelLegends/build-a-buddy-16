@@ -59,17 +59,18 @@ function CrmLayout() {
     );
   }
 
-  const navItems = [
-    { to: "/crm/pipeline", label: "Pipeline", icon: LayoutGrid, children: [] as { to: string; label: string; icon: typeof Settings }[] },
+  type Item = { to: string; label: string; icon: typeof Settings; children: Item[] };
+  const navItems: Item[] = [
+    { to: "/crm/pipeline", label: "Pipeline", icon: LayoutGrid, children: [] },
     { to: "/crm/contacts", label: "Contacts", icon: Users, children: [] },
     { to: "/crm/blog", label: "Blog", icon: FileText, children: [] },
     {
       to: "/crm/settings",
       label: "Settings",
       icon: Settings,
-      children: [{ to: "/crm/users", label: "Users", icon: UserCog }],
+      children: [{ to: "/crm/users", label: "Users", icon: UserCog, children: [] }],
     },
-  ] as const;
+  ];
 
   return (
     <div className="flex min-h-screen bg-slate-50">
