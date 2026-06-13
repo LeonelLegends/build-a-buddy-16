@@ -62,7 +62,7 @@ export function Header() {
         </div>
 
         <button className="lg:hidden text-primary" onClick={() => setOpen(!open)} aria-label="Menu">
-          {open ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+          {open ? <X className="h-9 w-9" /> : <Menu className="h-9 w-9" />}
         </button>
       </div>
 
