@@ -1,6 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useEffect, useMemo, useState } from "react";
-import { Search } from "lucide-react";
+import { ChevronLeft, ChevronRight, Search } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { useI18n, type Lang } from "@/lib/i18n";
 import { resolveBlogImage } from "@/lib/blog-images";
@@ -66,6 +66,8 @@ function BlogIndex() {
   const [posts, setPosts] = useState<PostRow[]>([]);
   const [loading, setLoading] = useState(true);
   const [query, setQuery] = useState("");
+  const [page, setPage] = useState(0);
+  const PAGE_SIZE = 4;
 
   useEffect(() => {
     (async () => {
@@ -92,6 +94,16 @@ function BlogIndex() {
     });
   }, [posts, query, lang]);
 
+  useEffect(() => {
+    setPage(0);
+  }, [query]);
+
+  const totalPages = Math.max(1, Math.ceil(filtered.length / PAGE_SIZE));
+  const currentPage = Math.min(page, totalPages - 1);
+  const paged = filtered.slice(currentPage * PAGE_SIZE, currentPage * PAGE_SIZE + PAGE_SIZE);
+  const canPrev = currentPage > 0;
+  const canNext = currentPage < totalPages - 1;
+
   const popular = useMemo(
     () => [...posts].sort((a, b) => b.view_count - a.view_count).slice(0, 10),
     [posts],
@@ -117,13 +129,36 @@ function BlogIndex() {
                 : t("blog.empty")}
             </p>
           ) : (
-            <div className="grid gap-6 sm:grid-cols-2">
-              {filtered.map((post) => (
-                <PostCard key={post.slug} post={post} lang={lang} t={t} />
-              ))}
-            </div>
+            <>
+              <div className="mb-6 flex items-center justify-center gap-3">
+                <button
+                  type="button"
+                  onClick={() => setPage((p) => Math.max(0, p - 1))}
+                  disabled={!canPrev}
+                  aria-label={lang === "es" ? "Anterior" : "Previous"}
+                  className="grid h-11 w-11 place-items-center rounded-full border border-primary/30 text-primary transition-colors hover:bg-primary hover:text-primary-foreground disabled:cursor-not-allowed disabled:opacity-40 disabled:hover:bg-transparent disabled:hover:text-primary"
+                >
+                  <ChevronLeft className="h-5 w-5" />
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setPage((p) => Math.min(totalPages - 1, p + 1))}
+                  disabled={!canNext}
+                  aria-label={lang === "es" ? "Siguiente" : "Next"}
+                  className="grid h-11 w-11 place-items-center rounded-full border border-primary/30 text-primary transition-colors hover:bg-primary hover:text-primary-foreground disabled:cursor-not-allowed disabled:opacity-40 disabled:hover:bg-transparent disabled:hover:text-primary"
+                >
+                  <ChevronRight className="h-5 w-5" />
+                </button>
+              </div>
+              <div className="grid gap-6 sm:grid-cols-2">
+                {paged.map((post) => (
+                  <PostCard key={post.slug} post={post} lang={lang} t={t} />
+                ))}
+              </div>
+            </>
           )}
         </div>
+
 
         <aside className="space-y-6 lg:sticky lg:top-24 lg:self-start">
           <div className="rounded-2xl border border-border bg-card p-5">
