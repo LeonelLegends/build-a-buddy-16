@@ -32,7 +32,6 @@ import {
   Trash2,
   Merge,
   Split,
-  Square,
   SquareDashed,
 } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
