@@ -119,7 +119,7 @@ export function Footer() {
         </div>
       </div>
     </footer>
-    <PolicyModal policyTitleEn="Roth IRA" open={hysaOpen} onClose={() => setHysaOpen(false)} />
+    <PolicyModal policyTitleEn={openPolicy ?? ""} open={!!openPolicy} onClose={() => setOpenPolicy(null)} />
     </>
   );
 }
