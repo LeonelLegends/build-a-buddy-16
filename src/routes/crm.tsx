@@ -1,7 +1,7 @@
 import { createFileRoute, Link, Outlet, useNavigate } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
-import { LayoutGrid, Users, Settings, LogOut, FileText } from "lucide-react";
+import { LayoutGrid, Users, Settings, LogOut, FileText, UserCog } from "lucide-react";
 
 export const Route = createFileRoute("/crm")({
   head: () => ({
@@ -30,7 +30,7 @@ function CrmLayout() {
         .from("user_roles")
         .select("role")
         .eq("user_id", session.user.id)
-        .eq("role", "admin")
+        .in("role", ["admin", "master"])
         .maybeSingle();
       if (!mounted) return;
       setIsAdmin(!!data);
@@ -64,6 +64,7 @@ function CrmLayout() {
     { to: "/crm/contacts", label: "Contacts", icon: Users },
     { to: "/crm/blog", label: "Blog", icon: FileText },
     { to: "/crm/settings", label: "Settings", icon: Settings },
+    { to: "/crm/users", label: "Users", icon: UserCog },
   ] as const;
 
   return (
