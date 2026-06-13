@@ -21,6 +21,7 @@ import { Route as BlogRouteImport } from './routes/blog'
 import { Route as BenefitsRouteImport } from './routes/benefits'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as CrmIndexRouteImport } from './routes/crm.index'
+import { Route as BlogIndexRouteImport } from './routes/blog.index'
 import { Route as CrmSettingsRouteImport } from './routes/crm.settings'
 import { Route as CrmPipelineRouteImport } from './routes/crm.pipeline'
 import { Route as CrmContactsRouteImport } from './routes/crm.contacts'
@@ -88,6 +89,11 @@ const CrmIndexRoute = CrmIndexRouteImport.update({
   path: '/',
   getParentRoute: () => CrmRoute,
 } as any)
+const BlogIndexRoute = BlogIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => BlogRoute,
+} as any)
 const CrmSettingsRoute = CrmSettingsRouteImport.update({
   id: '/settings',
   path: '/settings',
@@ -136,13 +142,13 @@ export interface FileRoutesByFullPath {
   '/crm/contacts': typeof CrmContactsRoute
   '/crm/pipeline': typeof CrmPipelineRoute
   '/crm/settings': typeof CrmSettingsRoute
+  '/blog/': typeof BlogIndexRoute
   '/crm/': typeof CrmIndexRoute
   '/api/public/chat': typeof ApiPublicChatRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/benefits': typeof BenefitsRoute
-  '/blog': typeof BlogRouteWithChildren
   '/contact': typeof ContactRoute
   '/dashboard': typeof DashboardRoute
   '/login': typeof LoginRoute
@@ -155,6 +161,7 @@ export interface FileRoutesByTo {
   '/crm/contacts': typeof CrmContactsRoute
   '/crm/pipeline': typeof CrmPipelineRoute
   '/crm/settings': typeof CrmSettingsRoute
+  '/blog': typeof BlogIndexRoute
   '/crm': typeof CrmIndexRoute
   '/api/public/chat': typeof ApiPublicChatRoute
 }
@@ -176,6 +183,7 @@ export interface FileRoutesById {
   '/crm/contacts': typeof CrmContactsRoute
   '/crm/pipeline': typeof CrmPipelineRoute
   '/crm/settings': typeof CrmSettingsRoute
+  '/blog/': typeof BlogIndexRoute
   '/crm/': typeof CrmIndexRoute
   '/api/public/chat': typeof ApiPublicChatRoute
 }
@@ -198,13 +206,13 @@ export interface FileRouteTypes {
     | '/crm/contacts'
     | '/crm/pipeline'
     | '/crm/settings'
+    | '/blog/'
     | '/crm/'
     | '/api/public/chat'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
     | '/benefits'
-    | '/blog'
     | '/contact'
     | '/dashboard'
     | '/login'
@@ -217,6 +225,7 @@ export interface FileRouteTypes {
     | '/crm/contacts'
     | '/crm/pipeline'
     | '/crm/settings'
+    | '/blog'
     | '/crm'
     | '/api/public/chat'
   id:
@@ -237,6 +246,7 @@ export interface FileRouteTypes {
     | '/crm/contacts'
     | '/crm/pipeline'
     | '/crm/settings'
+    | '/blog/'
     | '/crm/'
     | '/api/public/chat'
   fileRoutesById: FileRoutesById
@@ -342,6 +352,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof CrmIndexRouteImport
       parentRoute: typeof CrmRoute
     }
+    '/blog/': {
+      id: '/blog/'
+      path: '/'
+      fullPath: '/blog/'
+      preLoaderRoute: typeof BlogIndexRouteImport
+      parentRoute: typeof BlogRoute
+    }
     '/crm/settings': {
       id: '/crm/settings'
       path: '/settings'
@@ -389,10 +406,12 @@ declare module '@tanstack/react-router' {
 
 interface BlogRouteChildren {
   BlogSlugRoute: typeof BlogSlugRoute
+  BlogIndexRoute: typeof BlogIndexRoute
 }
 
 const BlogRouteChildren: BlogRouteChildren = {
   BlogSlugRoute: BlogSlugRoute,
+  BlogIndexRoute: BlogIndexRoute,
 }
 
 const BlogRouteWithChildren = BlogRoute._addFileChildren(BlogRouteChildren)
