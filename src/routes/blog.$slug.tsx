@@ -132,6 +132,9 @@ function BlogPostPage() {
         .blog-body table th { background: #f1f5f9; font-weight: 600; text-align: left; }
         .blog-body ul { list-style-type: disc; padding-left: 1.6rem; }
         .blog-body ol { list-style-type: decimal; padding-left: 1.6rem; }
+        .blog-body ul[data-list-style="disc"] { list-style-type: disc; }
+        .blog-body ul[data-list-style="circle"] { list-style-type: circle; }
+        .blog-body ul[data-list-style="square"] { list-style-type: square; }
       `}</style>
     </article>
   );
