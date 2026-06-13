@@ -116,9 +116,20 @@ function BlogPostPage() {
       )}
 
       <div
-        className="prose prose-slate max-w-none prose-headings:font-display prose-headings:tracking-tight prose-a:text-primary prose-img:rounded-lg"
+        className="blog-body prose prose-slate max-w-none prose-headings:font-display prose-headings:tracking-tight prose-a:text-primary prose-img:rounded-lg"
         dangerouslySetInnerHTML={{ __html: html }}
       />
+      <style>{`
+        .blog-body { white-space: pre-wrap; }
+        .blog-body p:empty { min-height: 1em; margin: 0 0 1em; }
+        .blog-body ol[data-list-style="upper-alpha"] { list-style-type: upper-alpha; }
+        .blog-body ol[data-list-style="lower-alpha"] { list-style-type: lower-alpha; }
+        .blog-body ol[data-list-style="upper-roman"] { list-style-type: upper-roman; }
+        .blog-body ol[data-list-style="lower-roman"] { list-style-type: lower-roman; }
+        .blog-body table { border-collapse: collapse; width: 100%; margin: 1rem 0; }
+        .blog-body table td, .blog-body table th { border: 1px solid #cbd5e1; padding: 8px 10px; vertical-align: top; }
+        .blog-body table th { background: #f1f5f9; font-weight: 600; text-align: left; }
+      `}</style>
     </article>
   );
 }
