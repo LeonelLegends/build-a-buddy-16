@@ -263,7 +263,7 @@ function Toolbar({ editor, onPickImage }: { editor: Editor; onPickImage: () => v
 
 function onChangeFire(editor: Editor) {
   // Force an update event so parent receives new HTML with data-list-style attr
-  editor.emit("update", { editor, transaction: editor.state.tr });
+  editor.emit("update", { editor, transaction: editor.state.tr, appendedTransactions: [] });
 }
 
 function Divider() {
