@@ -62,7 +62,7 @@ export function Header() {
         </div>
 
         <button className="lg:hidden text-primary" onClick={() => setOpen(!open)} aria-label="Menu">
-          {open ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+          {open ? <X className="h-9 w-9" /> : <Menu className="h-9 w-9" />}
         </button>
       </div>
 
@@ -81,26 +81,28 @@ export function Header() {
                 {l.label}
               </Link>
             ))}
-            <button
-              onClick={() => setLang(lang === "en" ? "es" : "en")}
-              className="mt-2 rounded-md bg-emerald-700 px-4 py-2 text-sm font-semibold tracking-wide text-logo-green-foreground text-center"
-            >
-              {t("lang.toggle")}
-            </button>
-            <Link
-              to="/login"
-              onClick={() => setOpen(false)}
-              className="rounded-md bg-emerald-700 px-4 py-2.5 text-center text-sm font-semibold text-logo-green-foreground"
-            >
-              Login
-            </Link>
-            <Link
-              to="/contact"
-              onClick={() => setOpen(false)}
-              className="rounded-md bg-emerald-700 px-4 py-2.5 text-center text-sm font-semibold text-logo-green-foreground"
-            >
-              {t("nav.cta")}
-            </Link>
+            <div className="mt-2 flex flex-wrap gap-2">
+              <button
+                onClick={() => setLang(lang === "en" ? "es" : "en")}
+                className="rounded-md bg-emerald-700 px-3 py-1.5 text-xs font-semibold tracking-wide text-logo-green-foreground"
+              >
+                {t("lang.toggle")}
+              </button>
+              <Link
+                to="/login"
+                onClick={() => setOpen(false)}
+                className="rounded-md bg-emerald-700 px-3 py-1.5 text-xs font-semibold text-logo-green-foreground"
+              >
+                Login
+              </Link>
+              <Link
+                to="/contact"
+                onClick={() => setOpen(false)}
+                className="rounded-md bg-emerald-700 px-3 py-1.5 text-xs font-semibold text-logo-green-foreground"
+              >
+                {t("nav.cta")}
+              </Link>
+            </div>
           </div>
         </div>
       )}

@@ -23,7 +23,19 @@ function InstagramIcon({ className }: { className?: string }) {
 
 export function Footer() {
   const { t } = useI18n();
-  const [hysaOpen, setHysaOpen] = useState(false);
+  const [openPolicy, setOpenPolicy] = useState<string | null>(null);
+
+  const svc = (titleEn: string, key: string) => (
+    <li>
+      <button
+        type="button"
+        onClick={() => setOpenPolicy(titleEn)}
+        className="text-left hover:text-gold"
+      >
+        {t(key)}
+      </button>
+    </li>
+  );
   return (
     <>
     <footer className="mt-24 border-t border-border bg-primary text-primary-foreground">
@@ -41,40 +53,12 @@ export function Footer() {
         <div>
           <h4 className="text-sm font-semibold uppercase tracking-wider text-gold">{t("nav.services")}</h4>
           <ul className="mt-4 space-y-2 text-sm text-primary-foreground/75">
-            <li>
-              <button
-                type="button"
-                onClick={() => setHysaOpen(true)}
-                className="text-left hover:text-gold"
-              >
-                {t("footer.svc.hysa")}
-              </button>
-            </li>
-            <li>
-              <Link to="/services" search={{ page: 0 }} className="hover:text-gold">
-                {t("footer.svc.401k")}
-              </Link>
-            </li>
-            <li>
-              <Link to="/services" search={{ page: 0 }} className="hover:text-gold">
-                {t("footer.svc.roth")}
-              </Link>
-            </li>
-            <li>
-              <Link to="/services" search={{ page: 1 }} className="hover:text-gold">
-                {t("footer.svc.term")}
-              </Link>
-            </li>
-            <li>
-              <Link to="/services" search={{ page: 2 }} className="hover:text-gold">
-                {t("footer.svc.permanent")}
-              </Link>
-            </li>
-            <li>
-              <Link to="/services" search={{ page: 2 }} className="hover:text-gold">
-                {t("footer.svc.annuities")}
-              </Link>
-            </li>
+            {svc("High Yield Savings Account (HYSA)", "footer.svc.hysa")}
+            {svc("401(k)", "footer.svc.401k")}
+            {svc("Roth IRA", "footer.svc.roth")}
+            {svc("Term Life Insurance", "footer.svc.term")}
+            {svc("Permanent Life Insurance (Whole, Universal, IUL)", "footer.svc.permanent")}
+            {svc("Annuities", "footer.svc.annuities")}
             <li>
               <Link to="/benefits" className="hover:text-gold">
                 {t("footer.svc.section125")}
@@ -135,7 +119,7 @@ export function Footer() {
         </div>
       </div>
     </footer>
-    <PolicyModal policyTitleEn="Roth IRA" open={hysaOpen} onClose={() => setHysaOpen(false)} />
+    <PolicyModal policyTitleEn={openPolicy ?? ""} open={!!openPolicy} onClose={() => setOpenPolicy(null)} />
     </>
   );
 }

@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { Link } from "@tanstack/react-router";
 import { ChevronLeft, ChevronRight, ArrowRight } from "lucide-react";
 import { useI18n } from "@/lib/i18n";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 import imgHysa from "@/assets/policy-hysa.jpg";
 import img401k from "@/assets/policy-401k.jpg";
@@ -232,18 +233,25 @@ export const POLICIES: Policy[] = [
   },
 ];
 
-const PAGE_SIZE = 3;
+const DESKTOP_PAGE_SIZE = 3;
 
 export function PolicySlideshow() {
   const { lang } = useI18n();
-  const totalPages = Math.ceil(POLICIES.length / PAGE_SIZE);
+  const isMobile = useIsMobile();
+  const pageSize = isMobile ? 1 : DESKTOP_PAGE_SIZE;
+  const totalPages = Math.ceil(POLICIES.length / pageSize);
 
   const [page, setPage] = useState(() => {
     if (typeof window === "undefined") return 0;
     const params = new URLSearchParams(window.location.search);
     const p = parseInt(params.get("page") || "0", 10);
-    return isNaN(p) ? 0 : Math.max(0, Math.min(p, totalPages - 1));
+    return isNaN(p) ? 0 : Math.max(0, p);
   });
+
+  useEffect(() => {
+    if (page > totalPages - 1) setPage(0);
+  }, [totalPages, page]);
+
 
   useEffect(() => {
     if (typeof window === "undefined") return;
@@ -255,8 +263,8 @@ export function PolicySlideshow() {
   const title = lang === "es" ? "Las Pólizas que Estás Buscando" : "The Policies You're Looking For";
   const learnMore = lang === "es" ? "Conoce más" : "Learn more";
 
-  const start = page * PAGE_SIZE;
-  const visible = POLICIES.slice(start, start + PAGE_SIZE);
+  const start = page * pageSize;
+  const visible = POLICIES.slice(start, start + pageSize);
 
   const prev = () => setPage((p) => (p - 1 + totalPages) % totalPages);
   const next = () => setPage((p) => (p + 1) % totalPages);
