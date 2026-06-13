@@ -23,7 +23,19 @@ function InstagramIcon({ className }: { className?: string }) {
 
 export function Footer() {
   const { t } = useI18n();
-  const [hysaOpen, setHysaOpen] = useState(false);
+  const [openPolicy, setOpenPolicy] = useState<string | null>(null);
+
+  const svc = (titleEn: string, key: string) => (
+    <li>
+      <button
+        type="button"
+        onClick={() => setOpenPolicy(titleEn)}
+        className="text-left hover:text-gold"
+      >
+        {t(key)}
+      </button>
+    </li>
+  );
   return (
     <>
     <footer className="mt-24 border-t border-border bg-primary text-primary-foreground">
