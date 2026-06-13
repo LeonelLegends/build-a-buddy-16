@@ -36,10 +36,6 @@ export function Footer() {
             </span>
           </Link>
           <p className="mt-4 max-w-sm text-sm text-primary-foreground/70">{t("footer.tagline")}</p>
-          <div className="mt-5 flex items-center gap-2 text-sm text-primary-foreground/75">
-            <Mail className="h-4 w-4 text-gold" />
-            <span>support@legendsinsuranceservices.com</span>
-          </div>
         </div>
 
         <div>
