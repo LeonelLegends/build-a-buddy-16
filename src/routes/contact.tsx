@@ -172,7 +172,7 @@ function ContactPage() {
                   <p className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">
                     {t("contact.emailLabel")}
                   </p>
-                  <p className="font-medium text-primary">jeff@legendsinsuranceservices.com</p>
+                  <p className="font-medium text-primary">support@legendsinsuranceservices.com</p>
                 </div>
               </div>
             </div>
