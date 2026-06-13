@@ -54,7 +54,7 @@ export function Footer() {
           </h4>
           <ul className="mt-4 space-y-3 text-sm text-primary-foreground/75">
             <li className="flex items-center gap-2"><Phone className="h-4 w-4 text-gold" /> (941) 265-0210</li>
-            <li className="flex items-center gap-2"><Mail className="h-4 w-4 text-gold" /> jeff@legendsinsuranceservices.com</li>
+            <li className="flex items-center gap-2"><Mail className="h-4 w-4 text-gold" /> support@legendsinsuranceservices.com</li>
             <li className="flex items-center gap-2"><MapPin className="h-4 w-4 text-gold" /> Sarasota FL 34231, United States</li>
           </ul>
           <div className="mt-5 flex items-center gap-3">
