@@ -66,6 +66,8 @@ function BlogIndex() {
   const [posts, setPosts] = useState<PostRow[]>([]);
   const [loading, setLoading] = useState(true);
   const [query, setQuery] = useState("");
+  const [page, setPage] = useState(0);
+  const PAGE_SIZE = 4;
 
   useEffect(() => {
     (async () => {
