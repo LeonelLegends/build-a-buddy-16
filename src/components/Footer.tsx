@@ -36,10 +36,6 @@ export function Footer() {
             </span>
           </Link>
           <p className="mt-4 max-w-sm text-sm text-primary-foreground/70">{t("footer.tagline")}</p>
-          <div className="mt-5 flex items-center gap-2 text-sm text-primary-foreground/75">
-            <Mail className="h-4 w-4 text-gold" />
-            <span>support@legendsinsuranceservices.com</span>
-          </div>
         </div>
 
         <div>
@@ -51,37 +47,37 @@ export function Footer() {
                 onClick={() => setHysaOpen(true)}
                 className="text-left hover:text-gold"
               >
-                High Yield Savings Account (HYSA)
+                {t("footer.svc.hysa")}
               </button>
             </li>
             <li>
               <Link to="/services" search={{ page: 0 }} className="hover:text-gold">
-                401(k)
+                {t("footer.svc.401k")}
               </Link>
             </li>
             <li>
               <Link to="/services" search={{ page: 0 }} className="hover:text-gold">
-                Roth IRA
+                {t("footer.svc.roth")}
               </Link>
             </li>
             <li>
               <Link to="/services" search={{ page: 1 }} className="hover:text-gold">
-                Term Life Insurance
+                {t("footer.svc.term")}
               </Link>
             </li>
             <li>
               <Link to="/services" search={{ page: 2 }} className="hover:text-gold">
-                Permanent Life Insurance (Whole, Universal, IUL)
+                {t("footer.svc.permanent")}
               </Link>
             </li>
             <li>
               <Link to="/services" search={{ page: 2 }} className="hover:text-gold">
-                Annuities
+                {t("footer.svc.annuities")}
               </Link>
             </li>
             <li>
               <Link to="/benefits" className="hover:text-gold">
-                Section 125 Cafeteria Plans
+                {t("footer.svc.section125")}
               </Link>
             </li>
           </ul>
