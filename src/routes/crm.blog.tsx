@@ -5,9 +5,10 @@ import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { Plus, Trash2, Pencil, X, Eye } from "lucide-react";
+import { Plus, Trash2, Pencil, X, Eye, Languages, Loader2 } from "lucide-react";
 import { RichTextEditor } from "@/components/blog/RichTextEditor";
 import { ImageUploader } from "@/components/blog/ImageUploader";
+import { translateBlogToSpanish } from "@/lib/translate.functions";
 
 type Post = {
   id: string;
