@@ -236,8 +236,22 @@ const PAGE_SIZE = 3;
 
 export function PolicySlideshow() {
   const { lang } = useI18n();
-  const [page, setPage] = useState(0);
+  const navigate = useNavigate({ from: "/services" });
   const totalPages = Math.ceil(POLICIES.length / PAGE_SIZE);
+
+  const [page, setPage] = useState(() => {
+    if (typeof window === "undefined") return 0;
+    const params = new URLSearchParams(window.location.search);
+    const p = parseInt(params.get("page") || "0", 10);
+    return isNaN(p) ? 0 : Math.max(0, Math.min(p, totalPages - 1));
+  });
+
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    const url = new URL(window.location.href);
+    url.searchParams.set("page", String(page));
+    window.history.replaceState({}, "", url);
+  }, [page]);
 
   const title = lang === "es" ? "Las Pólizas que Estás Buscando" : "The Policies You're Looking For";
   const learnMore = lang === "es" ? "Conoce más" : "Learn more";
