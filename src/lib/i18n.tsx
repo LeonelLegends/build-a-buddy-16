@@ -195,6 +195,13 @@ const es: Dict = {
 
   "footer.tagline": "Protección financiera centrada en la familia.",
   "footer.rights": "Todos los derechos reservados.",
+  "footer.svc.hysa": "Cuenta de Ahorros de Alto Rendimiento (HYSA)",
+  "footer.svc.401k": "401(k)",
+  "footer.svc.roth": "Roth IRA",
+  "footer.svc.term": "Seguro de Vida a Término",
+  "footer.svc.permanent": "Seguro de Vida Permanente (Whole, Universal, IUL)",
+  "footer.svc.annuities": "Anualidades",
+  "footer.svc.section125": "Planes de Cafetería Sección 125",
 
   "chat.title": "Chatea con Legends",
   "chat.subtitle": "Pregunta sobre planes, productos o citas.",
