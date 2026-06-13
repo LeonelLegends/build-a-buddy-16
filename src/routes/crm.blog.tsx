@@ -5,9 +5,10 @@ import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { Plus, Trash2, Pencil, X, Eye } from "lucide-react";
+import { Plus, Trash2, Pencil, X, Eye, Languages, Loader2 } from "lucide-react";
 import { RichTextEditor } from "@/components/blog/RichTextEditor";
 import { ImageUploader } from "@/components/blog/ImageUploader";
+import { translateBlogToSpanish } from "@/lib/translate.functions";
 
 type Post = {
   id: string;
@@ -61,6 +62,40 @@ function BlogAdmin() {
   const [editing, setEditing] = useState<typeof empty | null>(null);
   const [saving, setSaving] = useState(false);
   const [tab, setTab] = useState<"en" | "es">("en");
+  const [translating, setTranslating] = useState(false);
+
+  const copyToSpanish = async () => {
+    if (!editing) return;
+    if (!editing.title.trim() && !editing.summary.trim() && !editing.body.trim()) {
+      return toast.error("Add English content first");
+    }
+    setTranslating(true);
+    try {
+      const result = await translateBlogToSpanish({
+        data: {
+          title: editing.title || "",
+          summary: editing.summary || "",
+          body: editing.body || "",
+        },
+      });
+      setEditing((prev) =>
+        prev
+          ? {
+              ...prev,
+              title_es: result.title,
+              summary_es: result.summary,
+              body_es: result.body,
+            }
+          : prev,
+      );
+      setTab("es");
+      toast.success("Content copied and translated to Spanish");
+    } catch (e) {
+      toast.error(e instanceof Error ? e.message : "Translation failed");
+    } finally {
+      setTranslating(false);
+    }
+  };
 
   const load = async () => {
     setLoading(true);
@@ -263,14 +298,30 @@ function BlogAdmin() {
               </>
             )}
 
-            <label className="flex items-center gap-2 text-sm text-slate-700">
-              <input
-                type="checkbox"
-                checked={editing.published}
-                onChange={(e) => setEditing({ ...editing, published: e.target.checked })}
-              />
-              Published (visible on the public blog)
-            </label>
+            <div className="flex flex-wrap items-center justify-between gap-3">
+              <label className="flex items-center gap-2 text-sm text-slate-700">
+                <input
+                  type="checkbox"
+                  checked={editing.published}
+                  onChange={(e) => setEditing({ ...editing, published: e.target.checked })}
+                />
+                Published (visible on the public blog)
+              </label>
+              <Button
+                type="button"
+                variant="outline"
+                size="sm"
+                onClick={copyToSpanish}
+                disabled={translating}
+              >
+                {translating ? (
+                  <Loader2 className="mr-1.5 h-4 w-4 animate-spin" />
+                ) : (
+                  <Languages className="mr-1.5 h-4 w-4" />
+                )}
+                {translating ? "Translating…" : "Copy Content to the Spanish Section"}
+              </Button>
+            </div>
           </div>
 
           <div className="mt-6 flex justify-end gap-2">
