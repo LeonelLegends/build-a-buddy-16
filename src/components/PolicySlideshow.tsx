@@ -22,7 +22,7 @@ type Policy = {
 };
 
 // Title colors cycle through the logo palette (navy/primary, logo green, gold/teal accent)
-const POLICIES: Policy[] = [
+export const POLICIES: Policy[] = [
   {
     image: imgHysa,
     color: "text-primary",
