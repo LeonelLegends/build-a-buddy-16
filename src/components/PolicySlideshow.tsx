@@ -233,18 +233,25 @@ export const POLICIES: Policy[] = [
   },
 ];
 
-const PAGE_SIZE = 3;
+const DESKTOP_PAGE_SIZE = 3;
 
 export function PolicySlideshow() {
   const { lang } = useI18n();
-  const totalPages = Math.ceil(POLICIES.length / PAGE_SIZE);
+  const isMobile = useIsMobile();
+  const pageSize = isMobile ? 1 : DESKTOP_PAGE_SIZE;
+  const totalPages = Math.ceil(POLICIES.length / pageSize);
 
   const [page, setPage] = useState(() => {
     if (typeof window === "undefined") return 0;
     const params = new URLSearchParams(window.location.search);
     const p = parseInt(params.get("page") || "0", 10);
-    return isNaN(p) ? 0 : Math.max(0, Math.min(p, totalPages - 1));
+    return isNaN(p) ? 0 : Math.max(0, p);
   });
+
+  useEffect(() => {
+    if (page > totalPages - 1) setPage(0);
+  }, [totalPages, page]);
+
 
   useEffect(() => {
     if (typeof window === "undefined") return;
