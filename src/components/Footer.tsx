@@ -45,9 +45,13 @@ export function Footer() {
           <h4 className="text-sm font-semibold uppercase tracking-wider text-gold">{t("nav.services")}</h4>
           <ul className="mt-4 space-y-2 text-sm text-primary-foreground/75">
             <li>
-              <Link to="/services" search={{ page: 0 }} className="hover:text-gold">
+              <button
+                type="button"
+                onClick={() => setHysaOpen(true)}
+                className="text-left hover:text-gold"
+              >
                 High Yield Savings Account (HYSA)
-              </Link>
+              </button>
             </li>
             <li>
               <Link to="/services" search={{ page: 0 }} className="hover:text-gold">
