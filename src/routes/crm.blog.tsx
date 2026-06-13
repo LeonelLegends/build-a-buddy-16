@@ -298,14 +298,30 @@ function BlogAdmin() {
               </>
             )}
 
-            <label className="flex items-center gap-2 text-sm text-slate-700">
-              <input
-                type="checkbox"
-                checked={editing.published}
-                onChange={(e) => setEditing({ ...editing, published: e.target.checked })}
-              />
-              Published (visible on the public blog)
-            </label>
+            <div className="flex flex-wrap items-center justify-between gap-3">
+              <label className="flex items-center gap-2 text-sm text-slate-700">
+                <input
+                  type="checkbox"
+                  checked={editing.published}
+                  onChange={(e) => setEditing({ ...editing, published: e.target.checked })}
+                />
+                Published (visible on the public blog)
+              </label>
+              <Button
+                type="button"
+                variant="outline"
+                size="sm"
+                onClick={copyToSpanish}
+                disabled={translating}
+              >
+                {translating ? (
+                  <Loader2 className="mr-1.5 h-4 w-4 animate-spin" />
+                ) : (
+                  <Languages className="mr-1.5 h-4 w-4" />
+                )}
+                {translating ? "Translating…" : "Copy Content to the Spanish Section"}
+              </Button>
+            </div>
           </div>
 
           <div className="mt-6 flex justify-end gap-2">
