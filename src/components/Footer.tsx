@@ -32,29 +32,48 @@ export function Footer() {
             </span>
           </Link>
           <p className="mt-4 max-w-sm text-sm text-primary-foreground/70">{t("footer.tagline")}</p>
+          <div className="mt-5 flex items-center gap-2 text-sm text-primary-foreground/75">
+            <Mail className="h-4 w-4 text-gold" />
+            <span>support@legendsinsuranceservices.com</span>
+          </div>
         </div>
 
         <div>
           <h4 className="text-sm font-semibold uppercase tracking-wider text-gold">{t("nav.services")}</h4>
           <ul className="mt-4 space-y-2 text-sm text-primary-foreground/75">
             <li>
-              <Link to="/services" className="hover:text-gold">
-                {t("services.annuities.title")}
+              <Link to="/services" search={{ page: 0 }} className="hover:text-gold">
+                High Yield Savings Account (HYSA)
               </Link>
             </li>
             <li>
-              <Link to="/services" className="hover:text-gold">
-                {t("services.iul.title")}
+              <Link to="/services" search={{ page: 0 }} className="hover:text-gold">
+                401(k)
               </Link>
             </li>
             <li>
-              <Link to="/services" className="hover:text-gold">
-                {t("services.whole.title")}
+              <Link to="/services" search={{ page: 0 }} className="hover:text-gold">
+                Roth IRA
+              </Link>
+            </li>
+            <li>
+              <Link to="/services" search={{ page: 1 }} className="hover:text-gold">
+                Term Life Insurance
+              </Link>
+            </li>
+            <li>
+              <Link to="/services" search={{ page: 2 }} className="hover:text-gold">
+                Permanent Life Insurance (Whole, Universal, IUL)
+              </Link>
+            </li>
+            <li>
+              <Link to="/services" search={{ page: 2 }} className="hover:text-gold">
+                Annuities
               </Link>
             </li>
             <li>
               <Link to="/benefits" className="hover:text-gold">
-                {t("services.cafeteria.title")}
+                Section 125 Cafeteria Plans
               </Link>
             </li>
           </ul>
