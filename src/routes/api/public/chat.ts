@@ -1,6 +1,99 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { getAllPosts } from "@/lib/blog";
 
 type Msg = { role: "user" | "assistant" | "system"; content: string };
+
+function stripHtml(s: string): string {
+  return s
+    .replace(/<style[\s\S]*?<\/style>/gi, "")
+    .replace(/<script[\s\S]*?<\/script>/gi, "")
+    .replace(/<[^>]+>/g, " ")
+    .replace(/&nbsp;/g, " ")
+    .replace(/&amp;/g, "&")
+    .replace(/&lt;/g, "<")
+    .replace(/&gt;/g, ">")
+    .replace(/&quot;/g, '"')
+    .replace(/&#39;/g, "'")
+    .replace(/\s+/g, " ")
+    .trim();
+}
+
+type KbEntry = { title: string; summary: string; body: string; slug: string };
+
+let kbCache: { at: number; en: string; es: string } | null = null;
+const KB_TTL_MS = 5 * 60 * 1000;
+const PER_POST_CHARS = 2000;
+const MAX_TOTAL_CHARS = 18000;
+
+async function buildKnowledgeBase(): Promise<{ en: string; es: string }> {
+  if (kbCache && Date.now() - kbCache.at < KB_TTL_MS) {
+    return { en: kbCache.en, es: kbCache.es };
+  }
+
+  const en: KbEntry[] = [];
+  const es: KbEntry[] = [];
+
+  try {
+    for (const p of getAllPosts()) {
+      en.push({
+        slug: p.slug,
+        title: p.title,
+        summary: p.summary ?? "",
+        body: stripHtml(p.html || p.content || ""),
+      });
+    }
+  } catch (e) {
+    console.error("kb: file posts failed", e);
+  }
+
+  try {
+    const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
+    const { data, error } = await supabaseAdmin
+      .from("blog_posts")
+      .select("slug,title,summary,body,title_es,summary_es,body_es,published,published_at")
+      .eq("published", true)
+      .order("published_at", { ascending: false })
+      .limit(50);
+    if (error) throw error;
+    for (const row of data ?? []) {
+      en.push({
+        slug: row.slug,
+        title: row.title,
+        summary: row.summary ?? "",
+        body: stripHtml(row.body ?? ""),
+      });
+      if (row.title_es || row.body_es) {
+        es.push({
+          slug: row.slug,
+          title: row.title_es || row.title,
+          summary: row.summary_es ?? row.summary ?? "",
+          body: stripHtml(row.body_es ?? row.body ?? ""),
+        });
+      }
+    }
+  } catch (e) {
+    console.error("kb: db posts failed", e);
+  }
+
+  const esSource = es.length > 0 ? es : en;
+
+  const format = (entries: KbEntry[]): string => {
+    let total = 0;
+    const parts: string[] = [];
+    for (const e of entries) {
+      const body = e.body.slice(0, PER_POST_CHARS);
+      const block = `### ${e.title} (/${e.slug})\nSummary: ${e.summary}\n${body}`;
+      if (total + block.length > MAX_TOTAL_CHARS) break;
+      parts.push(block);
+      total += block.length;
+    }
+    return parts.join("\n\n---\n\n");
+  };
+
+  const result = { en: format(en), es: format(esSource) };
+  kbCache = { at: Date.now(), ...result };
+  return result;
+}
 
 const SYSTEM_EN = `You are the friendly virtual assistant for Legends Insurance Services, an independent insurance agency.
 
@@ -69,6 +162,13 @@ export const Route = createFileRoute("/api/public/chat")({
               content: String(m.content ?? "").slice(0, 2000),
             }));
 
+          const kb = await buildKnowledgeBase();
+          const kbBlock = lang === "es" ? kb.es : kb.en;
+          const baseSystem = lang === "es" ? SYSTEM_ES : SYSTEM_EN;
+          const kbInstructionEn = `\n\nYou have access to the following published blog articles from Legends Insurance Services. When a user's question is covered by these articles, base your answer on them and cite the relevant article title (and link as /blog/<slug>) so the user can read more. If the articles do not cover the topic, answer from general knowledge within your rules and invite the user to contact the agency.\n\n=== BLOG KNOWLEDGE BASE ===\n${kbBlock}\n=== END BLOG KNOWLEDGE BASE ===`;
+          const kbInstructionEs = `\n\nTienes acceso a los siguientes artículos publicados en el blog de Legends Insurance Services. Cuando la pregunta del usuario esté cubierta por estos artículos, basa tu respuesta en ellos y cita el título del artículo relevante (y el enlace como /blog/<slug>) para que el usuario pueda leer más. Si los artículos no cubren el tema, responde con conocimiento general dentro de tus reglas e invita al usuario a contactar a la agencia.\n\n=== BASE DE CONOCIMIENTO DEL BLOG ===\n${kbBlock}\n=== FIN BASE DE CONOCIMIENTO DEL BLOG ===`;
+          const systemContent = baseSystem + (kbBlock ? (lang === "es" ? kbInstructionEs : kbInstructionEn) : "");
+
           const upstream = await fetch(
             "https://ai.gateway.lovable.dev/v1/chat/completions",
             {
@@ -81,7 +181,7 @@ export const Route = createFileRoute("/api/public/chat")({
                 model: "google/gemini-3-flash-preview",
                 stream: true,
                 messages: [
-                  { role: "system", content: lang === "es" ? SYSTEM_ES : SYSTEM_EN },
+                  { role: "system", content: systemContent },
                   ...trimmed,
                 ],
               }),
