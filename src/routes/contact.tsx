@@ -159,7 +159,7 @@ function ContactPage() {
                   <p className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">
                     {t("contact.phoneLabel")}
                   </p>
-                  <p className="font-medium text-primary">(941) 265-0210</p>
+                  <p className="font-medium text-primary">(805) 419-3332</p>
                 </div>
               </div>
             </div>
