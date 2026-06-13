@@ -207,6 +207,7 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      has_admin_access: { Args: { _user_id: string }; Returns: boolean }
       has_role: {
         Args: {
           _role: Database["public"]["Enums"]["app_role"]
@@ -217,7 +218,7 @@ export type Database = {
       increment_blog_view: { Args: { _slug: string }; Returns: undefined }
     }
     Enums: {
-      app_role: "admin" | "user"
+      app_role: "admin" | "user" | "master"
       lead_priority: "Low" | "Medium" | "High"
       lead_status: "New" | "Pending" | "Closed"
       message_channel: "whatsapp" | "email" | "sms"
@@ -354,7 +355,7 @@ export type CompositeTypes<
 export const Constants = {
   public: {
     Enums: {
-      app_role: ["admin", "user"],
+      app_role: ["admin", "user", "master"],
       lead_priority: ["Low", "Medium", "High"],
       lead_status: ["New", "Pending", "Closed"],
       message_channel: ["whatsapp", "email", "sms"],
