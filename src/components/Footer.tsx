@@ -1,6 +1,8 @@
+import { useState } from "react";
 import { Link } from "@tanstack/react-router";
 import { Mail, Phone, MapPin } from "lucide-react";
 import { useI18n } from "@/lib/i18n";
+import { PolicyModal } from "@/components/PolicyModal";
 import logo from "@/assets/logo.jpg";
 
 function FacebookIcon({ className }: { className?: string }) {
