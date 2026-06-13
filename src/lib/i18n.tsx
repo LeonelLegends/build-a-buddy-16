@@ -90,6 +90,13 @@ const en: Dict = {
 
   "footer.tagline": "Family-first financial protection.",
   "footer.rights": "All rights reserved.",
+  "footer.svc.hysa": "High Yield Savings Account (HYSA)",
+  "footer.svc.401k": "401(k)",
+  "footer.svc.roth": "Roth IRA",
+  "footer.svc.term": "Term Life Insurance",
+  "footer.svc.permanent": "Permanent Life Insurance (Whole, Universal, IUL)",
+  "footer.svc.annuities": "Annuities",
+  "footer.svc.section125": "Section 125 Cafeteria Plans",
 
   "chat.title": "Chat with Legends",
   "chat.subtitle": "Ask about plans, products, or scheduling.",
