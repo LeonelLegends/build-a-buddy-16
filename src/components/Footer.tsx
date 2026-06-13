@@ -1,6 +1,8 @@
+import { useState } from "react";
 import { Link } from "@tanstack/react-router";
 import { Mail, Phone, MapPin } from "lucide-react";
 import { useI18n } from "@/lib/i18n";
+import { PolicyModal } from "@/components/PolicyModal";
 import logo from "@/assets/logo.jpg";
 
 function FacebookIcon({ className }: { className?: string }) {
@@ -21,7 +23,9 @@ function InstagramIcon({ className }: { className?: string }) {
 
 export function Footer() {
   const { t } = useI18n();
+  const [hysaOpen, setHysaOpen] = useState(false);
   return (
+    <>
     <footer className="mt-24 border-t border-border bg-primary text-primary-foreground">
       <div className="mx-auto grid max-w-7xl gap-10 px-6 py-14 md:grid-cols-4">
         <div className="md:col-span-2">
@@ -42,9 +46,13 @@ export function Footer() {
           <h4 className="text-sm font-semibold uppercase tracking-wider text-gold">{t("nav.services")}</h4>
           <ul className="mt-4 space-y-2 text-sm text-primary-foreground/75">
             <li>
-              <Link to="/services" search={{ page: 0 }} className="hover:text-gold">
+              <button
+                type="button"
+                onClick={() => setHysaOpen(true)}
+                className="text-left hover:text-gold"
+              >
                 High Yield Savings Account (HYSA)
-              </Link>
+              </button>
             </li>
             <li>
               <Link to="/services" search={{ page: 0 }} className="hover:text-gold">
@@ -131,5 +139,7 @@ export function Footer() {
         </div>
       </div>
     </footer>
+    <PolicyModal policyTitleEn="Roth IRA" open={hysaOpen} onClose={() => setHysaOpen(false)} />
+    </>
   );
 }
