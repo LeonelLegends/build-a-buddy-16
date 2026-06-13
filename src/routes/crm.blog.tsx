@@ -5,19 +5,25 @@ import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { Plus, Trash2, Pencil, X } from "lucide-react";
+import { Plus, Trash2, Pencil, X, Eye } from "lucide-react";
+import { RichTextEditor } from "@/components/blog/RichTextEditor";
+import { ImageUploader } from "@/components/blog/ImageUploader";
 
 type Post = {
   id: string;
   slug: string;
   title: string;
+  title_es: string | null;
   summary: string;
+  summary_es: string | null;
   author: string | null;
   cover: string | null;
+  cover_path: string | null;
   body: string;
+  body_es: string | null;
   published: boolean;
   published_at: string;
-  updated_at: string;
+  view_count: number;
 };
 
 export const Route = createFileRoute("/crm/blog")({
@@ -28,10 +34,13 @@ const empty = {
   id: "",
   slug: "",
   title: "",
+  title_es: "",
   summary: "",
+  summary_es: "",
   author: "Legends Insurance Services",
-  cover: "",
+  cover_path: "" as string | null,
   body: "",
+  body_es: "",
   published: true,
   published_at: new Date().toISOString().slice(0, 10),
 };
@@ -51,6 +60,7 @@ function BlogAdmin() {
   const [loading, setLoading] = useState(true);
   const [editing, setEditing] = useState<typeof empty | null>(null);
   const [saving, setSaving] = useState(false);
+  const [tab, setTab] = useState<"en" | "es">("en");
 
   const load = async () => {
     setLoading(true);
@@ -67,32 +77,44 @@ function BlogAdmin() {
     load();
   }, []);
 
-  const startNew = () => setEditing({ ...empty });
-  const startEdit = (p: Post) =>
+  const startNew = () => {
+    setTab("en");
+    setEditing({ ...empty });
+  };
+  const startEdit = (p: Post) => {
+    setTab("en");
     setEditing({
       id: p.id,
       slug: p.slug,
       title: p.title,
+      title_es: p.title_es ?? "",
       summary: p.summary,
+      summary_es: p.summary_es ?? "",
       author: p.author ?? "",
-      cover: p.cover ?? "",
+      cover_path: p.cover_path ?? p.cover ?? "",
       body: p.body,
+      body_es: p.body_es ?? "",
       published: p.published,
       published_at: p.published_at.slice(0, 10),
     });
+  };
 
   const save = async () => {
     if (!editing) return;
-    if (!editing.title.trim()) return toast.error("Title is required");
+    if (!editing.title.trim()) return toast.error("English title is required");
     const slug = editing.slug.trim() || slugify(editing.title);
     setSaving(true);
     const payload = {
       slug,
       title: editing.title.trim(),
+      title_es: editing.title_es?.trim() || null,
       summary: editing.summary,
+      summary_es: editing.summary_es || null,
       author: editing.author || null,
-      cover: editing.cover || null,
+      cover: null,
+      cover_path: editing.cover_path || null,
       body: editing.body,
+      body_es: editing.body_es || null,
       published: editing.published,
       published_at: new Date(editing.published_at).toISOString(),
     };
@@ -120,7 +142,7 @@ function BlogAdmin() {
         <div>
           <h1 className="text-2xl font-semibold text-slate-900">Blog</h1>
           <p className="mt-1 text-sm text-slate-600">
-            Create, edit, and publish articles. Changes go live on /blog instantly.
+            Create, edit, and publish articles in English and Spanish. Changes go live on /blog instantly.
           </p>
         </div>
         {!editing && (
@@ -146,13 +168,6 @@ function BlogAdmin() {
           </div>
 
           <div className="grid gap-4">
-            <Field label="Title">
-              <Input
-                value={editing.title}
-                onChange={(e) => setEditing({ ...editing, title: e.target.value })}
-                placeholder="Welcome to the Legends blog"
-              />
-            </Field>
             <div className="grid gap-4 sm:grid-cols-2">
               <Field label="Slug (URL)">
                 <Input
@@ -165,9 +180,7 @@ function BlogAdmin() {
                 <Input
                   type="date"
                   value={editing.published_at}
-                  onChange={(e) =>
-                    setEditing({ ...editing, published_at: e.target.value })
-                  }
+                  onChange={(e) => setEditing({ ...editing, published_at: e.target.value })}
                 />
               </Field>
             </div>
@@ -177,45 +190,91 @@ function BlogAdmin() {
                 onChange={(e) => setEditing({ ...editing, author: e.target.value })}
               />
             </Field>
-            <Field label="Cover image URL (optional)">
-              <Input
-                value={editing.cover}
-                onChange={(e) => setEditing({ ...editing, cover: e.target.value })}
-                placeholder="https://…"
+            <Field label="Cover image (drag & drop or click to upload)">
+              <ImageUploader
+                value={editing.cover_path || null}
+                onChange={(p) => setEditing({ ...editing, cover_path: p })}
               />
             </Field>
-            <Field label="Summary">
-              <Textarea
-                rows={2}
-                value={editing.summary}
-                onChange={(e) => setEditing({ ...editing, summary: e.target.value })}
-                placeholder="Short description shown on the blog index"
-              />
-            </Field>
-            <Field label="Body (Markdown supported)">
-              <Textarea
-                rows={14}
-                value={editing.body}
-                onChange={(e) => setEditing({ ...editing, body: e.target.value })}
-                placeholder={"# Heading\n\nWrite your article here. **Bold**, _italics_, and [links](https://example.com) work."}
-              />
-            </Field>
+
+            {/* Language tabs */}
+            <div className="mt-2 flex gap-1 border-b border-slate-200">
+              {(["en", "es"] as const).map((l) => (
+                <button
+                  key={l}
+                  type="button"
+                  onClick={() => setTab(l)}
+                  className={`px-4 py-2 text-sm font-medium ${
+                    tab === l
+                      ? "border-b-2 border-primary text-primary"
+                      : "text-slate-500 hover:text-slate-700"
+                  }`}
+                >
+                  {l === "en" ? "English" : "Español"}
+                </button>
+              ))}
+            </div>
+
+            {tab === "en" ? (
+              <>
+                <Field label="Title (English)">
+                  <Input
+                    value={editing.title}
+                    onChange={(e) => setEditing({ ...editing, title: e.target.value })}
+                    placeholder="Welcome to the Legends blog"
+                  />
+                </Field>
+                <Field label="Summary (English)">
+                  <Textarea
+                    rows={2}
+                    value={editing.summary}
+                    onChange={(e) => setEditing({ ...editing, summary: e.target.value })}
+                  />
+                </Field>
+                <Field label="Body (English)">
+                  <RichTextEditor
+                    value={editing.body}
+                    onChange={(html) => setEditing({ ...editing, body: html })}
+                  />
+                </Field>
+              </>
+            ) : (
+              <>
+                <Field label="Título (Español)">
+                  <Input
+                    value={editing.title_es}
+                    onChange={(e) => setEditing({ ...editing, title_es: e.target.value })}
+                    placeholder="(opcional — usa inglés si está vacío)"
+                  />
+                </Field>
+                <Field label="Resumen (Español)">
+                  <Textarea
+                    rows={2}
+                    value={editing.summary_es}
+                    onChange={(e) => setEditing({ ...editing, summary_es: e.target.value })}
+                  />
+                </Field>
+                <Field label="Cuerpo (Español)">
+                  <RichTextEditor
+                    value={editing.body_es}
+                    onChange={(html) => setEditing({ ...editing, body_es: html })}
+                  />
+                </Field>
+              </>
+            )}
+
             <label className="flex items-center gap-2 text-sm text-slate-700">
               <input
                 type="checkbox"
                 checked={editing.published}
-                onChange={(e) =>
-                  setEditing({ ...editing, published: e.target.checked })
-                }
+                onChange={(e) => setEditing({ ...editing, published: e.target.checked })}
               />
               Published (visible on the public blog)
             </label>
           </div>
 
           <div className="mt-6 flex justify-end gap-2">
-            <Button variant="outline" onClick={() => setEditing(null)}>
-              Cancel
-            </Button>
+            <Button variant="outline" onClick={() => setEditing(null)}>Cancel</Button>
             <Button onClick={save} disabled={saving}>
               {saving ? "Saving…" : editing.id ? "Save changes" : "Create post"}
             </Button>
@@ -234,6 +293,7 @@ function BlogAdmin() {
               <tr>
                 <th className="px-4 py-3">Title</th>
                 <th className="px-4 py-3">Status</th>
+                <th className="px-4 py-3">Views</th>
                 <th className="px-4 py-3">Published</th>
                 <th className="px-4 py-3"></th>
               </tr>
@@ -257,21 +317,16 @@ function BlogAdmin() {
                     </span>
                   </td>
                   <td className="px-4 py-3 text-slate-600">
+                    <span className="inline-flex items-center gap-1"><Eye className="h-3.5 w-3.5" />{p.view_count}</span>
+                  </td>
+                  <td className="px-4 py-3 text-slate-600">
                     {new Date(p.published_at).toLocaleDateString()}
                   </td>
                   <td className="px-4 py-3 text-right">
-                    <button
-                      onClick={() => startEdit(p)}
-                      className="mr-2 rounded p-1.5 text-slate-600 hover:bg-slate-100"
-                      aria-label="Edit"
-                    >
+                    <button onClick={() => startEdit(p)} className="mr-2 rounded p-1.5 text-slate-600 hover:bg-slate-100" aria-label="Edit">
                       <Pencil className="h-4 w-4" />
                     </button>
-                    <button
-                      onClick={() => remove(p.id)}
-                      className="rounded p-1.5 text-rose-600 hover:bg-rose-50"
-                      aria-label="Delete"
-                    >
+                    <button onClick={() => remove(p.id)} className="rounded p-1.5 text-rose-600 hover:bg-rose-50" aria-label="Delete">
                       <Trash2 className="h-4 w-4" />
                     </button>
                   </td>
@@ -288,9 +343,7 @@ function BlogAdmin() {
 function Field({ label, children }: { label: string; children: React.ReactNode }) {
   return (
     <label className="block">
-      <span className="mb-1 block text-xs font-medium uppercase tracking-wider text-slate-600">
-        {label}
-      </span>
+      <span className="mb-1 block text-xs font-medium uppercase tracking-wider text-slate-600">{label}</span>
       {children}
     </label>
   );
