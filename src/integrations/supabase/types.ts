@@ -18,41 +18,56 @@ export type Database = {
         Row: {
           author: string | null
           body: string
+          body_es: string | null
           cover: string | null
+          cover_path: string | null
           created_at: string
           id: string
           published: boolean
           published_at: string
           slug: string
           summary: string
+          summary_es: string | null
           title: string
+          title_es: string | null
           updated_at: string
+          view_count: number
         }
         Insert: {
           author?: string | null
           body?: string
+          body_es?: string | null
           cover?: string | null
+          cover_path?: string | null
           created_at?: string
           id?: string
           published?: boolean
           published_at?: string
           slug: string
           summary?: string
+          summary_es?: string | null
           title: string
+          title_es?: string | null
           updated_at?: string
+          view_count?: number
         }
         Update: {
           author?: string | null
           body?: string
+          body_es?: string | null
           cover?: string | null
+          cover_path?: string | null
           created_at?: string
           id?: string
           published?: boolean
           published_at?: string
           slug?: string
           summary?: string
+          summary_es?: string | null
           title?: string
+          title_es?: string | null
           updated_at?: string
+          view_count?: number
         }
         Relationships: []
       }
@@ -199,6 +214,7 @@ export type Database = {
         }
         Returns: boolean
       }
+      increment_blog_view: { Args: { _slug: string }; Returns: undefined }
     }
     Enums: {
       app_role: "admin" | "user"
