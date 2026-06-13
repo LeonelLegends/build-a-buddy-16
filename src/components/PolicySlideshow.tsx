@@ -263,8 +263,8 @@ export function PolicySlideshow() {
   const title = lang === "es" ? "Las Pólizas que Estás Buscando" : "The Policies You're Looking For";
   const learnMore = lang === "es" ? "Conoce más" : "Learn more";
 
-  const start = page * PAGE_SIZE;
-  const visible = POLICIES.slice(start, start + PAGE_SIZE);
+  const start = page * pageSize;
+  const visible = POLICIES.slice(start, start + pageSize);
 
   const prev = () => setPage((p) => (p - 1 + totalPages) % totalPages);
   const next = () => setPage((p) => (p + 1) % totalPages);
