@@ -83,7 +83,7 @@ function CrmLayout() {
           {navItems.map(({ to, label, icon: Icon, children }) => (
             <div key={to}>
               <Link
-                to={to}
+                to={to as any}
                 className="flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium text-slate-700 hover:bg-slate-100"
                 activeProps={{ className: "bg-slate-900 text-white hover:bg-slate-900" }}
               >
@@ -95,7 +95,7 @@ function CrmLayout() {
                   {children.map((c) => (
                     <Link
                       key={c.to}
-                      to={c.to}
+                      to={c.to as any}
                       className="flex items-center gap-2 rounded-lg px-3 py-1.5 text-xs font-medium text-slate-600 hover:bg-slate-100"
                       activeProps={{ className: "bg-slate-900 text-white hover:bg-slate-900" }}
                     >
@@ -120,9 +120,9 @@ function CrmLayout() {
       <main className="min-w-0 flex-1">
         <div className="flex items-center gap-2 overflow-x-auto border-b border-slate-200 bg-white px-4 py-3 md:hidden">
           {navItems.flatMap(({ to, label, children }) => [
-            <Link key={to} to={to} className="shrink-0 rounded-md px-3 py-1.5 text-xs font-medium text-slate-700" activeProps={{ className: "bg-slate-900 text-white" }}>{label}</Link>,
+            <Link key={to} to={to as any} className="shrink-0 rounded-md px-3 py-1.5 text-xs font-medium text-slate-700" activeProps={{ className: "bg-slate-900 text-white" }}>{label}</Link>,
             ...children.map((c) => (
-              <Link key={c.to} to={c.to} className="shrink-0 rounded-md px-3 py-1.5 text-xs font-medium text-slate-600" activeProps={{ className: "bg-slate-900 text-white" }}>{c.label}</Link>
+              <Link key={c.to} to={c.to as any} className="shrink-0 rounded-md px-3 py-1.5 text-xs font-medium text-slate-600" activeProps={{ className: "bg-slate-900 text-white" }}>{c.label}</Link>
             )),
           ])}
         </div>
