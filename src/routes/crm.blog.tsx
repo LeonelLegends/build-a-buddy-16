@@ -62,6 +62,40 @@ function BlogAdmin() {
   const [editing, setEditing] = useState<typeof empty | null>(null);
   const [saving, setSaving] = useState(false);
   const [tab, setTab] = useState<"en" | "es">("en");
+  const [translating, setTranslating] = useState(false);
+
+  const copyToSpanish = async () => {
+    if (!editing) return;
+    if (!editing.title.trim() && !editing.summary.trim() && !editing.body.trim()) {
+      return toast.error("Add English content first");
+    }
+    setTranslating(true);
+    try {
+      const result = await translateBlogToSpanish({
+        data: {
+          title: editing.title || "",
+          summary: editing.summary || "",
+          body: editing.body || "",
+        },
+      });
+      setEditing((prev) =>
+        prev
+          ? {
+              ...prev,
+              title_es: result.title,
+              summary_es: result.summary,
+              body_es: result.body,
+            }
+          : prev,
+      );
+      setTab("es");
+      toast.success("Content copied and translated to Spanish");
+    } catch (e) {
+      toast.error(e instanceof Error ? e.message : "Translation failed");
+    } finally {
+      setTranslating(false);
+    }
+  };
 
   const load = async () => {
     setLoading(true);
