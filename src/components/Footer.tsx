@@ -43,10 +43,11 @@ export function Footer() {
     <footer className="mt-24 border-t border-border bg-primary text-primary-foreground">
       <div className="mx-auto grid max-w-7xl gap-10 px-6 py-14 md:grid-cols-4">
         <div className="md:col-span-2">
-          <Link to="/" className="flex items-center gap-3">
-            <img src={logo} alt="Legends Insurance Services" className="h-11 w-auto rounded-md bg-white/5 p-1" />
-            <span className="font-display leading-tight text-slate-50 text-2xl font-sans font-medium">
-              Legends Insurance Services
+          <Link to="/" className="flex items-center gap-3 group shrink-0" aria-label="Legends Insurance Services">
+            <img src={logo} alt="Legends Insurance Services" className="h-20 w-auto rounded-md" />
+            <span className="inline-flex flex-col leading-none text-white" style={{ fontFamily: '"Montserrat", system-ui, sans-serif' }}>
+              <span className="text-4xl font-black tracking-tight">Legends</span>
+              <span className="block w-full text-[9px] font-semibold uppercase text-white" style={{ textAlign: 'justify', textAlignLast: 'justify', textJustify: 'inter-character' } as React.CSSProperties}>{'Insurance\u00A0Services'.split('').join('\u200B')}</span>
             </span>
           </Link>
           <p className="mt-4 max-w-sm text-sm text-primary-foreground/70">{t("footer.tagline")}</p>
