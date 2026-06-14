@@ -162,10 +162,10 @@ function ContactPage() {
                     {t("contact.phoneLabel")}
                   </p>
                   <a
-                    href={isMobile ? "https://wa.me/18054193332" : "tel:+18054193332"}
+                    href={isMobile ? "https://wa.me/19412650210" : "tel:+19412650210"}
                     className="font-medium text-primary hover:underline"
                   >
-                    (805) 419-3332
+                    (941) 265-0210
                   </a>
                 </div>
               </div>
