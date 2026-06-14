@@ -241,29 +241,12 @@ export function PolicySlideshow() {
   const pageSize = isMobile ? 1 : DESKTOP_PAGE_SIZE;
   const totalPages = Math.ceil(POLICIES.length / pageSize);
 
-  const [page, setPage] = useState(() => {
-    if (typeof window === "undefined") return 0;
-    const params = new URLSearchParams(window.location.search);
-    const p = parseInt(params.get("page") || "0", 10);
-    return isNaN(p) ? 0 : Math.max(0, p);
-  });
+  const [page, setPage] = useState(0);
 
   useEffect(() => {
     if (page > totalPages - 1) setPage(0);
   }, [totalPages, page]);
 
-
-  useEffect(() => {
-    if (typeof window === "undefined") return;
-    const url = new URL(window.location.href);
-    if (url.searchParams.get("page") === String(page)) return;
-    url.searchParams.set("page", String(page));
-    // Preserve scroll position — some routers/observers react to URL changes
-    const x = window.scrollX;
-    const y = window.scrollY;
-    window.history.replaceState({}, "", url);
-    window.scrollTo(x, y);
-  }, [page]);
 
   const title = lang === "es" ? "Las Pólizas que Estás Buscando" : "The Policies You're Looking For";
   const learnMore = lang === "es" ? "Conoce más" : "Learn more";
