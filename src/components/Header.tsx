@@ -21,8 +21,9 @@ export function Header() {
       <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4">
         <Link to="/" className="flex items-center gap-3 group shrink-0" aria-label="Legends Insurance Services">
           <img src={logo} alt="Legends Insurance Services" className="h-20 w-auto rounded-md" />
-          <span className="font-display font-semibold leading-tight font-sans text-2xl text-slate-950">
-            Legends Insurance Services
+          <span className="flex flex-col items-center font-display font-semibold leading-none text-foreground">
+            <span className="text-4xl tracking-tight">Legends</span>
+            <span className="text-[9px] uppercase tracking-[0.15em] text-foreground/80">Insurance Services</span>
           </span>
         </Link>
 
