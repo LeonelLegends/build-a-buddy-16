@@ -28,6 +28,7 @@ export const Route = createFileRoute("/contact")({
 
 function ContactPage() {
   const { t, lang } = useI18n();
+  const isMobile = useIsMobile();
   const [sent, setSent] = useState(false);
   const [submitting, setSubmitting] = useState(false);
 
@@ -160,7 +161,12 @@ function ContactPage() {
                   <p className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">
                     {t("contact.phoneLabel")}
                   </p>
-                  <p className="font-medium text-primary">(805) 419-3332</p>
+                  <a
+                    href={isMobile ? "https://wa.me/18054193332" : "tel:+18054193332"}
+                    className="font-medium text-primary hover:underline"
+                  >
+                    (805) 419-3332
+                  </a>
                 </div>
               </div>
             </div>
@@ -173,7 +179,12 @@ function ContactPage() {
                   <p className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">
                     {t("contact.emailLabel")}
                   </p>
-                  <p className="font-medium text-primary">support@legendsinsuranceservices.com</p>
+                  <a
+                    href="mailto:support@legendsinsuranceservices.com"
+                    className="font-medium text-primary hover:underline"
+                  >
+                    support@legendsinsuranceservices.com
+                  </a>
                 </div>
               </div>
             </div>
