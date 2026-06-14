@@ -256,8 +256,13 @@ export function PolicySlideshow() {
   useEffect(() => {
     if (typeof window === "undefined") return;
     const url = new URL(window.location.href);
+    if (url.searchParams.get("page") === String(page)) return;
     url.searchParams.set("page", String(page));
+    // Preserve scroll position — some routers/observers react to URL changes
+    const x = window.scrollX;
+    const y = window.scrollY;
     window.history.replaceState({}, "", url);
+    window.scrollTo(x, y);
   }, [page]);
 
   const title = lang === "es" ? "Las Pólizas que Estás Buscando" : "The Policies You're Looking For";
