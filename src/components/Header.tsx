@@ -21,9 +21,9 @@ export function Header() {
       <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4">
         <Link to="/" className="flex items-center gap-3 group shrink-0" aria-label="Legends Insurance Services">
           <img src={logo} alt="Legends Insurance Services" className="h-20 w-auto rounded-md" />
-          <span className="flex flex-col items-center leading-none text-foreground" style={{ fontFamily: '"Montserrat", system-ui, sans-serif' }}>
+          <span className="inline-flex flex-col leading-none text-foreground" style={{ fontFamily: '"Montserrat", system-ui, sans-serif' }}>
             <span className="text-4xl font-black tracking-tight">Legends</span>
-            <span className="text-[9px] font-semibold uppercase tracking-[0.15em] text-foreground/80">Insurance Services</span>
+            <span className="block w-full text-[9px] font-semibold uppercase text-foreground/80" style={{ textAlign: 'justify', textAlignLast: 'justify' }}>Insurance Services</span>
           </span>
         </Link>
 
