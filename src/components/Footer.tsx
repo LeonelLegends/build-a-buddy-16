@@ -3,6 +3,7 @@ import { Link } from "@tanstack/react-router";
 import { Mail, Phone, MapPin } from "lucide-react";
 import { useI18n } from "@/lib/i18n";
 import { PolicyModal } from "@/components/PolicyModal";
+import { useIsMobile } from "@/hooks/use-mobile";
 import logo from "@/assets/logo.jpg";
 
 function FacebookIcon({ className }: { className?: string }) {
@@ -23,6 +24,7 @@ function InstagramIcon({ className }: { className?: string }) {
 
 export function Footer() {
   const { t } = useI18n();
+  const isMobile = useIsMobile();
   const [openPolicy, setOpenPolicy] = useState<string | null>(null);
 
   const svc = (titleEn: string, key: string) => (
@@ -71,10 +73,22 @@ export function Footer() {
           <h4 className="text-sm font-semibold uppercase tracking-wider text-gold">{t("nav.contact")}</h4>
           <ul className="mt-4 space-y-3 text-sm text-primary-foreground/75">
             <li className="flex items-center gap-2">
-              <Phone className="h-4 w-4 text-gold" /> (805) 419-3332
+              <Phone className="h-4 w-4 text-gold" />
+              <a
+                href={isMobile ? "https://wa.me/18054193332" : "tel:+18054193332"}
+                className="hover:text-gold"
+              >
+                (805) 419-3332
+              </a>
             </li>
             <li className="flex items-center gap-2">
-              <Mail className="h-4 w-4 text-gold" /> support@legendsinsuranceservices.com
+              <Mail className="h-4 w-4 text-gold" />
+              <a
+                href="mailto:support@legendsinsuranceservices.com"
+                className="hover:text-gold"
+              >
+                support@legendsinsuranceservices.com
+              </a>
             </li>
             <li className="flex items-center gap-2">
               <MapPin className="h-4 w-4 text-gold" /> Sarasota FL 34231, United States
