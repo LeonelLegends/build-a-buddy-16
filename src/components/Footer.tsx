@@ -29,112 +29,116 @@ export function Footer() {
 
   const svc = (titleEn: string, key: string) => (
     <li>
-      <button
-        type="button"
-        onClick={() => setOpenPolicy(titleEn)}
-        className="text-left hover:text-gold"
-      >
+      <button type="button" onClick={() => setOpenPolicy(titleEn)} className="text-left hover:text-gold">
         {t(key)}
       </button>
     </li>
   );
   return (
     <>
-    <footer className="mt-24 border-t border-border bg-primary text-primary-foreground">
-      <div className="mx-auto grid max-w-7xl gap-10 px-6 py-14 md:grid-cols-4">
-        <div className="md:col-span-2">
-          <Link to="/" className="flex items-center gap-3 group shrink-0" aria-label="Legends Insurance Services">
-            <img src={logo} alt="Legends Insurance Services" className="h-20 w-auto rounded-md" />
-            <span className="inline-flex flex-col leading-none text-white" style={{ fontFamily: '"Montserrat", system-ui, sans-serif' }}>
-              <span className="text-4xl font-black tracking-tight">Legends</span>
-              <span className="block w-full text-[9px] font-semibold uppercase text-white" style={{ textAlign: 'justify', textAlignLast: 'justify', textJustify: 'inter-character' } as React.CSSProperties}>{'Insurance\u00A0Services'.split('').join('\u200B')}</span>
-            </span>
-          </Link>
-          <p className="mt-4 max-w-sm text-sm text-primary-foreground/70">{t("footer.tagline")}</p>
-        </div>
+      <footer className="mt-24 border-t border-border bg-primary text-primary-foreground">
+        <div className="mx-auto grid max-w-7xl gap-10 px-6 py-14 md:grid-cols-4">
+          <div className="md:col-span-2">
+            <Link to="/" className="flex items-center gap-3 group shrink-0" aria-label="Legends Insurance Services">
+              <img src={logo} alt="Legends Insurance Services" className="h-20 w-auto rounded-md" />
+              <span
+                className="inline-flex flex-col leading-none text-white"
+                style={{ fontFamily: '"Montserrat", system-ui, sans-serif' }}
+              >
+                <span className="text-4xl font-black tracking-tight">Legends</span>
+                <span
+                  className="block w-full text-[9px] font-semibold uppercase text-white"
+                  style={
+                    {
+                      textAlign: "justify",
+                      textAlignLast: "justify",
+                      textJustify: "inter-character",
+                    } as React.CSSProperties
+                  }
+                >
+                  {"Insurance\u00A0Services".split("").join("\u200B")}
+                </span>
+              </span>
+            </Link>
+            <p className="mt-4 max-w-sm text-sm text-primary-foreground/70">{t("footer.tagline")}</p>
+          </div>
 
-        <div>
-          <h4 className="text-sm font-semibold uppercase tracking-wider text-gold">{t("nav.services")}</h4>
-          <ul className="mt-4 space-y-2 text-sm text-primary-foreground/75">
-            {svc("High Yield Savings Account (HYSA)", "footer.svc.hysa")}
-            {svc("401(k)", "footer.svc.401k")}
-            {svc("Roth IRA", "footer.svc.roth")}
-            {svc("Term Life Insurance", "footer.svc.term")}
-            {svc("Permanent Life Insurance (Whole, Universal, IUL)", "footer.svc.permanent")}
-            {svc("Annuities", "footer.svc.annuities")}
-            <li>
-              <Link to="/benefits" className="hover:text-gold">
-                {t("footer.svc.section125")}
+          <div>
+            <h4 className="text-sm font-semibold uppercase tracking-wider text-gold">{t("nav.services")}</h4>
+            <ul className="mt-4 space-y-2 text-sm text-primary-foreground/75">
+              {svc("High Yield Savings Account (HYSA)", "footer.svc.hysa")}
+              {svc("401(k)", "footer.svc.401k")}
+              {svc("Roth IRA", "footer.svc.roth")}
+              {svc("Term Life Insurance", "footer.svc.term")}
+              {svc("Permanent Life Insurance (Whole, Universal, IUL)", "footer.svc.permanent")}
+              {svc("Annuities", "footer.svc.annuities")}
+              <li>
+                <Link to="/benefits" className="hover:text-gold">
+                  {t("footer.svc.section125")}
+                </Link>
+              </li>
+            </ul>
+          </div>
+
+          <div>
+            <h4 className="text-sm font-semibold uppercase tracking-wider text-gold">{t("nav.contact")}</h4>
+            <ul className="mt-4 space-y-3 text-sm text-primary-foreground/75">
+              <li className="flex items-center gap-2">
+                <Phone className="h-4 w-4 text-gold" />
+                <a href={isMobile ? "https://wa.me/19412650210" : "tel:+19412650210"} className="hover:text-gold">
+                  (941) 265-0210
+                </a>
+              </li>
+              <li className="flex items-center gap-2">
+                <Mail className="h-4 w-4 text-gold" />
+                <a href="mailto:support@legendsinsuranceservices.com" className="hover:text-gold">
+                  support@legendsinsuranceservices.com
+                </a>
+              </li>
+              <li className="flex items-center gap-2">
+                <MapPin className="h-4 w-4 text-gold" /> Sarasota FL 34231, United States
+              </li>
+            </ul>
+            <div className="mt-5 flex items-center gap-3">
+              <a
+                href="https://www.facebook.com/profile.php?id=61586608498612"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex h-9 w-9 items-center justify-center rounded-full bg-primary-foreground/10 text-primary-foreground/80 transition-colors hover:bg-[#1877F2] hover:text-white"
+                aria-label="Facebook"
+              >
+                <FacebookIcon className="h-4 w-4" />
+              </a>
+              <a
+                href="https://www.instagram.com/legendsinsuranceservices/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex h-9 w-9 items-center justify-center rounded-full bg-primary-foreground/10 text-primary-foreground/80 transition-colors hover:bg-gradient-to-tr hover:from-[#f09433] hover:via-[#e6683c] hover:to-[#bc1888] hover:text-white"
+                aria-label="Instagram"
+              >
+                <InstagramIcon className="h-4 w-4" />
+              </a>
+            </div>
+          </div>
+        </div>
+        <div className="border-t border-primary-foreground/10">
+          <div className="mx-auto flex max-w-7xl flex-col items-center justify-between gap-3 px-6 py-5 text-xs text-primary-foreground/60 md:flex-row">
+            <p>
+              © {new Date().getFullYear()} Legends Insurance Services. {t("footer.rights")}
+            </p>
+            <div className="flex items-center gap-4">
+              <Link to="/privacy" className="hover:text-gold">
+                Privacy Policy
               </Link>
-            </li>
-          </ul>
-        </div>
-
-        <div>
-          <h4 className="text-sm font-semibold uppercase tracking-wider text-gold">{t("nav.contact")}</h4>
-          <ul className="mt-4 space-y-3 text-sm text-primary-foreground/75">
-            <li className="flex items-center gap-2">
-              <Phone className="h-4 w-4 text-gold" />
-              <a
-                href={isMobile ? "https://wa.me/18054193332" : "tel:+18054193332"}
-                className="hover:text-gold"
-              >
-                (805) 419-3332
-              </a>
-            </li>
-            <li className="flex items-center gap-2">
-              <Mail className="h-4 w-4 text-gold" />
-              <a
-                href="mailto:support@legendsinsuranceservices.com"
-                className="hover:text-gold"
-              >
-                support@legendsinsuranceservices.com
-              </a>
-            </li>
-            <li className="flex items-center gap-2">
-              <MapPin className="h-4 w-4 text-gold" /> Sarasota FL 34231, United States
-            </li>
-          </ul>
-          <div className="mt-5 flex items-center gap-3">
-            <a
-              href="https://www.facebook.com/profile.php?id=61586608498612"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex h-9 w-9 items-center justify-center rounded-full bg-primary-foreground/10 text-primary-foreground/80 transition-colors hover:bg-[#1877F2] hover:text-white"
-              aria-label="Facebook"
-            >
-              <FacebookIcon className="h-4 w-4" />
-            </a>
-            <a
-              href="https://www.instagram.com/legendsinsuranceservices/"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex h-9 w-9 items-center justify-center rounded-full bg-primary-foreground/10 text-primary-foreground/80 transition-colors hover:bg-gradient-to-tr hover:from-[#f09433] hover:via-[#e6683c] hover:to-[#bc1888] hover:text-white"
-              aria-label="Instagram"
-            >
-              <InstagramIcon className="h-4 w-4" />
-            </a>
+              <Link to="/terms" className="hover:text-gold">
+                Terms of Service
+              </Link>
+              <span>Licensed insurance professionals.</span>
+            </div>
           </div>
         </div>
-      </div>
-      <div className="border-t border-primary-foreground/10">
-        <div className="mx-auto flex max-w-7xl flex-col items-center justify-between gap-3 px-6 py-5 text-xs text-primary-foreground/60 md:flex-row">
-          <p>
-            © {new Date().getFullYear()} Legends Insurance Services. {t("footer.rights")}
-          </p>
-          <div className="flex items-center gap-4">
-            <Link to="/privacy" className="hover:text-gold">
-              Privacy Policy
-            </Link>
-            <Link to="/terms" className="hover:text-gold">
-              Terms of Service
-            </Link>
-            <span>Licensed insurance professionals.</span>
-          </div>
-        </div>
-      </div>
-    </footer>
-    <PolicyModal policyTitleEn={openPolicy ?? ""} open={!!openPolicy} onClose={() => setOpenPolicy(null)} />
+      </footer>
+      <PolicyModal policyTitleEn={openPolicy ?? ""} open={!!openPolicy} onClose={() => setOpenPolicy(null)} />
     </>
   );
 }
