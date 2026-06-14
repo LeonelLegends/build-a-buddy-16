@@ -23,7 +23,7 @@ export function Header() {
           <img src={logo} alt="Legends Insurance Services" className="h-20 w-auto rounded-md" />
           <span className="inline-flex flex-col leading-none text-foreground" style={{ fontFamily: '"Montserrat", system-ui, sans-serif' }}>
             <span className="text-4xl font-black tracking-tight">Legends</span>
-            <span className="block w-full text-[9px] font-semibold uppercase text-foreground/80" style={{ textAlign: 'justify', textAlignLast: 'justify' }}>Insurance Services</span>
+            <span className="block w-full text-[9px] font-semibold uppercase text-foreground/80" style={{ textAlign: 'justify', textAlignLast: 'justify', textJustify: 'inter-character' } as React.CSSProperties}>{'Insurance\u00A0Services'.split('').join('\u200B')}</span>
           </span>
         </Link>
 
