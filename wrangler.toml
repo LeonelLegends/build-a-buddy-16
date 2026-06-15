@@ -1,0 +1,23 @@
+name = "build-a-buddy"
+type = "javascript"
+main = "dist/index.js"
+site = { include = "dist" }
+
+[build]
+command = "bun run build"
+cwd = "."
+
+[build.upload]
+format = "modules"
+main = "./dist/index.js"
+
+compatibility_date = "2024-12-19"
+compatibility_flags = ["streams_enable_constructors"]
+
+# Environment variables for Supabase
+[env.production]
+vars = { ENVIRONMENT = "production" }
+
+[[env.production.routes]]
+pattern = "*/*"
+zone_name = "example.com"
