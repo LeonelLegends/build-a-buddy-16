@@ -10,7 +10,9 @@ export const Route = createFileRoute("/services")({
         content:
           "Explore our insurance policies: HYSA, 401(k), Roth IRA, Life Insurance, Living Benefits, Term Life, Permanent Life, IUL, and Annuities.",
       },
+      { property: "og:url", content: "https://build-a-buddy-16.lovable.app/services" },
     ],
+    links: [{ rel: "canonical", href: "https://build-a-buddy-16.lovable.app/services" }],
   }),
   component: ServicesPage,
 });
