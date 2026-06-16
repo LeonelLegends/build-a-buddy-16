@@ -15,6 +15,12 @@ export const Route = createFileRoute("/")({
         content:
           "Annuities, life insurance, and employee benefit packages tailored to your family and business. Bilingual independent agency.",
       },
+      { property: "og:title", content: "Legends Insurance — Family-First Financial Protection" },
+      {
+        property: "og:description",
+        content:
+          "Annuities, life insurance, and employee benefits tailored to your family and business. Bilingual independent agency.",
+      },
       { property: "og:url", content: "https://build-a-buddy-16.lovable.app/" },
     ],
     links: [{ rel: "canonical", href: "https://build-a-buddy-16.lovable.app/" }],
