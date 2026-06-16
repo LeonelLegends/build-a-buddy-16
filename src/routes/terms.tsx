@@ -14,7 +14,9 @@ export const Route = createFileRoute("/terms")({
         property: "og:description",
         content: "The terms that govern your use of our website and services.",
       },
+      { property: "og:url", content: "https://build-a-buddy-16.lovable.app/terms" },
     ],
+    links: [{ rel: "canonical", href: "https://build-a-buddy-16.lovable.app/terms" }],
   }),
   component: TermsPage,
 });
