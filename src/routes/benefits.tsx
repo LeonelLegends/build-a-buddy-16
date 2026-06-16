@@ -58,7 +58,7 @@ function BenefitsPage() {
                   <p.icon className="h-5 w-5 text-primary" />
                 </span>
                 <div>
-                  <h3 className="font-display text-xl text-primary">{p.title}</h3>
+                  <h2 className="font-display text-xl text-primary">{p.title}</h2>
                   <p className="mt-1 text-sm text-muted-foreground">{p.desc}</p>
                 </div>
               </div>

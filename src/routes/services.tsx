@@ -16,5 +16,14 @@ export const Route = createFileRoute("/services")({
 });
 
 function ServicesPage() {
-  return <PolicySlideshow />;
+  return (
+    <main>
+      <section className="mx-auto max-w-7xl px-6 pt-16 pb-6">
+        <h1 className="font-display text-4xl font-bold tracking-tight text-primary md:text-5xl">
+          Our Insurance Services
+        </h1>
+      </section>
+      <PolicySlideshow />
+    </main>
+  );
 }

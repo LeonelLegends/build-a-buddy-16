@@ -249,7 +249,7 @@ export function PolicySlideshow() {
 
 
   const title = lang === "es" ? "Las Pólizas que Estás Buscando" : "The Policies You're Looking For";
-  const learnMore = lang === "es" ? "Conoce más" : "Learn more";
+  const learnMorePrefix = lang === "es" ? "Solicitar información sobre" : "Get a quote for";
 
   const start = page * pageSize;
   const visible = POLICIES.slice(start, start + pageSize);
@@ -312,7 +312,7 @@ export function PolicySlideshow() {
                     to="/contact"
                     className="inline-flex items-center gap-1 text-sm font-semibold text-primary underline-offset-4 hover:underline"
                   >
-                    {learnMore} <ArrowRight className="h-4 w-4" />
+                    {learnMorePrefix} {p.title[lang]} <ArrowRight className="h-4 w-4" />
                   </Link>
                 </div>
               </div>
