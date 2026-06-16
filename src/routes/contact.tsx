@@ -21,7 +21,9 @@ export const Route = createFileRoute("/contact")({
         content:
           "Get in touch with Legends Insurance Services for a free consultation on annuities, life insurance, or employee benefit packages.",
       },
+      { property: "og:url", content: "https://build-a-buddy-16.lovable.app/contact" },
     ],
+    links: [{ rel: "canonical", href: "https://build-a-buddy-16.lovable.app/contact" }],
   }),
   component: ContactPage,
 });

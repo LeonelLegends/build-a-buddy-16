@@ -6,13 +6,15 @@ import teamImg from "@/assets/team.jpg";
 export const Route = createFileRoute("/benefits")({
   head: () => ({
     meta: [
-      { title: "Employee Benefits & Section 125 Cafeteria Plans | Legends Insurance" },
+      { title: "Employee Benefits & Section 125 Plans | Legends Insurance" },
       {
         name: "description",
         content:
           "Specialized employee benefit packages and Section 125 cafeteria plans for companies with 50+ full-time employees. Tax-advantaged, fully managed.",
       },
+      { property: "og:url", content: "https://build-a-buddy-16.lovable.app/benefits" },
     ],
+    links: [{ rel: "canonical", href: "https://build-a-buddy-16.lovable.app/benefits" }],
   }),
   component: BenefitsPage,
 });

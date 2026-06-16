@@ -21,6 +21,43 @@ type Post = {
 };
 
 export const Route = createFileRoute("/blog/$slug")({
+  loader: async ({ params }) => {
+    try {
+      const { data } = await supabase
+        .from("blog_posts")
+        .select("title,title_es,summary,summary_es,cover")
+        .eq("slug", params.slug)
+        .eq("published", true)
+        .maybeSingle();
+      return { meta: data as { title: string; title_es: string | null; summary: string; summary_es: string | null; cover: string | null } | null };
+    } catch {
+      return { meta: null };
+    }
+  },
+  head: ({ params, loaderData }) => {
+    const m = loaderData?.meta;
+    const title = m?.title ?? "Blog Post";
+    const description = m?.summary ?? "Insights from Legends Insurance Services.";
+    const url = `https://build-a-buddy-16.lovable.app/blog/${params.slug}`;
+    const meta: Array<Record<string, string>> = [
+      { title: `${title} — Legends Insurance` },
+      { name: "description", content: description },
+      { property: "og:title", content: title },
+      { property: "og:description", content: description },
+      { property: "og:type", content: "article" },
+      { property: "og:url", content: url },
+      { name: "twitter:title", content: title },
+      { name: "twitter:description", content: description },
+    ];
+    if (m?.cover) {
+      meta.push({ property: "og:image", content: m.cover });
+      meta.push({ name: "twitter:image", content: m.cover });
+    }
+    return {
+      meta,
+      links: [{ rel: "canonical", href: url }],
+    };
+  },
   component: BlogPostPage,
   notFoundComponent: () => (
     <div className="mx-auto max-w-2xl px-6 py-24 text-center">
