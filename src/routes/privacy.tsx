@@ -14,7 +14,9 @@ export const Route = createFileRoute("/privacy")({
         property: "og:description",
         content: "Our commitment to protecting your privacy and personal data.",
       },
+      { property: "og:url", content: "https://build-a-buddy-16.lovable.app/privacy" },
     ],
+    links: [{ rel: "canonical", href: "https://build-a-buddy-16.lovable.app/privacy" }],
   }),
   component: PrivacyPage,
 });
