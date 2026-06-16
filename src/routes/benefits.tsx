@@ -12,6 +12,12 @@ export const Route = createFileRoute("/benefits")({
         content:
           "Specialized employee benefit packages and Section 125 cafeteria plans for companies with 50+ full-time employees. Tax-advantaged, fully managed.",
       },
+      { property: "og:title", content: "Employee Benefits & Section 125 Plans" },
+      {
+        property: "og:description",
+        content:
+          "Tax-advantaged employee benefits and Section 125 cafeteria plans for companies with 50+ full-time employees.",
+      },
       { property: "og:url", content: "https://build-a-buddy-16.lovable.app/benefits" },
     ],
     links: [{ rel: "canonical", href: "https://build-a-buddy-16.lovable.app/benefits" }],
