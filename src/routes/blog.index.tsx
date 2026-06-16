@@ -33,7 +33,9 @@ export const Route = createFileRoute("/blog/")({
         property: "og:description",
         content: "Insights and guides on life insurance, annuities, retirement, and employee benefits.",
       },
+      { property: "og:url", content: "https://build-a-buddy-16.lovable.app/blog" },
     ],
+    links: [{ rel: "canonical", href: "https://build-a-buddy-16.lovable.app/blog" }],
   }),
   component: BlogIndex,
 });
