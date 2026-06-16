@@ -9,13 +9,15 @@ import { PolicySlideshow } from "@/components/PolicySlideshow";
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "Legends Insurance Services — Family-First Financial Protection" },
+      { title: "Legends Insurance — Family-First Financial Protection" },
       {
         name: "description",
         content:
           "Annuities, life insurance, and employee benefit packages tailored to your family and business. Bilingual independent agency.",
       },
+      { property: "og:url", content: "https://build-a-buddy-16.lovable.app/" },
     ],
+    links: [{ rel: "canonical", href: "https://build-a-buddy-16.lovable.app/" }],
   }),
   component: HomePage,
 });
