@@ -1,0 +1,17 @@
+# Legends Insurance
+
+> Bilingual independent insurance agency specializing in annuities, life insurance, and employee benefit packages for families and businesses.
+
+## Pages
+
+- [Home](/): Family-first financial protection — annuities, life insurance, and employee benefits tailored to your goals.
+- [Services](/services): Insurance and retirement services including HYSA, 401(k), Roth IRA, life insurance, living benefits, term, permanent, IUL, and annuities.
+- [Employee Benefits](/benefits): Tax-advantaged employee benefits and Section 125 cafeteria plans for companies with 50+ full-time employees.
+- [Blog](/blog): Articles and insights on insurance, retirement planning, and employee benefits.
+- [Contact](/contact): Book a free, bilingual consultation on annuities, life insurance, or employee benefit packages.
+- [Privacy Policy](/privacy): How we collect, use, and protect your personal information.
+- [Terms of Service](/terms): Terms and conditions governing use of our website and services.
+
+## Optional
+
+- [Sitemap](/sitemap.xml): Machine-readable sitemap of all public pages and blog posts.
