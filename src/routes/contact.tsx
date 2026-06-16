@@ -117,8 +117,9 @@ function ContactPage() {
                   <Field label={t("contact.email")} name="email" type="email" required />
                   <Field label={t("contact.phone")} name="phone" type="tel" />
                   <div className="flex flex-col">
-                    <label className="mb-1.5 text-sm font-medium text-foreground/80">{t("contact.interest")}</label>
+                    <label htmlFor="interest" className="mb-1.5 text-sm font-medium text-foreground/80">{t("contact.interest")}</label>
                     <select
+                      id="interest"
                       name="interest"
                       className="rounded-md border border-border bg-background px-3 py-2.5 text-sm outline-none focus:border-gold"
                     >
@@ -132,8 +133,9 @@ function ContactPage() {
                   </div>
                 </div>
                 <div className="mt-4 flex flex-col">
-                  <label className="mb-1.5 text-sm font-medium text-foreground/80">{t("contact.message")}</label>
+                  <label htmlFor="message" className="mb-1.5 text-sm font-medium text-foreground/80">{t("contact.message")}</label>
                   <textarea
+                    id="message"
                     name="message"
                     rows={5}
                     className="rounded-md border border-border bg-background px-3 py-2.5 text-sm outline-none focus:border-gold"

@@ -241,7 +241,9 @@ function PostCard({ post, lang, t }: { post: PostRow; lang: Lang; t: (k: string)
       <p className="mt-3 line-clamp-3 flex-1 text-sm text-muted-foreground">
         {pickSummary(post, lang)}
       </p>
-      <span className="mt-4 text-sm font-semibold text-primary">{t("blog.read")} →</span>
+      <span className="mt-4 text-sm font-semibold text-primary" aria-label={lang === "es" ? `Lee el artículo completo: ${pickTitle(post, lang)}` : `Read the full article: ${pickTitle(post, lang)}`}>
+        {lang === "es" ? "Lee el artículo completo" : "Read the full article"} →
+      </span>
     </Link>
   );
 }
