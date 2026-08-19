@@ -164,7 +164,7 @@ function ContactPage() {
             <div className="rounded-2xl border border-border bg-card p-6">
               <div className="flex items-center gap-3">
                 <span className="icon-teal grid h-10 w-10 place-items-center rounded-lg">
-                  <Phone className="h-5 w-5 text-primary" />
+                  <Phone className="h-5 w-5 text-secondary" />
                 </span>
                 <div>
                   <p className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">
@@ -182,7 +182,7 @@ function ContactPage() {
             <div className="rounded-2xl border border-border bg-card p-6">
               <div className="flex items-center gap-3">
                 <span className="icon-teal grid h-10 w-10 place-items-center rounded-lg">
-                  <Mail className="h-5 w-5 text-primary" />
+                  <Mail className="h-5 w-5 text-secondary" />
                 </span>
                 <div>
                   <p className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">
@@ -200,7 +200,7 @@ function ContactPage() {
             <div className="rounded-2xl border border-border bg-card p-6">
               <div className="flex items-center gap-3">
                 <span className="icon-teal grid h-10 w-10 place-items-center rounded-lg">
-                  <Clock className="h-5 w-5 text-primary" />
+                  <Clock className="h-5 w-5 text-secondary" />
                 </span>
                 <div>
                   <p className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">

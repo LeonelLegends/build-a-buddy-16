@@ -119,7 +119,7 @@ function HomePage() {
               {[t("about.value1"), t("about.value2"), t("about.value3")].map((v) => (
                 <li key={v} className="flex items-center gap-3">
                   <span className="icon-teal grid h-6 w-6 place-items-center rounded-full">
-                    <Shield className="h-3.5 w-3.5" />
+                    <Shield className="h-3.5 w-3.5 text-secondary" />
                   </span>
                   <span className="font-medium text-primary">{v}</span>
                 </li>
