@@ -265,14 +265,14 @@ export function PolicySlideshow() {
           <div className="flex shrink-0 items-center gap-3">
             <button
               onClick={prev}
-              aria-label="Previous"
+              aria-label={lang === "es" ? "Ver pólizas anteriores" : "View previous policies"}
               className="btn-teal-outline grid h-11 w-11 place-items-center rounded-full"
             >
               <ChevronLeft className="h-5 w-5" />
             </button>
             <button
               onClick={next}
-              aria-label="Next"
+              aria-label={lang === "es" ? "Ver siguientes pólizas" : "View next policies"}
               className="btn-teal-outline grid h-11 w-11 place-items-center rounded-full"
             >
               <ChevronRight className="h-5 w-5" />
