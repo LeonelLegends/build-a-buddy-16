@@ -81,7 +81,7 @@ function BenefitsPage() {
           <p className="mx-auto mt-3 max-w-xl text-muted-foreground">{t("contact.subtitle")}</p>
           <Link
             to="/contact"
-            className="mt-6 inline-flex items-center gap-2 rounded-md bg-primary px-6 py-3 text-sm font-semibold text-primary-foreground hover:bg-secondary"
+            className="btn-teal mt-6 inline-flex items-center gap-2 rounded-md px-6 py-3 text-sm font-semibold"
           >
             {t("nav.cta")} <ArrowRight className="h-4 w-4" />
           </Link>

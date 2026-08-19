@@ -62,13 +62,13 @@ function HomePage() {
             <div className="mt-8 flex flex-wrap gap-3">
               <Link
                 to="/contact"
-                className="inline-flex items-center gap-2 rounded-md bg-gradient-gold px-5 py-3 text-sm font-semibold text-primary shadow-gold transition-transform hover:-translate-y-0.5"
+                className="btn-teal inline-flex items-center gap-2 rounded-md px-5 py-3 text-sm font-semibold"
               >
                 {t("hero.cta")} <ArrowRight className="h-4 w-4" />
               </Link>
               <Link
                 to="/services"
-                className="inline-flex items-center gap-2 rounded-md border border-primary-foreground/30 px-5 py-3 text-sm font-semibold text-primary-foreground hover:border-gold hover:text-gold"
+                className="btn-teal inline-flex items-center gap-2 rounded-md px-5 py-3 text-sm font-semibold"
               >
                 {t("hero.cta2")}
               </Link>
@@ -118,7 +118,7 @@ function HomePage() {
             <ul className="mt-6 space-y-3 text-sm">
               {[t("about.value1"), t("about.value2"), t("about.value3")].map((v) => (
                 <li key={v} className="flex items-center gap-3">
-                  <span className="grid h-6 w-6 place-items-center rounded-full bg-gradient-gold text-primary">
+                  <span className="icon-teal grid h-6 w-6 place-items-center rounded-full">
                     <Shield className="h-3.5 w-3.5" />
                   </span>
                   <span className="font-medium text-primary">{v}</span>
@@ -127,7 +127,7 @@ function HomePage() {
             </ul>
             <Link
               to="/contact"
-              className="mt-8 inline-flex items-center gap-2 rounded-md bg-primary px-5 py-3 text-sm font-semibold text-primary-foreground hover:bg-secondary"
+              className="btn-teal mt-8 inline-flex items-center gap-2 rounded-md px-5 py-3 text-sm font-semibold"
             >
               {t("hero.cta")} <ArrowRight className="h-4 w-4" />
             </Link>

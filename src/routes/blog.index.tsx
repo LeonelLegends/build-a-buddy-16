@@ -138,7 +138,7 @@ function BlogIndex() {
                   onClick={() => setPage((p) => Math.max(0, p - 1))}
                   disabled={!canPrev}
                   aria-label={lang === "es" ? "Anterior" : "Previous"}
-                  className="grid h-11 w-11 place-items-center rounded-full border border-primary/30 text-primary transition-colors hover:bg-primary hover:text-primary-foreground disabled:cursor-not-allowed disabled:opacity-40 disabled:hover:bg-transparent disabled:hover:text-primary"
+                  className="btn-teal-outline grid h-11 w-11 place-items-center rounded-full disabled:cursor-not-allowed disabled:opacity-40"
                 >
                   <ChevronLeft className="h-5 w-5" />
                 </button>
@@ -147,7 +147,7 @@ function BlogIndex() {
                   onClick={() => setPage((p) => Math.min(totalPages - 1, p + 1))}
                   disabled={!canNext}
                   aria-label={lang === "es" ? "Siguiente" : "Next"}
-                  className="grid h-11 w-11 place-items-center rounded-full border border-primary/30 text-primary transition-colors hover:bg-primary hover:text-primary-foreground disabled:cursor-not-allowed disabled:opacity-40 disabled:hover:bg-transparent disabled:hover:text-primary"
+                  className="btn-teal-outline grid h-11 w-11 place-items-center rounded-full disabled:cursor-not-allowed disabled:opacity-40"
                 >
                   <ChevronRight className="h-5 w-5" />
                 </button>

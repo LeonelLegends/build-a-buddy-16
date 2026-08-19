@@ -267,14 +267,14 @@ export function PolicySlideshow() {
             <button
               onClick={prev}
               aria-label="Previous"
-              className="grid h-11 w-11 place-items-center rounded-full border border-primary/30 text-primary transition-colors hover:bg-primary hover:text-primary-foreground"
+              className="btn-teal-outline grid h-11 w-11 place-items-center rounded-full"
             >
               <ChevronLeft className="h-5 w-5" />
             </button>
             <button
               onClick={next}
               aria-label="Next"
-              className="grid h-11 w-11 place-items-center rounded-full border border-primary/30 text-primary transition-colors hover:bg-primary hover:text-primary-foreground"
+              className="btn-teal-outline grid h-11 w-11 place-items-center rounded-full"
             >
               <ChevronRight className="h-5 w-5" />
             </button>
