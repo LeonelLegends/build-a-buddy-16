@@ -150,7 +150,7 @@ function BlogPostPage() {
       </header>
 
       {cover && (
-        <img src={cover} alt="" className="mb-10 aspect-video w-full rounded-2xl object-cover shadow-md" />
+        <img src={cover} alt={title} loading="lazy" decoding="async" className="mb-10 aspect-video w-full rounded-2xl object-cover shadow-md" />
       )}
 
       <div

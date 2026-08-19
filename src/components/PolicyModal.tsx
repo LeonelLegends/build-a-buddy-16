@@ -47,7 +47,7 @@ export function PolicyModal({ policyTitleEn, open, onClose }: Props) {
         <button
           type="button"
           onClick={onClose}
-          aria-label="Close"
+          aria-label={lang === "es" ? "Cerrar" : "Close"}
           className="absolute right-3 top-3 z-20 grid h-9 w-9 place-items-center rounded-full bg-black/40 text-white backdrop-blur-sm transition-colors hover:bg-black/60"
         >
           <X className="h-4 w-4" />
@@ -55,7 +55,13 @@ export function PolicyModal({ policyTitleEn, open, onClose }: Props) {
         <div className="overflow-hidden rounded-xl">
           <img
             src={policy.image}
-            alt={policy.title[lang]}
+            alt={
+              lang === "es"
+                ? `${policy.title.es} — Legends Insurance Services en Sarasota, FL`
+                : `${policy.title.en} plan from Legends Insurance Services in Sarasota, FL`
+            }
+            loading="lazy"
+            decoding="async"
             width={800}
             height={576}
             className="h-56 w-full object-cover"
