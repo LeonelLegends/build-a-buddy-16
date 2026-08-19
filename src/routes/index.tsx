@@ -113,7 +113,10 @@ function HomePage() {
       </section>
 
       {/* Trust strip */}
-      <section className="border-y border-border bg-cream">
+      <section className="border-y border-border bg-cream" aria-labelledby="trust-heading">
+        <h2 id="trust-heading" className="sr-only">
+          {t("trust.title")}
+        </h2>
         <div className="mx-auto grid max-w-7xl gap-6 px-6 py-10 md:grid-cols-4">
           {[
             { n: "25+", l: t("trust.years") },
