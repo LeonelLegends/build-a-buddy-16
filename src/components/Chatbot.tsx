@@ -94,7 +94,7 @@ export function Chatbot() {
         <button
           onClick={() => setOpen(true)}
           className="fixed bottom-6 right-6 z-50 flex items-center gap-2 rounded-full bg-gradient-hero px-5 py-3.5 text-primary-foreground shadow-elegant transition-transform hover:-translate-y-0.5"
-          aria-label="Open chat"
+          aria-label={t("chat.title")}
         >
           <MessageCircle className="h-5 w-5 text-gold" />
           <span className="text-sm font-semibold">{t("chat.title")}</span>
@@ -115,7 +115,7 @@ export function Chatbot() {
                 </p>
               </div>
             </div>
-            <button onClick={() => setOpen(false)} aria-label="Close">
+            <button onClick={() => setOpen(false)} aria-label={t("chat.close")}>
               <X className="h-5 w-5" />
             </button>
           </div>

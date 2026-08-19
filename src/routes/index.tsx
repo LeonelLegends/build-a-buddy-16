@@ -6,24 +6,57 @@ import familyImg from "@/assets/family.webp";
 import { PolicySlideshow } from "@/components/PolicySlideshow";
 
 
+const SITE = "https://legendsinsuranceservices.lovable.app";
+const HOME_TITLE = "Legends Insurance Services | Financial Protection & Retirement in Sarasota, FL";
+const HOME_DESC =
+  "Life insurance, annuities & retirement plans in Sarasota, FL. Bilingual independent agency — book your free consultation today.";
+
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "Legends Insurance — Family-First Financial Protection" },
-      {
-        name: "description",
-        content:
-          "Annuities, life insurance, and employee benefit packages tailored to your family and business. Bilingual independent agency.",
-      },
-      { property: "og:title", content: "Legends Insurance — Family-First Financial Protection" },
-      {
-        property: "og:description",
-        content:
-          "Annuities, life insurance, and employee benefits tailored to your family and business. Bilingual independent agency.",
-      },
-      { property: "og:url", content: "https://build-a-buddy-16.lovable.app/" },
+      { title: HOME_TITLE },
+      { name: "description", content: HOME_DESC },
+      { property: "og:title", content: HOME_TITLE },
+      { property: "og:description", content: HOME_DESC },
+      { property: "og:url", content: `${SITE}/` },
+      { name: "twitter:title", content: HOME_TITLE },
+      { name: "twitter:description", content: HOME_DESC },
     ],
-    links: [{ rel: "canonical", href: "https://build-a-buddy-16.lovable.app/" }],
+    links: [{ rel: "canonical", href: `${SITE}/` }],
+    scripts: [
+      {
+        type: "application/ld+json",
+        children: JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "InsuranceAgency",
+          name: "Legends Insurance Services",
+          url: SITE,
+          telephone: "+1-941-265-0210",
+          email: "support@legendsinsuranceservices.com",
+          image: `${SITE}/favicon.jpg`,
+          address: {
+            "@type": "PostalAddress",
+            addressLocality: "Sarasota",
+            addressRegion: "FL",
+            postalCode: "34231",
+            addressCountry: "US",
+          },
+          areaServed: { "@type": "State", name: "Florida" },
+          openingHoursSpecification: [
+            {
+              "@type": "OpeningHoursSpecification",
+              dayOfWeek: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+              opens: "09:00",
+              closes: "18:00",
+            },
+          ],
+          sameAs: [
+            "https://www.facebook.com/profile.php?id=61586608498612",
+            "https://www.instagram.com/legendsinsuranceservices/",
+          ],
+        }),
+      },
+    ],
   }),
   component: HomePage,
 });
@@ -80,7 +113,10 @@ function HomePage() {
       </section>
 
       {/* Trust strip */}
-      <section className="border-y border-border bg-cream">
+      <section className="border-y border-border bg-cream" aria-labelledby="trust-heading">
+        <h2 id="trust-heading" className="sr-only">
+          {t("trust.title")}
+        </h2>
         <div className="mx-auto grid max-w-7xl gap-6 px-6 py-10 md:grid-cols-4">
           {[
             { n: "25+", l: t("trust.years") },
@@ -106,7 +142,7 @@ function HomePage() {
           <div className="relative">
             <img
               src={familyImg}
-              alt="A family enjoying time together"
+              alt="Family in Sarasota, FL securing financial protection with Legends Insurance Services"
               width={1400}
               height={1000}
               loading="lazy"
