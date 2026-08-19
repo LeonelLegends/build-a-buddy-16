@@ -4,15 +4,15 @@ import { ChevronLeft, ChevronRight, ArrowRight } from "lucide-react";
 import { useI18n } from "@/lib/i18n";
 import { useIsMobile } from "@/hooks/use-mobile";
 
-import imgHysa from "@/assets/policy-hysa.jpg";
-import img401k from "@/assets/policy-401k.jpg";
-import imgRoth from "@/assets/policy-roth.jpg";
-import imgLife from "@/assets/policy-life.jpg";
-import imgLiving from "@/assets/policy-living.jpg";
-import imgTerm from "@/assets/policy-term.jpg";
-import imgPermanent from "@/assets/policy-permanent.jpg";
-import imgIul from "@/assets/policy-iul.jpg";
-import imgAnnuities from "@/assets/policy-annuities.jpg";
+import imgHysa from "@/assets/policy-hysa.webp";
+import img401k from "@/assets/policy-401k.webp";
+import imgRoth from "@/assets/policy-roth.webp";
+import imgLife from "@/assets/policy-life.webp";
+import imgLiving from "@/assets/policy-living.webp";
+import imgTerm from "@/assets/policy-term.webp";
+import imgPermanent from "@/assets/policy-permanent.webp";
+import imgIul from "@/assets/policy-iul.webp";
+import imgAnnuities from "@/assets/policy-annuities.webp";
 
 type Policy = {
   image: string;
@@ -24,6 +24,68 @@ type Policy = {
 
 // Title colors cycle through the logo palette (navy/primary, logo green, gold/teal accent)
 export const POLICIES: Policy[] = [
+  {
+    image: imgTerm,
+    color: "text-primary",
+    title: { en: "Term Life Insurance", es: "Seguro de Vida a Término" },
+    desc: {
+      en: "Economical coverage for a defined period.",
+      es: "Cobertura económica por un periodo determinado.",
+    },
+    bullets: {
+      en: ["Low initial cost", "Ideal for temporary needs", "Excellent for young families"],
+      es: ["Bajo costo inicial", "Ideal para necesidades temporales", "Excelente para familias jóvenes"],
+    },
+  },
+  {
+    image: imgPermanent,
+    color: "text-logo-green",
+    title: {
+      en: "Permanent Life Insurance (Whole, Universal, IUL)",
+      es: "Seguro de Vida Permanente (Whole, Universal, IUL)",
+    },
+    desc: {
+      en: "Lifetime coverage with cash value accumulation.",
+      es: "Cobertura de por vida con acumulación de valor en efectivo.",
+    },
+    bullets: {
+      en: [
+        "Tax-deferred growth",
+        "Access to funds",
+        "Estate planning benefits",
+        "IUL offers market-linked growth with protection",
+      ],
+      es: [
+        "Crecimiento con impuestos diferidos",
+        "Acceso a los fondos",
+        "Beneficios de planificación patrimonial",
+        "IUL ofrece crecimiento ligado al mercado con protección",
+      ],
+    },
+  },
+  {
+    image: imgAnnuities,
+    color: "text-gold",
+    title: { en: "Annuities", es: "Anualidades" },
+    desc: {
+      en: "Insurance contracts that provide guaranteed growth or future income.",
+      es: "Contratos de seguro que ofrecen crecimiento garantizado o ingresos futuros.",
+    },
+    bullets: {
+      en: [
+        "Fixed, indexed or variable options",
+        "Tax-deferred accumulation",
+        "Lifetime income",
+        "Typical returns: 3%–6%",
+      ],
+      es: [
+        "Opciones fijas, indexadas o variables",
+        "Acumulación con impuestos diferidos",
+        "Ingresos de por vida",
+        "Rendimientos típicos: 3%–6%",
+      ],
+    },
+  },
   {
     image: imgHysa,
     color: "text-primary",
@@ -142,47 +204,8 @@ export const POLICIES: Policy[] = [
     },
   },
   {
-    image: imgTerm,
-    color: "text-gold",
-    title: { en: "Term Life Insurance", es: "Seguro de Vida a Término" },
-    desc: {
-      en: "Economical coverage for a defined period.",
-      es: "Cobertura económica por un periodo determinado.",
-    },
-    bullets: {
-      en: ["Low initial cost", "Ideal for temporary needs", "Excellent for young families"],
-      es: ["Bajo costo inicial", "Ideal para necesidades temporales", "Excelente para familias jóvenes"],
-    },
-  },
-  {
-    image: imgPermanent,
-    color: "text-primary",
-    title: {
-      en: "Permanent Life Insurance (Whole, Universal, IUL)",
-      es: "Seguro de Vida Permanente (Whole, Universal, IUL)",
-    },
-    desc: {
-      en: "Lifetime coverage with cash value accumulation.",
-      es: "Cobertura de por vida con acumulación de valor en efectivo.",
-    },
-    bullets: {
-      en: [
-        "Tax-deferred growth",
-        "Access to funds",
-        "Estate planning benefits",
-        "IUL offers market-linked growth with protection",
-      ],
-      es: [
-        "Crecimiento con impuestos diferidos",
-        "Acceso a los fondos",
-        "Beneficios de planificación patrimonial",
-        "IUL ofrece crecimiento ligado al mercado con protección",
-      ],
-    },
-  },
-  {
     image: imgIul,
-    color: "text-logo-green",
+    color: "text-gold",
     title: {
       en: "Benefits of Indexed Universal Life (IUL)",
       es: "Beneficios del Seguro de Vida Universal Indexado (IUL)",
@@ -205,29 +228,6 @@ export const POLICIES: Policy[] = [
         "Primas flexibles",
         "Cláusulas opcionales de beneficios en vida",
         "Crecimiento típico: 6%–10% (no garantizado)",
-      ],
-    },
-  },
-  {
-    image: imgAnnuities,
-    color: "text-gold",
-    title: { en: "Annuities", es: "Anualidades" },
-    desc: {
-      en: "Insurance contracts that provide guaranteed growth or future income.",
-      es: "Contratos de seguro que ofrecen crecimiento garantizado o ingresos futuros.",
-    },
-    bullets: {
-      en: [
-        "Fixed, indexed or variable options",
-        "Tax-deferred accumulation",
-        "Lifetime income",
-        "Typical returns: 3%–6%",
-      ],
-      es: [
-        "Opciones fijas, indexadas o variables",
-        "Acumulación con impuestos diferidos",
-        "Ingresos de por vida",
-        "Rendimientos típicos: 3%–6%",
       ],
     },
   },
@@ -266,14 +266,14 @@ export function PolicySlideshow() {
             <button
               onClick={prev}
               aria-label="Previous"
-              className="grid h-11 w-11 place-items-center rounded-full border border-primary/30 text-primary transition-colors hover:bg-primary hover:text-primary-foreground"
+              className="btn-teal-outline grid h-11 w-11 place-items-center rounded-full"
             >
               <ChevronLeft className="h-5 w-5" />
             </button>
             <button
               onClick={next}
               aria-label="Next"
-              className="grid h-11 w-11 place-items-center rounded-full border border-primary/30 text-primary transition-colors hover:bg-primary hover:text-primary-foreground"
+              className="btn-teal-outline grid h-11 w-11 place-items-center rounded-full"
             >
               <ChevronRight className="h-5 w-5" />
             </button>
@@ -293,6 +293,7 @@ export function PolicySlideshow() {
                   width={800}
                   height={576}
                   loading="lazy"
+                  decoding="async"
                   className="h-56 w-full object-cover"
                 />
               </div>

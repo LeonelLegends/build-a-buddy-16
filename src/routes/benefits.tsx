@@ -1,7 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { ArrowRight, Coins, ListChecks, FileCheck2, Users } from "lucide-react";
 import { useI18n } from "@/lib/i18n";
-import teamImg from "@/assets/team.jpg";
+import teamImg from "@/assets/team.webp";
 
 export const Route = createFileRoute("/benefits")({
   head: () => ({
@@ -57,6 +57,7 @@ function BenefitsPage() {
             width={1400}
             height={1000}
             loading="lazy"
+            decoding="async"
             className="rounded-3xl shadow-elegant"
           />
           <div className="space-y-6">
@@ -81,7 +82,7 @@ function BenefitsPage() {
           <p className="mx-auto mt-3 max-w-xl text-muted-foreground">{t("contact.subtitle")}</p>
           <Link
             to="/contact"
-            className="mt-6 inline-flex items-center gap-2 rounded-md bg-primary px-6 py-3 text-sm font-semibold text-primary-foreground hover:bg-secondary"
+            className="btn-teal mt-6 inline-flex items-center gap-2 rounded-md px-6 py-3 text-sm font-semibold"
           >
             {t("nav.cta")} <ArrowRight className="h-4 w-4" />
           </Link>

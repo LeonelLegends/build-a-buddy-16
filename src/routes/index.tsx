@@ -1,8 +1,8 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { ArrowRight, Shield } from "lucide-react";
 import { useI18n } from "@/lib/i18n";
-import heroImg from "@/assets/hero.jpg";
-import familyImg from "@/assets/family.jpg";
+import heroImg from "@/assets/hero.webp";
+import familyImg from "@/assets/family.webp";
 import { PolicySlideshow } from "@/components/PolicySlideshow";
 
 
@@ -42,6 +42,8 @@ function HomePage() {
             alt=""
             width={1600}
             height={1200}
+            decoding="async"
+            fetchPriority="high"
             className="h-full w-full object-cover"
           />
           <div className="absolute inset-0 bg-gradient-to-r from-primary via-primary/70 to-transparent" />
@@ -62,13 +64,13 @@ function HomePage() {
             <div className="mt-8 flex flex-wrap gap-3">
               <Link
                 to="/contact"
-                className="inline-flex items-center gap-2 rounded-md bg-gradient-gold px-5 py-3 text-sm font-semibold text-primary shadow-gold transition-transform hover:-translate-y-0.5"
+                className="btn-teal inline-flex items-center gap-2 rounded-md px-5 py-3 text-sm font-semibold"
               >
                 {t("hero.cta")} <ArrowRight className="h-4 w-4" />
               </Link>
               <Link
                 to="/services"
-                className="inline-flex items-center gap-2 rounded-md border border-primary-foreground/30 px-5 py-3 text-sm font-semibold text-primary-foreground hover:border-gold hover:text-gold"
+                className="btn-teal inline-flex items-center gap-2 rounded-md px-5 py-3 text-sm font-semibold"
               >
                 {t("hero.cta2")}
               </Link>
@@ -108,6 +110,7 @@ function HomePage() {
               width={1400}
               height={1000}
               loading="lazy"
+              decoding="async"
               className="rounded-3xl shadow-elegant"
             />
             
@@ -118,8 +121,8 @@ function HomePage() {
             <ul className="mt-6 space-y-3 text-sm">
               {[t("about.value1"), t("about.value2"), t("about.value3")].map((v) => (
                 <li key={v} className="flex items-center gap-3">
-                  <span className="grid h-6 w-6 place-items-center rounded-full bg-gradient-gold text-primary">
-                    <Shield className="h-3.5 w-3.5" />
+                  <span className="icon-teal grid h-6 w-6 place-items-center rounded-full">
+                    <Shield className="h-3.5 w-3.5 text-secondary" />
                   </span>
                   <span className="font-medium text-primary">{v}</span>
                 </li>
@@ -127,7 +130,7 @@ function HomePage() {
             </ul>
             <Link
               to="/contact"
-              className="mt-8 inline-flex items-center gap-2 rounded-md bg-primary px-5 py-3 text-sm font-semibold text-primary-foreground hover:bg-secondary"
+              className="btn-teal mt-8 inline-flex items-center gap-2 rounded-md px-5 py-3 text-sm font-semibold"
             >
               {t("hero.cta")} <ArrowRight className="h-4 w-4" />
             </Link>

@@ -2,7 +2,7 @@ import { Link } from "@tanstack/react-router";
 import { useState } from "react";
 import { Menu, X } from "lucide-react";
 import { useI18n } from "@/lib/i18n";
-import logo from "@/assets/logo-new.png";
+import logo from "@/assets/logo-new.webp";
 
 export function Header() {
   const { t, lang, setLang } = useI18n();
@@ -20,7 +20,7 @@ export function Header() {
     <header className="sticky top-0 z-40 border-b border-border/60 bg-background/80 backdrop-blur-md">
       <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4">
         <Link to="/" className="flex items-center gap-3 group shrink-0" aria-label="Legends Insurance Services">
-          <img src={logo} alt="Legends Insurance Services" className="h-20 w-auto rounded-md" />
+          <img src={logo} alt="Legends Insurance Services" width={240} height={80} decoding="async" className="h-20 w-auto rounded-md" />
           <span className="inline-flex flex-col leading-none text-foreground" style={{ fontFamily: '"Montserrat", system-ui, sans-serif' }}>
             <span className="text-4xl font-black tracking-tight">Legends</span>
             <span className="block w-full text-[9px] font-semibold uppercase text-foreground/80" style={{ textAlign: 'justify', textAlignLast: 'justify', textJustify: 'inter-character' } as React.CSSProperties}>{'Insurance\u00A0Services'.split('').join('\u200B')}</span>
@@ -44,19 +44,19 @@ export function Header() {
         <div className="hidden items-center gap-3 lg:flex">
           <Link
             to="/login"
-            className="rounded-md bg-cyan-700 px-4 py-2 text-sm font-semibold text-logo-green-foreground shadow-sm transition-transform hover:-translate-y-0.5"
+            className="btn-teal rounded-md px-4 py-2 text-sm font-semibold"
           >
             Login
           </Link>
           <button
             onClick={() => setLang(lang === "en" ? "es" : "en")}
-            className="rounded-md bg-cyan-700 px-4 py-2 text-sm font-semibold tracking-wide text-logo-green-foreground shadow-sm transition-transform hover:-translate-y-0.5"
+            className="btn-teal rounded-md px-4 py-2 text-sm font-semibold tracking-wide"
           >
             {t("lang.toggle")}
           </button>
           <Link
             to="/contact"
-            className="rounded-md bg-cyan-700 px-4 py-2 text-sm font-semibold text-logo-green-foreground shadow-sm transition-transform hover:-translate-y-0.5"
+            className="btn-teal rounded-md px-4 py-2 text-sm font-semibold"
           >
             {t("nav.cta")}
           </Link>
@@ -85,21 +85,21 @@ export function Header() {
             <div className="mt-2 flex flex-wrap gap-2">
               <button
                 onClick={() => setLang(lang === "en" ? "es" : "en")}
-                className="rounded-md bg-emerald-700 px-3 py-1.5 text-xs font-semibold tracking-wide text-logo-green-foreground"
+                className="btn-teal rounded-md px-3 py-1.5 text-xs font-semibold tracking-wide"
               >
                 {t("lang.toggle")}
               </button>
               <Link
                 to="/login"
                 onClick={() => setOpen(false)}
-                className="rounded-md bg-emerald-700 px-3 py-1.5 text-xs font-semibold text-logo-green-foreground"
+                className="btn-teal rounded-md px-3 py-1.5 text-xs font-semibold"
               >
                 Login
               </Link>
               <Link
                 to="/contact"
                 onClick={() => setOpen(false)}
-                className="rounded-md bg-emerald-700 px-3 py-1.5 text-xs font-semibold text-logo-green-foreground"
+                className="btn-teal rounded-md px-3 py-1.5 text-xs font-semibold"
               >
                 {t("nav.cta")}
               </Link>

@@ -82,8 +82,7 @@ function ContactPage() {
                       url: "https://calendly.com/leonel-legendsinsurance/30min",
                     })
                   }
-                  className="inline-flex items-center justify-center rounded-md px-5 py-3 text-sm font-semibold text-white shadow-md transition-transform hover:-translate-y-0.5"
-                  style={{ backgroundColor: "#047857" }}
+                  className="btn-teal inline-flex items-center justify-center rounded-md px-5 py-3 text-sm font-semibold"
                 >
                   {t("contact.scheduleBtn")}
                 </button>
@@ -153,7 +152,7 @@ function ContactPage() {
                 <button
                   type="submit"
                   disabled={submitting}
-                  className="mt-6 w-full rounded-md bg-gradient-gold px-5 py-3 text-sm font-semibold text-primary shadow-gold transition-transform hover:-translate-y-0.5 disabled:opacity-60"
+                  className="btn-teal mt-6 w-full rounded-md px-5 py-3 text-sm font-semibold disabled:opacity-60"
                 >
                   {submitting ? "Sending..." : t("contact.submit")}
                 </button>
@@ -164,8 +163,8 @@ function ContactPage() {
           <div className="md:col-span-2 space-y-6 md:order-2">
             <div className="rounded-2xl border border-border bg-card p-6">
               <div className="flex items-center gap-3">
-                <span className="grid h-10 w-10 place-items-center rounded-lg bg-gradient-gold">
-                  <Phone className="h-5 w-5 text-primary" />
+                <span className="icon-teal grid h-10 w-10 place-items-center rounded-lg">
+                  <Phone className="h-5 w-5 text-secondary" />
                 </span>
                 <div>
                   <p className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">
@@ -182,8 +181,8 @@ function ContactPage() {
             </div>
             <div className="rounded-2xl border border-border bg-card p-6">
               <div className="flex items-center gap-3">
-                <span className="grid h-10 w-10 place-items-center rounded-lg bg-gradient-gold">
-                  <Mail className="h-5 w-5 text-primary" />
+                <span className="icon-teal grid h-10 w-10 place-items-center rounded-lg">
+                  <Mail className="h-5 w-5 text-secondary" />
                 </span>
                 <div>
                   <p className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">
@@ -200,8 +199,8 @@ function ContactPage() {
             </div>
             <div className="rounded-2xl border border-border bg-card p-6">
               <div className="flex items-center gap-3">
-                <span className="grid h-10 w-10 place-items-center rounded-lg bg-gradient-gold">
-                  <Clock className="h-5 w-5 text-primary" />
+                <span className="icon-teal grid h-10 w-10 place-items-center rounded-lg">
+                  <Clock className="h-5 w-5 text-secondary" />
                 </span>
                 <div>
                   <p className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">
