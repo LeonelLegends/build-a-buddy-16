@@ -82,23 +82,42 @@ export function Footer() {
 
           <div>
             <h4 className="text-sm font-semibold uppercase tracking-wider text-gold">{t("nav.contact")}</h4>
-            <ul className="mt-4 space-y-3 text-sm text-primary-foreground/75">
-              <li className="flex items-center gap-2">
-                <Phone className="h-4 w-4 text-gold" />
-                <a href={isMobile ? "https://wa.me/19412650210" : "tel:+19412650210"} className="hover:text-gold">
+            <address className="mt-4 space-y-3 text-sm not-italic text-primary-foreground/75">
+              <p className="flex items-center gap-2">
+                <Phone className="h-4 w-4 text-gold" aria-hidden="true" />
+                <a
+                  href={isMobile ? "https://wa.me/19412650210" : "tel:+19412650210"}
+                  className="hover:text-gold"
+                  aria-label="Call Legends Insurance Services at (941) 265-0210"
+                >
                   (941) 265-0210
                 </a>
-              </li>
-              <li className="flex items-center gap-2">
-                <Mail className="h-4 w-4 text-gold" />
-                <a href="mailto:support@legendsinsuranceservices.com" className="hover:text-gold">
+              </p>
+              <p className="flex items-center gap-2">
+                <Mail className="h-4 w-4 text-gold" aria-hidden="true" />
+                <a
+                  href="mailto:support@legendsinsuranceservices.com"
+                  className="hover:text-gold"
+                  aria-label="Email support@legendsinsuranceservices.com"
+                >
                   support@legendsinsuranceservices.com
                 </a>
-              </li>
-              <li className="flex items-center gap-2">
-                <MapPin className="h-4 w-4 text-gold" /> Sarasota FL 34231, United States
-              </li>
-            </ul>
+              </p>
+              <p className="flex items-start gap-2">
+                <MapPin className="mt-0.5 h-4 w-4 shrink-0 text-gold" aria-hidden="true" />
+                <span>
+                  <span className="block">Sarasota, FL 34231</span>
+                  <span className="block">United States</span>
+                </span>
+              </p>
+              <p className="flex items-start gap-2">
+                <Clock className="mt-0.5 h-4 w-4 shrink-0 text-gold" aria-hidden="true" />
+                <span>
+                  {t("contact.hoursLabel")}:{" "}
+                  <time dateTime="Mo-Fr 09:00-18:00">{t("contact.hoursValue")}</time>
+                </span>
+              </p>
+            </address>
             <div className="mt-5 flex items-center gap-3">
               <a
                 href="https://www.facebook.com/profile.php?id=61586608498612"
