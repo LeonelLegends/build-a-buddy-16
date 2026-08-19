@@ -44,19 +44,19 @@ export function Header() {
         <div className="hidden items-center gap-3 lg:flex">
           <Link
             to="/login"
-            className="rounded-md bg-cyan-700 px-4 py-2 text-sm font-semibold text-logo-green-foreground shadow-sm transition-transform hover:-translate-y-0.5"
+            className="btn-teal rounded-md px-4 py-2 text-sm font-semibold"
           >
             Login
           </Link>
           <button
             onClick={() => setLang(lang === "en" ? "es" : "en")}
-            className="rounded-md bg-cyan-700 px-4 py-2 text-sm font-semibold tracking-wide text-logo-green-foreground shadow-sm transition-transform hover:-translate-y-0.5"
+            className="btn-teal rounded-md px-4 py-2 text-sm font-semibold tracking-wide"
           >
             {t("lang.toggle")}
           </button>
           <Link
             to="/contact"
-            className="rounded-md bg-cyan-700 px-4 py-2 text-sm font-semibold text-logo-green-foreground shadow-sm transition-transform hover:-translate-y-0.5"
+            className="btn-teal rounded-md px-4 py-2 text-sm font-semibold"
           >
             {t("nav.cta")}
           </Link>
@@ -85,21 +85,21 @@ export function Header() {
             <div className="mt-2 flex flex-wrap gap-2">
               <button
                 onClick={() => setLang(lang === "en" ? "es" : "en")}
-                className="rounded-md bg-emerald-700 px-3 py-1.5 text-xs font-semibold tracking-wide text-logo-green-foreground"
+                className="btn-teal rounded-md px-3 py-1.5 text-xs font-semibold tracking-wide"
               >
                 {t("lang.toggle")}
               </button>
               <Link
                 to="/login"
                 onClick={() => setOpen(false)}
-                className="rounded-md bg-emerald-700 px-3 py-1.5 text-xs font-semibold text-logo-green-foreground"
+                className="btn-teal rounded-md px-3 py-1.5 text-xs font-semibold"
               >
                 Login
               </Link>
               <Link
                 to="/contact"
                 onClick={() => setOpen(false)}
-                className="rounded-md bg-emerald-700 px-3 py-1.5 text-xs font-semibold text-logo-green-foreground"
+                className="btn-teal rounded-md px-3 py-1.5 text-xs font-semibold"
               >
                 {t("nav.cta")}
               </Link>

@@ -66,12 +66,12 @@ export function Footer() {
           <div>
             <h4 className="text-sm font-semibold uppercase tracking-wider text-gold">{t("nav.services")}</h4>
             <ul className="mt-4 space-y-2 text-sm text-primary-foreground/75">
-              {svc("High Yield Savings Account (HYSA)", "footer.svc.hysa")}
-              {svc("401(k)", "footer.svc.401k")}
-              {svc("Roth IRA", "footer.svc.roth")}
               {svc("Term Life Insurance", "footer.svc.term")}
               {svc("Permanent Life Insurance (Whole, Universal, IUL)", "footer.svc.permanent")}
               {svc("Annuities", "footer.svc.annuities")}
+              {svc("High Yield Savings Account (HYSA)", "footer.svc.hysa")}
+              {svc("401(k)", "footer.svc.401k")}
+              {svc("Roth IRA", "footer.svc.roth")}
               <li>
                 <Link to="/benefits" className="hover:text-gold">
                   {t("footer.svc.section125")}
