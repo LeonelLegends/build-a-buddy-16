@@ -1,7 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { ArrowRight, Coins, ListChecks, FileCheck2, Users } from "lucide-react";
 import { useI18n } from "@/lib/i18n";
-import teamImg from "@/assets/team.jpg";
+import teamImg from "@/assets/team.webp";
 
 export const Route = createFileRoute("/benefits")({
   head: () => ({

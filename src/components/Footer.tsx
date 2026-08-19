@@ -4,7 +4,7 @@ import { Mail, Phone, MapPin } from "lucide-react";
 import { useI18n } from "@/lib/i18n";
 import { PolicyModal } from "@/components/PolicyModal";
 import { useIsMobile } from "@/hooks/use-mobile";
-import logo from "@/assets/logo-new.png";
+import logo from "@/assets/logo-new.webp";
 
 function FacebookIcon({ className }: { className?: string }) {
   return (

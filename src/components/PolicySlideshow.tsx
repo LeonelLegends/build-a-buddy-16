@@ -4,15 +4,15 @@ import { ChevronLeft, ChevronRight, ArrowRight } from "lucide-react";
 import { useI18n } from "@/lib/i18n";
 import { useIsMobile } from "@/hooks/use-mobile";
 
-import imgHysa from "@/assets/policy-hysa.jpg";
-import img401k from "@/assets/policy-401k.jpg";
-import imgRoth from "@/assets/policy-roth.jpg";
-import imgLife from "@/assets/policy-life.jpg";
-import imgLiving from "@/assets/policy-living.jpg";
-import imgTerm from "@/assets/policy-term.jpg";
-import imgPermanent from "@/assets/policy-permanent.jpg";
-import imgIul from "@/assets/policy-iul.jpg";
-import imgAnnuities from "@/assets/policy-annuities.jpg";
+import imgHysa from "@/assets/policy-hysa.webp";
+import img401k from "@/assets/policy-401k.webp";
+import imgRoth from "@/assets/policy-roth.webp";
+import imgLife from "@/assets/policy-life.webp";
+import imgLiving from "@/assets/policy-living.webp";
+import imgTerm from "@/assets/policy-term.webp";
+import imgPermanent from "@/assets/policy-permanent.webp";
+import imgIul from "@/assets/policy-iul.webp";
+import imgAnnuities from "@/assets/policy-annuities.webp";
 
 type Policy = {
   image: string;

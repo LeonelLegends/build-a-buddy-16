@@ -1,8 +1,8 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { ArrowRight, Shield } from "lucide-react";
 import { useI18n } from "@/lib/i18n";
-import heroImg from "@/assets/hero.jpg";
-import familyImg from "@/assets/family.jpg";
+import heroImg from "@/assets/hero.webp";
+import familyImg from "@/assets/family.webp";
 import { PolicySlideshow } from "@/components/PolicySlideshow";
 
 
