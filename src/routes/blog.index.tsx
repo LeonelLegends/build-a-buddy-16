@@ -232,7 +232,7 @@ function PostCard({ post, lang, t }: { post: PostRow; lang: Lang; t: (k: string)
       className="group flex flex-col rounded-2xl border border-border bg-card p-6 shadow-sm transition-all hover:-translate-y-1 hover:border-primary/40 hover:shadow-lg"
     >
       {cover && (
-        <img src={cover} alt={title} loading="lazy" decoding="async" className="mb-4 aspect-video w-full rounded-lg object-cover" />
+        <img src={cover} alt={pickTitle(post, lang)} loading="lazy" decoding="async" className="mb-4 aspect-video w-full rounded-lg object-cover" />
       )}
       <time className="text-xs font-medium uppercase tracking-wider text-muted-foreground">
         {formatDate(post.published_at, lang)}

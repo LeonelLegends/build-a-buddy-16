@@ -102,6 +102,7 @@ const en: Dict = {
   "chat.subtitle": "Ask about plans, products, or scheduling.",
   "chat.placeholder": "Type your message…",
   "chat.send": "Send",
+  "chat.close": "Close chat",
   "chat.greeting":
     "Hi! I'm the Legends Insurance virtual assistant. How can I help you today — life insurance, annuities, or employee benefits?",
   "chat.error": "Sorry, something went wrong. Please try again.",
@@ -207,6 +208,7 @@ const es: Dict = {
   "chat.subtitle": "Pregunta sobre planes, productos o citas.",
   "chat.placeholder": "Escribe tu mensaje…",
   "chat.send": "Enviar",
+  "chat.close": "Cerrar chat",
   "chat.greeting":
     "¡Hola! Soy el asistente virtual de Legends Insurance. ¿En qué puedo ayudarte — seguros de vida, anualidades o beneficios para empleados?",
   "chat.error": "Lo siento, algo salió mal. Inténtalo de nuevo.",
