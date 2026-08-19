@@ -23,7 +23,70 @@ type Policy = {
 };
 
 // Title colors cycle through the logo palette (navy/primary, logo green, gold/teal accent)
-export const POLICIES: Policy[] = [
+export const POLICIES: Policy[
+  {
+    image: imgTerm,
+    color: "text-primary",
+    title: { en: "Term Life Insurance", es: "Seguro de Vida a Término" },
+    desc: {
+      en: "Economical coverage for a defined period.",
+      es: "Cobertura económica por un periodo determinado.",
+    },
+    bullets: {
+      en: ["Low initial cost", "Ideal for temporary needs", "Excellent for young families"],
+      es: ["Bajo costo inicial", "Ideal para necesidades temporales", "Excelente para familias jóvenes"],
+    },
+  },
+  {
+    image: imgPermanent,
+    color: "text-logo-green",
+    title: {
+      en: "Permanent Life Insurance (Whole, Universal, IUL)",
+      es: "Seguro de Vida Permanente (Whole, Universal, IUL)",
+    },
+    desc: {
+      en: "Lifetime coverage with cash value accumulation.",
+      es: "Cobertura de por vida con acumulación de valor en efectivo.",
+    },
+    bullets: {
+      en: [
+        "Tax-deferred growth",
+        "Access to funds",
+        "Estate planning benefits",
+        "IUL offers market-linked growth with protection",
+      ],
+      es: [
+        "Crecimiento con impuestos diferidos",
+        "Acceso a los fondos",
+        "Beneficios de planificación patrimonial",
+        "IUL ofrece crecimiento ligado al mercado con protección",
+      ],
+    },
+  },
+  {
+    image: imgAnnuities,
+    color: "text-gold",
+    title: { en: "Annuities", es: "Anualidades" },
+    desc: {
+      en: "Insurance contracts that provide guaranteed growth or future income.",
+      es: "Contratos de seguro que ofrecen crecimiento garantizado o ingresos futuros.",
+    },
+    bullets: {
+      en: [
+        "Fixed, indexed or variable options",
+        "Tax-deferred accumulation",
+        "Lifetime income",
+        "Typical returns: 3%–6%",
+      ],
+      es: [
+        "Opciones fijas, indexadas o variables",
+        "Acumulación con impuestos diferidos",
+        "Ingresos de por vida",
+        "Rendimientos típicos: 3%–6%",
+      ],
+    },
+  },
+  ] = [
   {
     image: imgHysa,
     color: "text-primary",
@@ -142,47 +205,8 @@ export const POLICIES: Policy[] = [
     },
   },
   {
-    image: imgTerm,
-    color: "text-gold",
-    title: { en: "Term Life Insurance", es: "Seguro de Vida a Término" },
-    desc: {
-      en: "Economical coverage for a defined period.",
-      es: "Cobertura económica por un periodo determinado.",
-    },
-    bullets: {
-      en: ["Low initial cost", "Ideal for temporary needs", "Excellent for young families"],
-      es: ["Bajo costo inicial", "Ideal para necesidades temporales", "Excelente para familias jóvenes"],
-    },
-  },
-  {
-    image: imgPermanent,
-    color: "text-primary",
-    title: {
-      en: "Permanent Life Insurance (Whole, Universal, IUL)",
-      es: "Seguro de Vida Permanente (Whole, Universal, IUL)",
-    },
-    desc: {
-      en: "Lifetime coverage with cash value accumulation.",
-      es: "Cobertura de por vida con acumulación de valor en efectivo.",
-    },
-    bullets: {
-      en: [
-        "Tax-deferred growth",
-        "Access to funds",
-        "Estate planning benefits",
-        "IUL offers market-linked growth with protection",
-      ],
-      es: [
-        "Crecimiento con impuestos diferidos",
-        "Acceso a los fondos",
-        "Beneficios de planificación patrimonial",
-        "IUL ofrece crecimiento ligado al mercado con protección",
-      ],
-    },
-  },
-  {
     image: imgIul,
-    color: "text-logo-green",
+    color: "text-gold",
     title: {
       en: "Benefits of Indexed Universal Life (IUL)",
       es: "Beneficios del Seguro de Vida Universal Indexado (IUL)",
@@ -205,29 +229,6 @@ export const POLICIES: Policy[] = [
         "Primas flexibles",
         "Cláusulas opcionales de beneficios en vida",
         "Crecimiento típico: 6%–10% (no garantizado)",
-      ],
-    },
-  },
-  {
-    image: imgAnnuities,
-    color: "text-gold",
-    title: { en: "Annuities", es: "Anualidades" },
-    desc: {
-      en: "Insurance contracts that provide guaranteed growth or future income.",
-      es: "Contratos de seguro que ofrecen crecimiento garantizado o ingresos futuros.",
-    },
-    bullets: {
-      en: [
-        "Fixed, indexed or variable options",
-        "Tax-deferred accumulation",
-        "Lifetime income",
-        "Typical returns: 3%–6%",
-      ],
-      es: [
-        "Opciones fijas, indexadas o variables",
-        "Acumulación con impuestos diferidos",
-        "Ingresos de por vida",
-        "Rendimientos típicos: 3%–6%",
       ],
     },
   },
