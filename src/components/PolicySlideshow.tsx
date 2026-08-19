@@ -86,7 +86,7 @@ export const POLICIES: Policy[] = [
       ],
     },
   },
-  ] = [
+  {
   {
     image: imgHysa,
     color: "text-primary",
