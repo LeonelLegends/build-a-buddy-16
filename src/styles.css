@@ -111,3 +111,46 @@
   .shadow-elegant { box-shadow: var(--shadow-elegant); }
   .shadow-gold { box-shadow: var(--shadow-gold); }
 }
+
+/* Unified site button: teal base, hover/focus lifts only (no color change) */
+@utility btn-teal {
+  background-color: var(--secondary);
+  color: var(--secondary-foreground);
+  box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.06);
+  transition: transform 0.18s ease, box-shadow 0.18s ease;
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-elegant);
+  }
+  &:focus-visible {
+    outline: 2px solid var(--secondary);
+    outline-offset: 2px;
+    transform: translateY(-2px);
+  }
+}
+
+/* Outline variant for circular nav / pager controls */
+@utility btn-teal-outline {
+  border: 1px solid var(--secondary);
+  background-color: transparent;
+  color: var(--secondary);
+  transition: transform 0.18s ease, box-shadow 0.18s ease;
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-elegant);
+  }
+  &:focus-visible {
+    outline: 2px solid var(--secondary);
+    outline-offset: 2px;
+    transform: translateY(-2px);
+  }
+}
+
+/* Transparent icon badge with teal border, matching the buttons */
+@utility icon-teal {
+  border: 1px solid var(--secondary);
+  background-color: transparent;
+  color: var(--secondary);
+}
