@@ -42,6 +42,8 @@ function HomePage() {
             alt=""
             width={1600}
             height={1200}
+            decoding="async"
+            fetchPriority="high"
             className="h-full w-full object-cover"
           />
           <div className="absolute inset-0 bg-gradient-to-r from-primary via-primary/70 to-transparent" />
@@ -108,6 +110,7 @@ function HomePage() {
               width={1400}
               height={1000}
               loading="lazy"
+              decoding="async"
               className="rounded-3xl shadow-elegant"
             />
             

@@ -57,6 +57,7 @@ function BenefitsPage() {
             width={1400}
             height={1000}
             loading="lazy"
+            decoding="async"
             className="rounded-3xl shadow-elegant"
           />
           <div className="space-y-6">

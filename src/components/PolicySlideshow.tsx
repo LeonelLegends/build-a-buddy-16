@@ -294,6 +294,7 @@ export function PolicySlideshow() {
                   width={800}
                   height={576}
                   loading="lazy"
+                  decoding="async"
                   className="h-56 w-full object-cover"
                 />
               </div>

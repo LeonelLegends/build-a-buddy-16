@@ -20,7 +20,7 @@ export function Header() {
     <header className="sticky top-0 z-40 border-b border-border/60 bg-background/80 backdrop-blur-md">
       <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4">
         <Link to="/" className="flex items-center gap-3 group shrink-0" aria-label="Legends Insurance Services">
-          <img src={logo} alt="Legends Insurance Services" className="h-20 w-auto rounded-md" />
+          <img src={logo} alt="Legends Insurance Services" width={240} height={80} decoding="async" className="h-20 w-auto rounded-md" />
           <span className="inline-flex flex-col leading-none text-foreground" style={{ fontFamily: '"Montserrat", system-ui, sans-serif' }}>
             <span className="text-4xl font-black tracking-tight">Legends</span>
             <span className="block w-full text-[9px] font-semibold uppercase text-foreground/80" style={{ textAlign: 'justify', textAlignLast: 'justify', textJustify: 'inter-character' } as React.CSSProperties}>{'Insurance\u00A0Services'.split('').join('\u200B')}</span>

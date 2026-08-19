@@ -40,7 +40,7 @@ export function Footer() {
         <div className="mx-auto grid max-w-7xl gap-10 px-6 py-14 md:grid-cols-4">
           <div className="md:col-span-2">
             <Link to="/" className="flex items-center gap-3 group shrink-0" aria-label="Legends Insurance Services">
-              <img src={logo} alt="Legends Insurance Services" className="h-20 w-auto rounded-md" />
+              <img src={logo} alt="Legends Insurance Services" width={240} height={80} decoding="async" className="h-20 w-auto rounded-md" />
               <span
                 className="inline-flex flex-col leading-none text-white"
                 style={{ fontFamily: '"Montserrat", system-ui, sans-serif' }}
