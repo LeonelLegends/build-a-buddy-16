@@ -142,7 +142,7 @@ function HomePage() {
           <div className="relative">
             <img
               src={familyImg}
-              alt="A family enjoying time together"
+              alt="Family in Sarasota, FL securing financial protection with Legends Insurance Services"
               width={1400}
               height={1000}
               loading="lazy"
