@@ -289,7 +289,11 @@ export function PolicySlideshow() {
               <div className="overflow-hidden rounded-xl">
                 <img
                   src={p.image}
-                  alt={p.title[lang]}
+                  alt={
+                    lang === "es"
+                      ? `${p.title.es} — Legends Insurance Services en Sarasota, FL`
+                      : `${p.title.en} plan from Legends Insurance Services in Sarasota, FL`
+                  }
                   width={800}
                   height={576}
                   loading="lazy"
