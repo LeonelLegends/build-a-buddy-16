@@ -87,7 +87,6 @@ export const POLICIES: Policy[] = [
     },
   },
   {
-  {
     image: imgHysa,
     color: "text-primary",
     title: { en: "High Yield Savings Account (HYSA)", es: "Cuenta de Ahorros de Alto Rendimiento (HYSA)" },
