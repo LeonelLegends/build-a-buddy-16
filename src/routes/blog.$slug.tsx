@@ -5,6 +5,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { useI18n } from "@/lib/i18n";
 import { resolveBlogImage } from "@/lib/blog-images";
 import { incrementBlogView } from "@/lib/blog-views.functions";
+import { ArrowRight } from "lucide-react";
 
 type Post = {
   slug: string;
