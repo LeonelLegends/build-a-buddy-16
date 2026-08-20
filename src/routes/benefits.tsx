@@ -64,7 +64,7 @@ function BenefitsPage() {
             {points.map((p) => (
               <div key={p.title} className="flex gap-4">
                 <span className="grid h-11 w-11 shrink-0 place-items-center rounded-xl icon-teal">
-                  <p.icon className="h-5 w-5 text-primary" />
+                  <p.icon className="h-5 w-5 text-secondary" />
                 </span>
                 <div>
                   <h2 className="font-display text-xl text-primary">{p.title}</h2>
