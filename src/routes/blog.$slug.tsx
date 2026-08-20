@@ -5,6 +5,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { useI18n } from "@/lib/i18n";
 import { resolveBlogImage } from "@/lib/blog-images";
 import { incrementBlogView } from "@/lib/blog-views.functions";
+import { ArrowRight } from "lucide-react";
 
 type Post = {
   slug: string;
@@ -179,6 +180,19 @@ function BlogPostPage() {
         .blog-body ul[data-list-style="circle"] { list-style-type: circle; }
         .blog-body ul[data-list-style="square"] { list-style-type: square; }
       `}</style>
+
+      <div className="mt-12 flex flex-col items-center gap-4 border-t border-border pt-10 text-center">
+        <Link
+          to="/contact"
+          className="btn-teal inline-flex items-center gap-2 rounded-md px-6 py-3 text-sm font-semibold"
+        >
+          {t("nav.cta")} <ArrowRight className="h-4 w-4" />
+        </Link>
+        <Link to="/blog" className="text-sm font-semibold text-primary hover:underline">
+          ← {t("blog.back")}
+        </Link>
+      </div>
     </article>
+
   );
 }
